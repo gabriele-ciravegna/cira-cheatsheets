@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Codex Plugin for Claude Code — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">Ardea Cheatsheets</div>
+    <input class="search-box" type="search" id="sidebar-search" placeholder="Search…">
+
+    <div class="nav-section">
+      <h3>Library</h3>
+      <a href="../index.html">Index</a>
+      <a href="../gsd/index.html">GSD</a>
+      <a href="../gstack/index.html">Gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo</a>
+      <a href="../compound-engineering/index.html">Compound Eng</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../cira-custom/index.html">CIRA Custom</a>
+      <a href="../claude-code-basics/index.html">Claude Code</a>
+      <a href="../bash-macos/index.html">Bash + macOS</a>
+      <a href="../caveman/index.html">Caveman</a>
+      <a href="../morph-compact/index.html">Morph Compact</a>
+      <a href="../claude-mem/index.html">claude-mem</a>
+      <a href="../pai/index.html">PAI</a>
+      <a href="../obsidian-skills/index.html">Obsidian</a>
+      <a href="../codex-plugin-cc/index.html" class="active">Codex Plugin</a>
+      <a href="../claude-for-legal/index.html">Claude for Legal</a>
+      <a href="../buildpartner-plugin/index.html">BuildPartner</a>
+      <a href="../exa-mcp-server/index.html">Exa MCP</a>
+      <a href="../codeburn/index.html">Codeburn</a>
+      <a href="../higgsfield-skill/index.html">Higgsfield</a>
+      <a href="../n8n/index.html">n8n</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>Cheatsheet</h3>
+      <a href="#quick-start">Quick start</a>
+      <a href="#commands">Comandi</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#cira">CIRA context</a>
+      <a href="#gotchas">Gotchas</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="tool-header">
+      <h1>Codex Plugin for Claude Code <span class="version-badge">openai</span></h1>
+      <p class="tagline">Usa Codex (modelli OpenAI o1/o3) DENTRO Claude Code. Code review indipendente, delega task in background, adversarial challenge.</p>
+      <div class="when-card"><strong>Quando usarlo:</strong> serve seconda opinione su decisione critica (review indipendente, no contamination con tuo plan). Delegare task lungo a background mentre lavori. Adversarial test su architettura.</div>
+      <div class="skip-card"><strong>NON usarlo se:</strong> Non hai ChatGPT subscription o OpenAI API key. Se vuoi review interno Claude → <a href="../compound-engineering/index.html">compound-engineering</a> è più ricco.</div>
+    </header>
+
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <pre><code># Marketplace + install
+/plugin marketplace add openai/codex-plugin-cc
+/plugin install codex@openai-codex
+/reload-plugins
+
+# Setup (check Codex installato + login)
+/codex:setup
+
+# Se Codex missing:
+npm install -g @openai/codex
+!codex login
+
+# First run
+/codex:review --background
+/codex:status
+/codex:result</code></pre>
+      <p>Requisiti: Node 18.18+, ChatGPT subscription (anche free) o OpenAI API key. Usage conta su Codex limits.</p>
+    </section>
+
+    <section id="commands">
+      <h2>Comandi</h2>
+      <div class="cmd-card">
+        <div class="cmd-name">/codex:review</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Code review normale read-only via Codex. Stessa qualità di <code>/review</code> dentro Codex.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">PR review indipendente. Vuoi opinion fuori dal tuo Claude context.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/codex:adversarial-review</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Steerable challenge review: Codex prova a rompere/disconfermare la tua architettura/diff.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Decisioni critiche reversibili-difficili. Pre-merge feature ad alto rischio.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/codex:rescue</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Delega task substanziale a Codex via shared runtime. Background job.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Claude bloccato/saturato, vuoi seconda implementazione, root-cause analysis profonda.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/codex:status</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Mostra background job Codex attivi + stato.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/codex:result</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Ritorna output del background job più recente (o specifico per id).</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/codex:cancel</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Cancella job background in corso.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">codex:codex-rescue (subagent)</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Subagent disponibile in <code>/agents</code> per delega complessa, non solo review.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Multi-step research/debug che vuoi isolato dal main context.</span></div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <h2>Use Cases</h2>
+      <ul>
+        <li><strong>Second opinion architecturale</strong> — disegno feature in Claude, <code>/codex:adversarial-review</code> per stress-test prima di committare</li>
+        <li><strong>Long-running research</strong> — <code>/codex:rescue</code> con prompt esplorativo, continuo a lavorare in foreground, <code>/codex:result</code> dopo</li>
+        <li><strong>PR review indipendente</strong> — Claude scrive PR, Codex review (no bias)</li>
+        <li><strong>Stuck debug</strong> — Claude in loop su un bug, Codex con prospettiva fresca</li>
+      </ul>
+    </section>
+
+    <section id="cira">
+      <h2>CIRA Context</h2>
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Pricing</div>
+        <h4>Costo OpenAI separato</h4>
+        <p>Codex usage NON è incluso in piano Anthropic. Va su tuo OpenAI account. Per CIRA tracciare costi via <a href="../codeburn/index.html">Codeburn</a> che vede TUTTE le AI coding tools.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Workflow</div>
+        <h4>Quando preferirlo a Agent Teams</h4>
+        <p><a href="../agent-teams/index.html">Agent Teams</a> (Sonnet+Sonnet) per debate interno modello. Codex Plugin per second opinion cross-modello. Diverso costo, diverso valore.</p>
+      </div>
+    </section>
+
+    <section id="gotchas">
+      <h2>Gotchas &amp; Anti-pattern</h2>
+      <ul>
+        <li>Codex CLI deve essere già installato + loggato. <code>/codex:setup</code> guida ma può fallire su network restrictions.</li>
+        <li>Background job → ricordati di chiamare <code>/codex:result</code> prima di /clear sessione, altrimenti perdi output.</li>
+        <li>Adversarial review può essere troppo aggressivo su prototipi — usa <code>--background</code> e leggi con calma.</li>
+        <li>NO usarlo per task triviali — overhead OpenAI auth + runtime + cost. Riserva a casi dove vale.</li>
+        <li>Tokens consumati su Codex limits, non Anthropic.</li>
+      </ul>
+    </section>
+
+    <footer>
+      Generato 2026-05-15 · Source: <a href="https://github.com/openai/codex-plugin-cc">github.com/openai/codex-plugin-cc</a> · <a href="javascript:window.print()">Stampa / PDF</a>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/copy.js" defer></script>
+<script src="../assets/search.js" defer></script>
+<script src="../assets/glossary.js" defer></script>
+</body>
+</html>

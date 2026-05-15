@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Obsidian Skills — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">Ardea Cheatsheets</div>
+    <input class="search-box" type="search" id="sidebar-search" placeholder="Search…">
+
+    <div class="nav-section">
+      <h3>Library</h3>
+      <a href="../index.html">Index</a>
+      <a href="../gsd/index.html">GSD</a>
+      <a href="../gstack/index.html">Gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo</a>
+      <a href="../compound-engineering/index.html">Compound Eng</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../cira-custom/index.html">CIRA Custom</a>
+      <a href="../claude-code-basics/index.html">Claude Code</a>
+      <a href="../bash-macos/index.html">Bash + macOS</a>
+      <a href="../caveman/index.html">Caveman</a>
+      <a href="../morph-compact/index.html">Morph Compact</a>
+      <a href="../claude-mem/index.html">claude-mem</a>
+      <a href="../pai/index.html">PAI</a>
+      <a href="../obsidian-skills/index.html" class="active">Obsidian</a>
+      <a href="../codex-plugin-cc/index.html">Codex Plugin</a>
+      <a href="../claude-for-legal/index.html">Claude for Legal</a>
+      <a href="../buildpartner-plugin/index.html">BuildPartner</a>
+      <a href="../exa-mcp-server/index.html">Exa MCP</a>
+      <a href="../codeburn/index.html">Codeburn</a>
+      <a href="../higgsfield-skill/index.html">Higgsfield</a>
+      <a href="../n8n/index.html">n8n</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>Cheatsheet</h3>
+      <a href="#quick-start">Quick start</a>
+      <a href="#skills">Skills</a>
+      <a href="#install">Install</a>
+      <a href="#cira">CIRA context</a>
+      <a href="#gotchas">Gotchas</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="tool-header">
+      <h1>Obsidian Skills <span class="version-badge">kepano</span></h1>
+      <p class="tagline">Agent Skills per Obsidian. Permette a Claude Code / Codex / OpenCode di leggere e scrivere markdown Obsidian con wikilink, embed, callout, properties, bases, canvas.</p>
+      <div class="when-card"><strong>Quando usarlo:</strong> usi Obsidian come vault note + Claude Code per editing. Coach Daily Cowork + assistant scrivono daily note in vault. Defuddle per estrarre markdown pulito da web pages.</div>
+      <div class="skip-card"><strong>NON usarlo se:</strong> Non usi Obsidian. Per markdown vanilla, skill stock di Claude Code basta.</div>
+    </header>
+
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <pre><code># Marketplace Claude Code
+/plugin marketplace add kepano/obsidian-skills
+/plugin install obsidian@obsidian-skills
+
+# Oppure npx skills
+npx skills add git@github.com:kepano/obsidian-skills.git
+
+# Manuale: aggiungi cartella .claude nel root del vault
+git clone https://github.com/kepano/obsidian-skills.git
+# poi copia skills/ in vault/.claude/skills/</code></pre>
+      <p>Segue <a href="https://agentskills.io/specification">Agent Skills specification</a> — funziona con qualsiasi agent compatibile.</p>
+    </section>
+
+    <section id="skills">
+      <h2>Le 5 Skill</h2>
+      <div class="cmd-card">
+        <div class="cmd-name">obsidian-markdown</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Crea ed edita Obsidian Flavored Markdown (.md): wikilink <code>[[file]]</code>, embed <code>![[file]]</code>, callout, properties YAML, sintassi Obsidian-specific.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Ogni volta che Claude scrive nel vault Obsidian. Daily note, project page, MOC.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">obsidian-bases</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Crea ed edita .base (Obsidian Bases): view, filter, formule, summary su collezioni di note.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Dashboard tabular su note (es. lista clienti, pipeline progetti, mentori).</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">json-canvas</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Crea ed edita .canvas (JSON Canvas): node, edge, group, connessioni. Mind-map + diagrammi.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">obsidian-cli</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Interagisce con vault via Obsidian CLI: plugin development, theme dev, comandi vault.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">defuddle</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Estrae markdown pulito da web page tramite <a href="https://github.com/kepano/defuddle-cli">defuddle-cli</a>. Rimuove clutter, salva token.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Importare articoli web nel vault senza menu/ads/cookie banner.</span></div>
+      </div>
+    </section>
+
+    <section id="install">
+      <h2>Install per agent</h2>
+      <ul>
+        <li><strong>Claude Code</strong>: <code>/plugin install obsidian@obsidian-skills</code> oppure cartella <code>.claude/</code> nel root del vault</li>
+        <li><strong>Codex CLI</strong>: copia <code>skills/</code> in <code>~/.codex/skills/</code></li>
+        <li><strong>OpenCode</strong>: <code>git clone</code> intera repo in <code>~/.opencode/skills/obsidian-skills</code> (NO solo <code>skills/</code> inner!)</li>
+      </ul>
+    </section>
+
+    <section id="cira">
+      <h2>CIRA Context</h2>
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Status</div>
+        <h4>Obsidian Mac installato</h4>
+        <p>Obsidian Mac installato + template daily 4 sezioni. iPhone NON serve (Telegram-first). Coach Leonardo + Aurelio scrivono nel daily note dello stesso vault.</p>
+        <p>Vedi memoria <code>project_obsidian_integration.md</code>.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Use</div>
+        <h4>Daily note coach</h4>
+        <p>Leonardo (Daily Coach Cowork Opus 4.7) + Aurelio (Personal Assistant Sonnet) scrivono nello stesso daily note Obsidian, blocchi separati. Skill <code>obsidian-markdown</code> è critica per non rompere wikilink + properties.</p>
+        <p>Vedi memoria <code>project_daily_coach_life_os.md</code>.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Stack</div>
+        <h4>Defuddle per KB</h4>
+        <p>Per importare articoli/docs cliente nel vault, defuddle è da preferire a curl+pandoc — output markdown è già pulito da menu/ads.</p>
+      </div>
+    </section>
+
+    <section id="gotchas">
+      <h2>Gotchas &amp; Anti-pattern</h2>
+      <ul>
+        <li>OpenCode install: NO copiare solo <code>skills/</code> — clona repo intera o auto-discovery fallisce.</li>
+        <li>Wikilink <code>[[file]]</code> case-sensitive su filesystem Linux. Su macOS HFS+ case-insensitive ma errore latente se sposti il vault.</li>
+        <li>Properties YAML in head note — formato strict. Skill <code>obsidian-markdown</code> conosce le regole, ma Edit raw può rompere.</li>
+        <li>Bases (.base) feature beta Obsidian — verifica versione Obsidian installata.</li>
+        <li>Defuddle richiede CLI separato installato. <code>npm i -g @kepano/defuddle</code>.</li>
+      </ul>
+    </section>
+
+    <footer>
+      Generato 2026-05-15 · Source: <a href="https://github.com/kepano/obsidian-skills">github.com/kepano/obsidian-skills</a> · <a href="javascript:window.print()">Stampa / PDF</a>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/copy.js" defer></script>
+<script src="../assets/search.js" defer></script>
+<script src="../assets/glossary.js" defer></script>
+</body>
+</html>

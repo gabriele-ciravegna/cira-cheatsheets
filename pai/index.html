@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PAI — Personal AI Infrastructure — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">Ardea Cheatsheets</div>
+    <input class="search-box" type="search" id="sidebar-search" placeholder="Search…">
+
+    <div class="nav-section">
+      <h3>Library</h3>
+      <a href="../index.html">Index</a>
+      <a href="../gsd/index.html">GSD</a>
+      <a href="../gstack/index.html">Gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo</a>
+      <a href="../compound-engineering/index.html">Compound Eng</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../cira-custom/index.html">CIRA Custom</a>
+      <a href="../claude-code-basics/index.html">Claude Code</a>
+      <a href="../bash-macos/index.html">Bash + macOS</a>
+      <a href="../caveman/index.html">Caveman</a>
+      <a href="../morph-compact/index.html">Morph Compact</a>
+      <a href="../claude-mem/index.html">claude-mem</a>
+      <a href="../pai/index.html" class="active">PAI</a>
+      <a href="../obsidian-skills/index.html">Obsidian</a>
+      <a href="../codex-plugin-cc/index.html">Codex Plugin</a>
+      <a href="../claude-for-legal/index.html">Claude for Legal</a>
+      <a href="../buildpartner-plugin/index.html">BuildPartner</a>
+      <a href="../exa-mcp-server/index.html">Exa MCP</a>
+      <a href="../codeburn/index.html">Codeburn</a>
+      <a href="../higgsfield-skill/index.html">Higgsfield</a>
+      <a href="../n8n/index.html">n8n</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>Cheatsheet</h3>
+      <a href="#quick-start">Quick start</a>
+      <a href="#concepts">Concetti</a>
+      <a href="#components">Componenti v5.0</a>
+      <a href="#algorithm">Algorithm v6.3</a>
+      <a href="#cira">CIRA context</a>
+      <a href="#gotchas">Gotchas</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="tool-header">
+      <h1>PAI <span class="version-badge">v5.0.0 · algo v6.3.0</span></h1>
+      <p class="tagline">Personal AI Infrastructure di Daniel Miessler. "Life Operating System": daemon Pulse (dashboard :31337), identità DA (Digital Assistant), Algorithm Current State → Ideal State, ISA primitive.</p>
+      <div class="when-card"><strong>Quando usarlo:</strong> vuoi un sistema personale unificato che gira sopra Claude Code per gestire vita + lavoro. 45 skill, 171 workflow, 37 hook, privacy strutturale via containment zones.</div>
+      <div class="skip-card"><strong>NON usarlo se:</strong> Vuoi solo dev tool (PAI è life-OS). O hai già un sistema custom incompatibile (PAI è invasivo del filesystem).</div>
+    </header>
+
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <pre><code># One-liner install
+curl -sSL https://ourpai.ai/install.sh | bash
+
+# Da v4.x? NO upgrade incrementale, sistema diverso
+# Leggi migration guide v5.0.0 PRIMA
+
+# Dashboard Pulse
+open http://localhost:31337</code></pre>
+      <p>Repo: <a href="https://github.com/danielmiessler/Personal_AI_Infrastructure">github.com/danielmiessler/Personal_AI_Infrastructure</a> · v5.0 release notes in <code>Releases/v5.0.0/README.md</code>.</p>
+    </section>
+
+    <section id="concepts">
+      <h2>Concetti core</h2>
+      <div class="cmd-card">
+        <div class="cmd-name">DA (Digital Assistant)</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Identità persistente che ricorda chi sei, cosa vuoi, come lavori. Ogni skill/workflow lo consulta.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">ISA (Ideal State Articulation)</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Primitive universale: descrive lo stato ideale di X (un progetto, una vita, un'azienda). Algorithm naviga dal Current State al Ideal State.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Pulse daemon</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Unified daemon che gira in background. Dashboard <code>localhost:31337</code>. Aggrega skill running + workflow + telemetria vita (sleep, calendar, focus).</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Containment Zones</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Privacy strutturale: contesto sensibile isolato in zone. Skill normale non vede zone "high-trust" senza esplicito grant.</span></div>
+      </div>
+    </section>
+
+    <section id="components">
+      <h2>Componenti v5.0</h2>
+      <ul>
+        <li><strong>45 skill</strong> — ricche, organizzate per dominio (productivity, security, content, comms, etc.)</li>
+        <li><strong>171 workflow</strong> — orchestrazioni multi-step pre-configurate</li>
+        <li><strong>37 hook</strong> — punti di estensione su lifecycle session/file/event</li>
+        <li><strong>Packs</strong> — bundle skill+workflow per use case specifici</li>
+        <li><strong>Pulse</strong> — daemon + UI <code>:31337</code></li>
+      </ul>
+    </section>
+
+    <section id="algorithm">
+      <h2>Algorithm v6.3.0</h2>
+      <p>Loop a 7 fasi che porta da <em>Current State</em> a <em>Ideal State</em>:</p>
+      <ol>
+        <li><strong>Classify</strong> — quale modo (advisor / coach / executor) e quale tier (quick / standard / deep)?</li>
+        <li><strong>Frame</strong> — definisci ISA per il problema</li>
+        <li><strong>Map</strong> — Current State vs Ideal State</li>
+        <li><strong>Bridge</strong> — gap, ostacoli, risorse</li>
+        <li><strong>Sequence</strong> — ordine azioni</li>
+        <li><strong>Execute</strong> — fai</li>
+        <li><strong>Verify</strong> — sei più vicino all'Ideal State?</li>
+      </ol>
+      <p>Classifier-driven: PAI decide quale modo+tier in base al prompt user.</p>
+    </section>
+
+    <section id="cira">
+      <h2>CIRA Context</h2>
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Status</div>
+        <h4>Plan workspace 12 mag</h4>
+        <p>Piano approvato: CIRA-WORKSPACE su SSD esterno + integrazione PAI v6.3.0 + 8 reparti aziendali + skill unica location + symlink farm. Doc completo: <code>_AWARENESS/2026-05-12-WORKSPACE-ARCHITECTURE-PAI-INTEGRATION.md</code>.</p>
+        <p>Status: NON installato ancora. 8 domande aperte. Vedi memoria <code>project_workspace_architecture_pai_2026_05_12.md</code>.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Decisione</div>
+        <h4>Ruflo come componente PAI</h4>
+        <p>Decisione 13/5 (memoria <code>project_pai_ruflo_system_flow_2026_05_14.md</code>): install PAI Mac portatile NON qui, Hybrid Opzione C — npm binary + <code>.claude/components/ruflo/</code>. Tre vincoli: memory isolation, workspace boundaries, hook coordination.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Trigger</div>
+        <h4>Comandi ripresa</h4>
+        <p>"architettura workspace" o "scrivi CLAUDE.md reparti" → apre il piano workspace. "installa ruflo PAI" → patch + integrazione. Vedi memoria <code>project_ruflo_pai_integration_2026_05_13.md</code>.</p>
+      </div>
+    </section>
+
+    <section id="gotchas">
+      <h2>Gotchas &amp; Anti-pattern</h2>
+      <ul>
+        <li>PAI v5 è different system da v4 — NON è patch, è nuova architettura. Migration guide obbligatorio.</li>
+        <li>Pulse daemon su porta :31337 — conflitto possibile con altri servizi. Verifica <code>lsof -iTCP:31337</code> prima di install.</li>
+        <li>Containment zones non-banali da configurare — leggi privacy guide.</li>
+        <li>CIRA: NON installare PAI sulla macchina principale prima di chiudere il piano workspace. Test su Mac portatile prima.</li>
+        <li>One-liner install esegue shell remoto — review <code>install.sh</code> prima di lanciare.</li>
+      </ul>
+    </section>
+
+    <footer>
+      Generato 2026-05-15 · Source: <a href="https://github.com/danielmiessler/Personal_AI_Infrastructure">github.com/danielmiessler/Personal_AI_Infrastructure</a> · <a href="javascript:window.print()">Stampa / PDF</a>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/copy.js" defer></script>
+<script src="../assets/search.js" defer></script>
+<script src="../assets/glossary.js" defer></script>
+</body>
+</html>

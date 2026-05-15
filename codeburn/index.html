@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Codeburn — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">Ardea Cheatsheets</div>
+    <input class="search-box" type="search" id="sidebar-search" placeholder="Search…">
+
+    <div class="nav-section">
+      <h3>Library</h3>
+      <a href="../index.html">Index</a>
+      <a href="../gsd/index.html">GSD</a>
+      <a href="../gstack/index.html">Gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo</a>
+      <a href="../compound-engineering/index.html">Compound Eng</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../cira-custom/index.html">CIRA Custom</a>
+      <a href="../claude-code-basics/index.html">Claude Code</a>
+      <a href="../bash-macos/index.html">Bash + macOS</a>
+      <a href="../caveman/index.html">Caveman</a>
+      <a href="../morph-compact/index.html">Morph Compact</a>
+      <a href="../claude-mem/index.html">claude-mem</a>
+      <a href="../pai/index.html">PAI</a>
+      <a href="../obsidian-skills/index.html">Obsidian</a>
+      <a href="../codex-plugin-cc/index.html">Codex Plugin</a>
+      <a href="../claude-for-legal/index.html">Claude for Legal</a>
+      <a href="../buildpartner-plugin/index.html">BuildPartner</a>
+      <a href="../exa-mcp-server/index.html">Exa MCP</a>
+      <a href="../codeburn/index.html" class="active">Codeburn</a>
+      <a href="../higgsfield-skill/index.html">Higgsfield</a>
+      <a href="../n8n/index.html">n8n</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>Cheatsheet</h3>
+      <a href="#quick-start">Quick start</a>
+      <a href="#commands">Comandi</a>
+      <a href="#breakdown">Cosa traccia</a>
+      <a href="#cira">CIRA context</a>
+      <a href="#gotchas">Gotchas</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="tool-header">
+      <h1>Codeburn <span class="version-badge">npm</span></h1>
+      <p class="tagline">"See where your AI coding tokens go." Tracker locale di token, cost, performance su 19 AI coding tool. Breakdown per task type, model, tool, project, provider.</p>
+      <div class="when-card"><strong>Quando usarlo:</strong> mensilmente per audit costi AI coding. Capire se Opus vs Sonnet ti conviene. Confrontare provider. Identificare project che brucia di più.</div>
+      <div class="skip-card"><strong>NON usarlo se:</strong> Usi un solo tool (Claude Code) e costi non sono problema. Codeburn brilla con stack multi-tool (Claude + Codex + Cursor + altri).</div>
+    </header>
+
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <pre><code># Install
+npm install -g codeburn
+# o brew
+brew tap getagentseal/codeburn
+brew install codeburn
+
+# Run
+codeburn                              # dashboard interattiva (7 giorni)
+codeburn today
+codeburn month
+codeburn report -p 30days
+codeburn report -p all
+codeburn report --from 2026-04-01 --to 2026-04-10
+codeburn status                       # one-liner today + month
+codeburn export                       # CSV today/7d/30d
+codeburn export -f json</code></pre>
+      <p>Tutto locale. NO proxy, NO wrapper, NO API key. Legge session data direttamente da disco, pricing via <a href="https://github.com/BerriAI/litellm">LiteLLM</a>.</p>
+    </section>
+
+    <section id="commands">
+      <h2>Comandi principali</h2>
+      <div class="cmd-card">
+        <div class="cmd-name">codeburn (default)</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">TUI dashboard interattiva, default 7 giorni.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Check rapido settimanale.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">codeburn report --refresh 30</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Auto-refresh ogni 30s (default).</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Sessione build attiva, monitor in tempo reale spending.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">codeburn report --format json</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Output dashboard completa come JSON.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Pipe in jq, alimentare dashboard custom, integrare con report.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">codeburn status</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">One-liner: today + month spending. JSON disponibile.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Status bar terminale, daily heartbeat.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">codeburn export</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">CSV con today/7d/30d. <code>-f json</code> per JSON.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Backup mensile, archivio storico, report client.</span></div>
+      </div>
+
+      <p>App menu bar macOS disponibile separatamente — icona vicino orologio, status compatto.</p>
+    </section>
+
+    <section id="breakdown">
+      <h2>Cosa traccia</h2>
+      <ul>
+        <li><strong>19 AI coding tool</strong>: Claude Code, Cursor, Codex, OpenCode, Aider, e altri</li>
+        <li><strong>Per task type</strong>: edit, search, plan, review, debug</li>
+        <li><strong>Per model</strong>: Opus 4.7, Sonnet 4.6, Haiku 4.5, GPT-5, Gemini, etc.</li>
+        <li><strong>Per tool / project / provider</strong>: vedi quale cartella + tool + provider brucia di più</li>
+        <li><strong>Optimize tab</strong>: suggerimenti su switch modello/tool</li>
+        <li><strong>Compare tab</strong>: A/B tool su stesso task</li>
+      </ul>
+      <p>Cursor + OpenCode richiedono <code>better-sqlite3</code> (installato auto come optional dep).</p>
+    </section>
+
+    <section id="cira">
+      <h2>CIRA Context</h2>
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Use</div>
+        <h4>Audit mensile spending</h4>
+        <p>CIRA: usa <code>codeburn month</code> il primo di ogni mese per audit. Identifica project che brucia (es. dashboard build, coach Telegram heavy session). Decidi se switchare modello.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Stack</div>
+        <h4>Vede anche Codex Plugin</h4>
+        <p>Se usi <a href="../codex-plugin-cc/index.html">Codex Plugin for Claude Code</a>, Codeburn vede entrambi i provider (Anthropic + OpenAI) — utile per capire dove fluisce la spesa cross-modello.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Privacy</div>
+        <h4>Tutto locale</h4>
+        <p>NO API key richieste, NO proxy, NO upload. Legge JSONL session su disco. Nessuna telemetria fuori.</p>
+      </div>
+    </section>
+
+    <section id="gotchas">
+      <h2>Gotchas &amp; Anti-pattern</h2>
+      <ul>
+        <li>Pricing via LiteLLM — può lagging quando OpenAI/Anthropic cambiano prezzo. Aggiorna <code>codeburn</code> periodico.</li>
+        <li>Sessioni precedenti install di codeburn non tracciate — solo da install in poi.</li>
+        <li>Node 20+ required. Verifica <code>node -v</code>.</li>
+        <li>Menu bar app è separata da CLI — install entrambi se vuoi entrambi.</li>
+        <li>Cursor support richiede SQLite native module — possibili problemi build su M1/M3 (di solito si autoinstalla).</li>
+      </ul>
+    </section>
+
+    <footer>
+      Generato 2026-05-15 · Source: <a href="https://github.com/getagentseal/codeburn">github.com/getagentseal/codeburn</a> · <a href="javascript:window.print()">Stampa / PDF</a>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/copy.js" defer></script>
+<script src="../assets/search.js" defer></script>
+<script src="../assets/glossary.js" defer></script>
+</body>
+</html>

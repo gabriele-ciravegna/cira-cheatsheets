@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Claude for Legal — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">Ardea Cheatsheets</div>
+    <input class="search-box" type="search" id="sidebar-search" placeholder="Search…">
+
+    <div class="nav-section">
+      <h3>Library</h3>
+      <a href="../index.html">Index</a>
+      <a href="../gsd/index.html">GSD</a>
+      <a href="../gstack/index.html">Gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo</a>
+      <a href="../compound-engineering/index.html">Compound Eng</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../cira-custom/index.html">CIRA Custom</a>
+      <a href="../claude-code-basics/index.html">Claude Code</a>
+      <a href="../bash-macos/index.html">Bash + macOS</a>
+      <a href="../caveman/index.html">Caveman</a>
+      <a href="../morph-compact/index.html">Morph Compact</a>
+      <a href="../claude-mem/index.html">claude-mem</a>
+      <a href="../pai/index.html">PAI</a>
+      <a href="../obsidian-skills/index.html">Obsidian</a>
+      <a href="../codex-plugin-cc/index.html">Codex Plugin</a>
+      <a href="../claude-for-legal/index.html" class="active">Claude for Legal</a>
+      <a href="../buildpartner-plugin/index.html">BuildPartner</a>
+      <a href="../exa-mcp-server/index.html">Exa MCP</a>
+      <a href="../codeburn/index.html">Codeburn</a>
+      <a href="../higgsfield-skill/index.html">Higgsfield</a>
+      <a href="../n8n/index.html">n8n</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>Cheatsheet</h3>
+      <a href="#quick-start">Quick start</a>
+      <a href="#plugins">Practice-area plugin</a>
+      <a href="#agents">Agent principali</a>
+      <a href="#connectors">MCP connector</a>
+      <a href="#cira">CIRA context</a>
+      <a href="#gotchas">Gotchas</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="tool-header">
+      <h1>Claude for Legal <span class="version-badge">official Anthropic</span></h1>
+      <p class="tagline">Agent, skill, e data connector per workflow legali: in-house commercial, privacy, product, corporate, employment, litigation, regulatory, AI governance, IP. <strong>Disclaimer obbligatorio</strong>: output è draft, mai legal advice.</p>
+      <div class="when-card"><strong>Quando usarlo:</strong> sei avvocato in-house / studio / accademico. Lavoro legale ricorrente: review NDA, vendor MSA, DSAR, claim chart, due diligence.</div>
+      <div class="skip-card"><strong>NON usarlo se:</strong> Non sei avvocato. <strong>Importante CIRA:</strong> usa SOLO per contratti propri di Gabriele (es. DocuSign personale), MAI per clienti — vedi gotcha.</div>
+    </header>
+
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <pre><code># In Claude Cowork (recommended)
+# 1. Download Claude Desktop
+# 2. Cowork access
+# 3. Segui video tutorial
+
+# In Claude Code
+/plugin marketplace add anthropics/claude-for-legal
+/plugin install commercial-legal@claude-for-legal
+# (o privacy-legal, ip-legal, ecc.)
+
+# Quickstart 60s
+# vedi QUICKSTART.md nel repo</code></pre>
+      <p>Disponibile <strong>two ways from one source</strong>: come plugin Claude Code/Cowork, oppure deploy via Claude Managed Agents API dietro tuo workflow engine.</p>
+    </section>
+
+    <section id="plugins">
+      <h2>Practice-area plugin</h2>
+      <ul>
+        <li><code>commercial-legal</code> — NDA, MSA, vendor review, amendment trace, renewal watch, deal debrief, playbook monitor</li>
+        <li><code>corporate-legal</code> — diligence tabular, board consent, M&A closing checklist, integration runbook, entity compliance</li>
+        <li><code>employment-legal</code> — termination review, hire review, classification, leave tracker, investigation, policy drafting</li>
+        <li><code>privacy-legal</code> — DSAR, DPA review, PIA, reg gap analysis, policy monitor</li>
+        <li><code>product-legal</code> — launch review, marketing claims, "is this a problem" triage, launch watcher</li>
+        <li><code>regulatory-legal</code> — reg feed watcher, policy diff, gap tracker, NPRM comment tracker</li>
+        <li><code>ai-governance-legal</code> — AI use case triage, AIA generation, vendor AI review, AI reg gap</li>
+        <li><code>ip-legal</code> — trademark clearance, C&D, DMCA, OSS compliance, FTO triage, infringement</li>
+        <li><code>litigation-legal</code> — claim chart, demand letter, subpoena triage, chronology, dep prep, privilege log</li>
+      </ul>
+    </section>
+
+    <section id="agents">
+      <h2>Agent principali</h2>
+      <div class="cmd-card">
+        <div class="cmd-name">Vendor Agreement Reviewer</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Review vendor MSA contro playbook house, redline memo.</span></div>
+        <div class="cmd-row"><span class="label">Comando</span><span class="value"><code>/commercial-legal:review</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">NDA Triager</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">GREEN/YELLOW/RED triage NDA inbound. Solo i hard arrivano sul tavolo avvocato.</span></div>
+        <div class="cmd-row"><span class="label">Comando</span><span class="value"><code>/commercial-legal:review</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">DSAR Responder</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Drafta acknowledgment + risposta sostantiva DSAR entro deadline statutorie.</span></div>
+        <div class="cmd-row"><span class="label">Comando</span><span class="value"><code>/privacy-legal:dsar-response</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Renewal Watcher</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Scheduled: scansiona registro contratti per cancel-by + renewal deadline.</span></div>
+        <div class="cmd-row"><span class="label">Tipo</span><span class="value">Scheduled managed-agent.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Claim Chart Builder</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Element-by-element claim chart, patent o civil cause of action.</span></div>
+        <div class="cmd-row"><span class="label">Comando</span><span class="value"><code>/litigation-legal:claim-chart</code></span></div>
+      </div>
+
+      <p>Lista completa: 60+ agent nel repo. Vedi tabella nel <a href="https://github.com/anthropics/claude-for-legal">README ufficiale</a>.</p>
+    </section>
+
+    <section id="connectors">
+      <h2>MCP Connector</h2>
+      <ul>
+        <li><strong>Productivity</strong>: Slack, Google Drive, Box</li>
+        <li><strong>Legal-specific</strong>: Ironclad (CLM), DocuSign (e-sign), iManage (DMS), Everlaw (eDiscovery), CourtListener (case law), TopCounsel, Definely</li>
+      </ul>
+      <p>Ogni connector richiede OAuth/auth separato — vedi <code>/&lt;plugin&gt;:authenticate</code> e <code>/&lt;plugin&gt;:complete_authentication</code>.</p>
+    </section>
+
+    <section id="cira">
+      <h2>CIRA Context</h2>
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Boundary CRITICA</div>
+        <h4>SOLO contratti propri Gabriele</h4>
+        <p>Memoria <code>reference_docusign_personal_contracts.md</code>: DocuSign MCP (via commercial-legal plugin) <strong>SOLO</strong> per contratti propri di Gabriele, MAI per clienti CIRA. Auth pending.</p>
+        <p>Motivo: legalmente Gabriele non è avvocato per i clienti CIRA; usare strumenti legal su loro documenti = "unauthorized practice of law" rischio.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Disclaimer</div>
+        <h4>Output = draft per avvocato review</h4>
+        <p>Anthropic chiarisce: ogni output è <strong>draft per attorney review</strong>, mai legal advice/conclusione/sostituto avvocato. Source attribution su ogni citazione, default conservativi su privilege, jurisdiction surfaced.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Use case</div>
+        <h4>Esempi pratici per Gabriele</h4>
+        <p>NDA Triager su NDA cliente <em>che firma Gabriele</em> (lui come parte). Renewal watcher su SaaS subscription CIRA. AI Use Case Triager su tool AI che CIRA usa internamente. NON su pratica legale dei clienti finali.</p>
+      </div>
+    </section>
+
+    <section id="gotchas">
+      <h2>Gotchas &amp; Anti-pattern</h2>
+      <ul>
+        <li><strong>CRITICA CIRA</strong>: NON usare per contratti dei clienti. Solo per i tuoi. (Vedi reference docusign_personal_contracts.)</li>
+        <li>Tutti gli output sono draft, non legal advice. Disclaimer Anthropic non eliminabile.</li>
+        <li>Plugin attivano connector MCP — auth OAuth separato per ognuno (DocuSign, Ironclad, etc.).</li>
+        <li>Practice profile (CLAUDE.md ognuno) impara playbook house — riempi correttamente o output generico.</li>
+        <li>Scheduled agent richiedono managed-agents API per girare 24/7 — non basta plugin Cowork locale.</li>
+      </ul>
+    </section>
+
+    <footer>
+      Generato 2026-05-15 · Source: <a href="https://github.com/anthropics/claude-for-legal">github.com/anthropics/claude-for-legal</a> · <a href="javascript:window.print()">Stampa / PDF</a>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/copy.js" defer></script>
+<script src="../assets/search.js" defer></script>
+<script src="../assets/glossary.js" defer></script>
+</body>
+</html>

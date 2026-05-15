@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BuildPartner — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">Ardea Cheatsheets</div>
+    <input class="search-box" type="search" id="sidebar-search" placeholder="Search…">
+
+    <div class="nav-section">
+      <h3>Library</h3>
+      <a href="../index.html">Index</a>
+      <a href="../gsd/index.html">GSD</a>
+      <a href="../gstack/index.html">Gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo</a>
+      <a href="../compound-engineering/index.html">Compound Eng</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../cira-custom/index.html">CIRA Custom</a>
+      <a href="../claude-code-basics/index.html">Claude Code</a>
+      <a href="../bash-macos/index.html">Bash + macOS</a>
+      <a href="../caveman/index.html">Caveman</a>
+      <a href="../morph-compact/index.html">Morph Compact</a>
+      <a href="../claude-mem/index.html">claude-mem</a>
+      <a href="../pai/index.html">PAI</a>
+      <a href="../obsidian-skills/index.html">Obsidian</a>
+      <a href="../codex-plugin-cc/index.html">Codex Plugin</a>
+      <a href="../claude-for-legal/index.html">Claude for Legal</a>
+      <a href="../buildpartner-plugin/index.html" class="active">BuildPartner</a>
+      <a href="../exa-mcp-server/index.html">Exa MCP</a>
+      <a href="../codeburn/index.html">Codeburn</a>
+      <a href="../higgsfield-skill/index.html">Higgsfield</a>
+      <a href="../n8n/index.html">n8n</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>Cheatsheet</h3>
+      <a href="#quick-start">Quick start</a>
+      <a href="#skills">Skill bp:*</a>
+      <a href="#architecture">Architettura</a>
+      <a href="#cira">CIRA context</a>
+      <a href="#gotchas">Gotchas</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="tool-header">
+      <h1>BuildPartner <span class="version-badge">SaaS plugin</span></h1>
+      <p class="tagline">AI build partner per Claude Code. Expert frameworks, coaching, training personalizzato — pricing, content, launch, AI automation, marketing, sales, product. Dashboard + Skill usage tracking.</p>
+      <div class="when-card"><strong>Quando usarlo:</strong> serve framework battle-tested invece di risposta generica. Pricing, content strategy, launch, marketing decisions con expert backbone.</div>
+      <div class="skip-card"><strong>NON usarlo se:</strong> Vuoi solo dev tool tecnico (BuildPartner è business/strategy oriented). Free tier limitato, dopo è a pagamento Stripe.</div>
+    </header>
+
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <pre><code># Marketplace
+claude plugin marketplace add austinmarchese/buildpartner-plugin
+claude plugin install buildpartner@buildpartner
+
+# Prima volta: crea account, apre dashboard, registra MCP
+
+# Update
+claude plugin marketplace update
+claude plugin update buildpartner@buildpartner
+
+# Uninstall
+claude plugin uninstall buildpartner@buildpartner</code></pre>
+      <p>Dashboard: <a href="https://buildpartner.ai/dashboard">buildpartner.ai/dashboard</a> — skill usage, quest progress, AI profile, recap sessioni.</p>
+    </section>
+
+    <section id="skills">
+      <h2>Skill <code>bp:*</code></h2>
+      <div class="cmd-card">
+        <div class="cmd-name">/bp:expert-advice</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Chiedi domanda, matching automatico a expert framework giusto. Copre pricing, content, launch, AI automation, marketing, sales, product strategy.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Decisione che beneficia di framework battle-tested invece risposta generica.</span></div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value">"Come prezzo il nuovo SaaS dimore storiche?" → Hormozi grand-slam offer + Vignali pricing power → output strutturato.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/bp:improve-system</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Mantiene setup Claude Code sharp. Review sessioni, captura learnings, audit per rot, recap recent work.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Settimanale (lun/ven reminder automatico). Keep CLAUDE.md + skill + workflow non drift.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/bp:open-dashboard</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Apre dashboard BuildPartner nel browser, signed in automatic. Shortcut a profile, skill usage, quest, billing.</span></div>
+      </div>
+    </section>
+
+    <section id="architecture">
+      <h2>Architettura</h2>
+      <p>Quattro pezzi:</p>
+      <ul>
+        <li><strong>Skills</strong> (<code>plugin/skills/</code>) — slash command route al framework giusto</li>
+        <li><strong>MCP server</strong> (<code>buildpartner</code> su npm) — espone <code>get_expert_knowledge</code></li>
+        <li><strong>Hook</strong> (<code>plugin/hooks/</code>) — session-boundary gating, usage flush, auto-update, reminder weekly</li>
+        <li><strong>Web app</strong> (<a href="https://buildpartner.ai">buildpartner.ai</a>) — dashboard, account, payments, expert knowledge API</li>
+      </ul>
+      <p>MCP server avviato da Claude Code via <code>npx -y buildpartner@latest serve</code>. Auto-update check a session start + end.</p>
+    </section>
+
+    <section id="cira">
+      <h2>CIRA Context</h2>
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Compare</div>
+        <h4>vs mentori CIRA</h4>
+        <p>CIRA ha 67 mentori (Hormozi, Vignali, Brooks, Bezos, Jobs, Randolph, Bilyeu, ecc.) in <code>WORK/MENTORI/</code> + skill orchestra. BuildPartner offre framework simili ma <strong>impacchettati</strong> con dashboard SaaS.</p>
+        <p>Decisione: usare mentori CIRA per decisioni profonde (Sequential/Concistoro), BuildPartner per quick check su decisione tattica.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Reminder</div>
+        <h4>/bp:improve-system weekly</h4>
+        <p>Reminder lun/ven a session start. Utile per non far drift il sistema Claude. Complementare al <code>/evolve</code> (self-evolving CIRA) e al daily coach.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Pricing</div>
+        <h4>Tier gratis, poi Stripe</h4>
+        <p>Free per primi usi di ogni skill. Dopo upgrade da dashboard. Billing via Stripe, cancel anytime. CIRA: testa free tier prima di committere.</p>
+      </div>
+    </section>
+
+    <section id="gotchas">
+      <h2>Gotchas &amp; Anti-pattern</h2>
+      <ul>
+        <li>Free tier limitato — dopo paga o stop. NON è freeware permanente.</li>
+        <li>Dashboard cookie/session — sign-in automatico via plugin, ma scade. Re-login se <code>/bp:open-dashboard</code> fallisce.</li>
+        <li>Expert framework può sovrappore mentori CIRA — scegli source autorevole (memo) per evitare doppi.</li>
+        <li>Auto-update plugin a session start — può rallentare cold start.</li>
+        <li>MCP server <code>get_expert_knowledge</code> richiede internet — offline = degraded.</li>
+      </ul>
+    </section>
+
+    <footer>
+      Generato 2026-05-15 · Source: <a href="https://github.com/austinmarchese/buildpartner-plugin">github.com/austinmarchese/buildpartner-plugin</a> · <a href="javascript:window.print()">Stampa / PDF</a>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/copy.js" defer></script>
+<script src="../assets/search.js" defer></script>
+<script src="../assets/glossary.js" defer></script>
+</body>
+</html>

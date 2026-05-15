@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Morph Compact — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">Ardea Cheatsheets</div>
+    <input class="search-box" type="search" id="sidebar-search" placeholder="Search…">
+
+    <div class="nav-section">
+      <h3>Library</h3>
+      <a href="../index.html">Index</a>
+      <a href="../gsd/index.html">GSD</a>
+      <a href="../gstack/index.html">Gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo</a>
+      <a href="../compound-engineering/index.html">Compound Eng</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../cira-custom/index.html">CIRA Custom</a>
+      <a href="../claude-code-basics/index.html">Claude Code</a>
+      <a href="../bash-macos/index.html">Bash + macOS</a>
+      <a href="../caveman/index.html">Caveman</a>
+      <a href="../morph-compact/index.html" class="active">Morph Compact</a>
+      <a href="../claude-mem/index.html">claude-mem</a>
+      <a href="../pai/index.html">PAI</a>
+      <a href="../obsidian-skills/index.html">Obsidian</a>
+      <a href="../codex-plugin-cc/index.html">Codex Plugin</a>
+      <a href="../claude-for-legal/index.html">Claude for Legal</a>
+      <a href="../buildpartner-plugin/index.html">BuildPartner</a>
+      <a href="../exa-mcp-server/index.html">Exa MCP</a>
+      <a href="../codeburn/index.html">Codeburn</a>
+      <a href="../higgsfield-skill/index.html">Higgsfield</a>
+      <a href="../n8n/index.html">n8n</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>Cheatsheet</h3>
+      <a href="#quick-start">Quick start</a>
+      <a href="#how">Come funziona</a>
+      <a href="#commands">Comandi</a>
+      <a href="#cira">CIRA context</a>
+      <a href="#gotchas">Gotchas</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="tool-header">
+      <h1>Morph Compact <span class="version-badge">0.2.8</span></h1>
+      <p class="tagline">Context compaction veloce: 25-33k tok/s, +0.6% SWE-Bench Pro, sub-2s. Sostituisce il summarizer interno di Claude Code.</p>
+      <div class="when-card"><strong>Quando usarlo:</strong> sessioni lunghe Claude Code che raggiungono il limite di contesto. Vuoi compaction rapida e di qualità superiore senza perdere catena di lavoro.</div>
+      <div class="skip-card"><strong>NON usarlo se:</strong> Non hai una Morph API key (a pagamento), o lavori sempre in sessioni brevi (<50% contesto).</div>
+    </header>
+
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <pre><code># Install dal marketplace Claude Code
+/plugin marketplace add morph/morph-claude-code-plugin
+/plugin install morph-compact@morph
+
+# Configura API key (interattivo)
+/morph-compact:install
+
+# Quando contesto pieno
+/compact morph
+</code></pre>
+      <p>API key salvata in <code>~/.claude/morph/.env</code> (o env <code>MORPH_API_KEY</code>). Plugin aggiunge istruzioni a <code>~/.claude/CLAUDE.md</code> per saltare il summarizer interno quando Morph gestisce.</p>
+    </section>
+
+    <section id="how">
+      <h2>Come funziona</h2>
+      <p>Hook 3 punti del ciclo Claude Code:</p>
+      <ol>
+        <li><strong>PreCompact</strong> — Morph Flash Compact a 33k tok/s comprime il contesto</li>
+        <li><strong>PostCompact</strong> — risultato Morph iniettato nel context status</li>
+        <li><strong>SessionStart</strong> — su resume/compact, Claude legge il contesto compresso da Morph</li>
+      </ol>
+      <p>Prompt-injection nel CLAUDE.md istruisce il summarizer Claude a produrre solo un sentinel text, lasciando spazio a Morph. Non sempre rispettato — se fallisce, plugin lo detecta e ti propone <code>/compact morph</code> di nuovo (cache hit, no extra API call).</p>
+    </section>
+
+    <section id="commands">
+      <h2>Comandi</h2>
+      <div class="cmd-card">
+        <div class="cmd-name">/morph-compact:install</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Setup interattivo: prompt API key, salva in <code>~/.claude/morph/.env</code>, aggiunge compact instructions al CLAUDE.md globale.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Prima volta dopo install plugin.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/morph-compact:uninstall</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Rimuove instructions dal CLAUDE.md e cancella .env. Plugin resta installato.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compact morph</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Forza compaction via Morph. Claude vede l'istruzione "morph" e output solo sentinel, lasciando Morph summary prevalere.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Manuale, prima del limite di contesto. O dopo failure auto-compact.</span></div>
+        <div class="cmd-row"><span class="label">Gotcha</span><span class="value">Su sessioni molto grandi prima compaction può fallire prompt-injection; ritry su contesto già ridotto è quasi sempre OK.</span></div>
+      </div>
+    </section>
+
+    <section id="cira">
+      <h2>CIRA Context</h2>
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Setup</div>
+        <h4>API key necessaria</h4>
+        <p>Morph è SaaS a pagamento — pricing su <a href="https://morphllm.com">morphllm.com</a>. Vale per build session ≥3h. Pagamento via Stripe.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Trade-off</div>
+        <h4>Quando NON usarlo</h4>
+        <p>Sessioni brevi (Telegram coach, scripting da 30min) non beneficiano. Lì il summarizer Claude basta. Riserva Morph per sessioni Mercurio/dashboard build da molte ore.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Stack</div>
+        <h4>Pairing con claude-mem</h4>
+        <p><a href="../claude-mem/index.html">claude-mem</a> salva memorie persistenti tra sessioni; Morph comprime DENTRO la sessione corrente. Sono complementari, non sostituiti.</p>
+      </div>
+    </section>
+
+    <section id="gotchas">
+      <h2>Gotchas &amp; Anti-pattern</h2>
+      <ul>
+        <li>NO modo di disabilitare il summarizer Claude default (limitazione hook) — il plugin lo aggira via prompt-injection nel CLAUDE.md, non sempre seguito.</li>
+        <li>Su sessioni "molto grandi" prima compaction può ignorare istruzioni e produrre summary Claude completo. Soluzione: secondo <code>/compact morph</code> su contesto ridotto.</li>
+        <li>API key in chiaro nel <code>.env</code> — non committarlo in repo.</li>
+        <li>Plugin NON sostituisce Morph MCP (warpgrep + fast apply). Per stack completo installa anche MCP.</li>
+        <li>Conflitti con altri plugin compaction (es. context-mode). Tieni uno solo attivo.</li>
+      </ul>
+    </section>
+
+    <footer>
+      Generato 2026-05-15 · Source: <a href="https://github.com/morph/morph-claude-code-plugin">github.com/morph/morph-claude-code-plugin</a> · <a href="javascript:window.print()">Stampa / PDF</a>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/copy.js" defer></script>
+<script src="../assets/search.js" defer></script>
+<script src="../assets/glossary.js" defer></script>
+</body>
+</html>

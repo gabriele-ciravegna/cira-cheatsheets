@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Higgsfield Skill — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">Ardea Cheatsheets</div>
+    <input class="search-box" type="search" id="sidebar-search" placeholder="Search…">
+
+    <div class="nav-section">
+      <h3>Library</h3>
+      <a href="../index.html">Index</a>
+      <a href="../gsd/index.html">GSD</a>
+      <a href="../gstack/index.html">Gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo</a>
+      <a href="../compound-engineering/index.html">Compound Eng</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../cira-custom/index.html">CIRA Custom</a>
+      <a href="../claude-code-basics/index.html">Claude Code</a>
+      <a href="../bash-macos/index.html">Bash + macOS</a>
+      <a href="../caveman/index.html">Caveman</a>
+      <a href="../morph-compact/index.html">Morph Compact</a>
+      <a href="../claude-mem/index.html">claude-mem</a>
+      <a href="../pai/index.html">PAI</a>
+      <a href="../obsidian-skills/index.html">Obsidian</a>
+      <a href="../codex-plugin-cc/index.html">Codex Plugin</a>
+      <a href="../claude-for-legal/index.html">Claude for Legal</a>
+      <a href="../buildpartner-plugin/index.html">BuildPartner</a>
+      <a href="../exa-mcp-server/index.html">Exa MCP</a>
+      <a href="../codeburn/index.html">Codeburn</a>
+      <a href="../higgsfield-skill/index.html" class="active">Higgsfield</a>
+      <a href="../n8n/index.html">n8n</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>Cheatsheet</h3>
+      <a href="#quick-start">Quick start</a>
+      <a href="#models">Modelli inclusi</a>
+      <a href="#examples">Esempi prompt</a>
+      <a href="#cira">CIRA context</a>
+      <a href="#gotchas">Gotchas</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="tool-header">
+      <h1>Higgsfield Skill <span class="version-badge">CC BY 4.0</span></h1>
+      <p class="tagline">Un MCP, 30+ modelli image/video. Skill Claude Code che wrappa il Higgsfield MCP — Seedance 2.0, Sora 2, Veo, Kling, Nano Banana Pro, GPT Image 2, Flux, Hailuo + Higgsfield exclusive Soul e Cinema Studio.</p>
+      <div class="when-card"><strong>Quando usarlo:</strong> hai subscription Higgsfield e vuoi attivare modelli image/video con prompt naturale. Storyboard animation, poster, cinematic shot, b-roll.</div>
+      <div class="skip-card"><strong>NON usarlo se:</strong> NON hai subscription Higgsfield. La skill ha decision rule built-in: suggerisce solo se sei già subscriber. NON abbonarsi per un progetto solo.</div>
+    </header>
+
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <pre><code># Clone skill
+git clone https://github.com/robonuggets/higgsfield-skill
+
+# Install MCP user-scope (una auth per tutte le sessioni)
+claude mcp add --transport http --scope user higgsfield https://mcp.higgsfield.ai/mcp
+
+# OAuth
+/mcp
+# Sign-in con account Higgsfield
+# Restart Claude Code se tools non appaiono</code></pre>
+      <p>Skill discovera <code>.claude/skills/higgsfield/SKILL.md</code> automatic.</p>
+    </section>
+
+    <section id="models">
+      <h2>Modelli inclusi (30+)</h2>
+      <ul>
+        <li><strong>Video</strong>: Seedance 2.0, Sora 2, Veo, Kling, Hailuo, Higgsfield Cinema Studio (exclusive)</li>
+        <li><strong>Image</strong>: Nano Banana Pro, GPT Image 2, Flux, Higgsfield Soul (exclusive)</li>
+        <li><strong>Mixed</strong>: cinematic ad, b-roll, storyboard frame animation</li>
+      </ul>
+      <p>One auth, no per-provider API key da gestire. Pricing transparency: skill mostra credit cost + cost-approval gate prima di run paid.</p>
+    </section>
+
+    <section id="examples">
+      <h2>Esempi prompt</h2>
+      <div class="cmd-card">
+        <div class="cmd-name">Cinematic shot</div>
+        <div class="cmd-row"><span class="label">Prompt</span><span class="value">"Use higgsfield to generate a cinematic shot of a runner at sunrise."</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Storyboard animation</div>
+        <div class="cmd-row"><span class="label">Prompt</span><span class="value">"Animate this storyboard frame with Kling via higgsfield."</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Poster</div>
+        <div class="cmd-row"><span class="label">Prompt</span><span class="value">"Generate a poster with GPT Image 2 through my higgsfield sub."</span></div>
+      </div>
+    </section>
+
+    <section id="cira">
+      <h2>CIRA Context</h2>
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Decision</div>
+        <h4>Pre-condizione subscription</h4>
+        <p>NON installare se non hai già una sub Higgsfield. CIRA: valutare ROI prima — quanti asset video/image servono in 3 mesi? Se &lt; 5 progetti, meglio una-tantum su Krea/Runway.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Use case</div>
+        <h4>Pitch deck dimore storiche</h4>
+        <p>Possibile use case: cinematic shot palazzo + animation virtual tour per pitch Alessandro/SaaS dimore storiche. Pre-meeting Alessandro (vedi memoria <code>project_alessandro_meeting_prep.md</code>).</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Stack</div>
+        <h4>Pairing</h4>
+        <p>Pairs con <code>cinematic-ads</code>, <code>image-gen</code>, <code>b-roll</code> workflow esistenti CIRA. Higgsfield = motore, skill esterne = orchestrazione.</p>
+      </div>
+    </section>
+
+    <section id="gotchas">
+      <h2>Gotchas &amp; Anti-pattern</h2>
+      <ul>
+        <li>Sub Higgsfield obbligatoria — autore stesso dice "NON abbonarsi solo per un progetto, il valore è sbloccare i modelli che già paghi".</li>
+        <li>Restart Claude Code dopo MCP add — tools non appaiono altrimenti.</li>
+        <li>OAuth flow via <code>/mcp</code> — segui prompt sign-in browser.</li>
+        <li>Pricing trasparente ma cumulativo — monitora credit cost via <a href="../codeburn/index.html">Codeburn</a> (anche se Codeburn potrebbe non aver supporto Higgsfield nativo).</li>
+        <li>Output video pesanti — pianifica storage + GDrive upload per condividere.</li>
+      </ul>
+    </section>
+
+    <footer>
+      Generato 2026-05-15 · Source: <a href="https://github.com/robonuggets/higgsfield-skill">github.com/robonuggets/higgsfield-skill</a> · <a href="javascript:window.print()">Stampa / PDF</a>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/copy.js" defer></script>
+<script src="../assets/search.js" defer></script>
+<script src="../assets/glossary.js" defer></script>
+</body>
+</html>

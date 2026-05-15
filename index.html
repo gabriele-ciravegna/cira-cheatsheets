@@ -15,11 +15,11 @@
     <!-- ╭─── SIDEBAR SX — Nav ───╮ -->
     <aside class="sidebar">
       <div class="logo">Cheatsheets</div>
-      <input type="search" class="search-box" id="global-search" data-root="." placeholder="Cerca tra 282 comandi…" autofocus>
+      <input type="search" class="search-box" id="global-search" data-root="." placeholder="Cerca tra 21 cheatsheet…" autofocus>
       <div id="search-results"></div>
 
       <div class="nav-section">
-        <h3>Le 9 Cheatsheet</h3>
+        <h3>Le 21 Cheatsheet</h3>
         <a href="./index.html" class="active">⌂ Index</a>
         <a href="./gsd/index.html">GSD <span style="color:var(--text-faint);font-size:11px">· 88 cmd</span></a>
         <a href="./gstack/index.html">Gstack <span style="color:var(--text-faint);font-size:11px">· 51 skill</span></a>
@@ -30,6 +30,18 @@
         <a href="./cira-custom/index.html">CIRA Custom <span style="color:var(--text-faint);font-size:11px">· 14</span></a>
         <a href="./claude-code-basics/index.html">Claude Code <span style="color:var(--text-faint);font-size:11px">· 71</span></a>
         <a href="./bash-macos/index.html">Bash + macOS <span style="color:var(--text-faint);font-size:11px">· 66</span></a>
+        <a href="./caveman/index.html">Caveman <span style="color:var(--text-faint);font-size:11px">· 4 lvl</span></a>
+        <a href="./morph-compact/index.html">Morph Compact <span style="color:var(--text-faint);font-size:11px">· 3 cmd</span></a>
+        <a href="./claude-mem/index.html">claude-mem <span style="color:var(--text-faint);font-size:11px">· :37777</span></a>
+        <a href="./pai/index.html">PAI <span style="color:var(--text-faint);font-size:11px">· 45 sk · 171 wf</span></a>
+        <a href="./obsidian-skills/index.html">Obsidian <span style="color:var(--text-faint);font-size:11px">· 5 skill</span></a>
+        <a href="./codex-plugin-cc/index.html">Codex Plugin <span style="color:var(--text-faint);font-size:11px">· 6 cmd</span></a>
+        <a href="./claude-for-legal/index.html">Claude for Legal <span style="color:var(--text-faint);font-size:11px">· 9 plugin</span></a>
+        <a href="./buildpartner-plugin/index.html">BuildPartner <span style="color:var(--text-faint);font-size:11px">· 3 bp:</span></a>
+        <a href="./exa-mcp-server/index.html">Exa MCP <span style="color:var(--text-faint);font-size:11px">· hosted</span></a>
+        <a href="./codeburn/index.html">Codeburn <span style="color:var(--text-faint);font-size:11px">· 19 tool</span></a>
+        <a href="./higgsfield-skill/index.html">Higgsfield <span style="color:var(--text-faint);font-size:11px">· 30+ model</span></a>
+        <a href="./n8n/index.html">n8n <span style="color:var(--text-faint);font-size:11px">· 400+ int</span></a>
       </div>
 
       <div class="nav-section">
@@ -53,9 +65,9 @@
 
       <header class="tool-header">
         <h1>CIRA <em>Cheatsheet Library</em></h1>
-        <p class="tagline">Nove cheatsheet HTML, duecento­ottantadue comandi, una bussola per decidere cosa usare e quando.</p>
+        <p class="tagline">Ventuno cheatsheet HTML — workflow tool, plugin, MCP, infrastruttura — una bussola per decidere cosa usare e quando.</p>
         <div class="when-card">
-          <strong>A cosa serve questa biblioteca:</strong> quando costruisci qualcosa di nuovo — un sito, un agente Telegram, un MVP — hai a disposizione tanti strumenti diversi (GSD, gstack, superpowers, ruflo, ecc.). Ognuno fa qualcosa di diverso. Qui c'è la <em>cartina</em> per non perdersi.
+          <strong>A cosa serve questa biblioteca:</strong> quando costruisci qualcosa di nuovo — un sito, un agente Telegram, un MVP — hai a disposizione tanti strumenti diversi (GSD, gstack, superpowers, ruflo, caveman, PAI, ecc.). Ognuno fa qualcosa di diverso. Qui c'è la <em>cartina</em> per non perdersi.
         </div>
       </header>
 
@@ -67,7 +79,7 @@
       </section>
 
       <section id="tools">
-        <h2>Le <em>9</em> librerie</h2>
+        <h2>Le <em>21</em> librerie</h2>
         <p style="color:var(--text-muted);margin-bottom:24px">Tocca una card per aprire la cheatsheet. Tutte hanno la stessa struttura: cosa fa, quando, esempio, gotcha.</p>
 
         <div class="tool-grid">
@@ -124,6 +136,78 @@
             <h3>Bash + macOS</h3>
             <p class="tool-card-tagline"><strong>Sostrato di tutto.</strong> 66 comandi shell quotidiani: <code>cd</code>, <code>find</code>, <code>grep</code>, <code>curl</code>, <code>lsof</code>, <code>launchctl</code>, <code>brew</code>, <code>jq</code>, <code>open</code>, <code>pbcopy</code>, ecc. Più 15 shortcut zsh + automazione cron/launchd.</p>
             <div class="when">Quando: terminale aperto = sempre. Healthcheck post-blackout, debug servizi</div>
+          </a>
+
+          <a class="tool-card" href="./caveman/index.html">
+            <h3>Caveman</h3>
+            <p class="tool-card-tagline"><strong>Output stile uomo delle caverne.</strong> Taglia ~75% token output, 100% accuratezza tecnica. Quattro livelli: lite, full, ultra, wenyan. <code>/caveman</code> ON, "stop caveman" OFF.</p>
+            <div class="when">Quando: sessioni lunghe coaching/build, abbatti costi Opus 3-4×</div>
+          </a>
+
+          <a class="tool-card" href="./morph-compact/index.html">
+            <h3>Morph Compact <span class="version-badge">0.2.8</span></h3>
+            <p class="tool-card-tagline"><strong>Context compaction veloce.</strong> 33k tok/s, sub-2s, +0.6% SWE-Bench Pro. Hook PreCompact + PostCompact + SessionStart. Sostituisce summarizer interno.</p>
+            <div class="when">Quando: sessioni Claude Code lunghe che saturano contesto. API key Morph richiesta.</div>
+          </a>
+
+          <a class="tool-card" href="./claude-mem/index.html">
+            <h3>claude-mem <span class="version-badge">10.6.3</span></h3>
+            <p class="tool-card-tagline"><strong>Memoria persistente Claude Code.</strong> SQLite + worker HTTP :37777 + web viewer. Inietta contesto sessioni precedenti a SessionStart. Skill <code>mem-search</code> per query NL.</p>
+            <div class="when">Quando: sempre. Senza, ogni /clear azzera tutto. Già attivo nel sistema CIRA.</div>
+          </a>
+
+          <a class="tool-card" href="./pai/index.html">
+            <h3>PAI <span class="version-badge">v5.0.0</span></h3>
+            <p class="tool-card-tagline"><strong>Personal AI Infrastructure (Miessler).</strong> Life Operating System: daemon Pulse :31337, identità DA, Algorithm v6.3.0 Current→Ideal, ISA primitive. 45 skill, 171 workflow, 37 hook.</p>
+            <div class="when">Quando: sistema personale unificato vita+lavoro. Plan CIRA workspace 8 reparti pending.</div>
+          </a>
+
+          <a class="tool-card" href="./obsidian-skills/index.html">
+            <h3>Obsidian Skills</h3>
+            <p class="tool-card-tagline"><strong>Agent Skills per Obsidian (kepano).</strong> 5 skill: obsidian-markdown, bases, json-canvas, obsidian-cli, defuddle. Wikilink, embed, callout, properties, web-to-vault clean import.</p>
+            <div class="when">Quando: Obsidian come vault note + coach Leonardo/Aurelio scrivono daily note</div>
+          </a>
+
+          <a class="tool-card" href="./codex-plugin-cc/index.html">
+            <h3>Codex Plugin for CC</h3>
+            <p class="tool-card-tagline"><strong>Codex DENTRO Claude Code.</strong> <code>/codex:review</code>, <code>/codex:adversarial-review</code>, <code>/codex:rescue</code> background. Subagent <code>codex:codex-rescue</code>. Richiede ChatGPT sub o OpenAI key.</p>
+            <div class="when">Quando: seconda opinione cross-modello, delega task background, adversarial test</div>
+          </a>
+
+          <a class="tool-card" href="./claude-for-legal/index.html">
+            <h3>Claude for Legal</h3>
+            <p class="tool-card-tagline"><strong>Plugin Anthropic ufficiale.</strong> 9 practice-area plugin (commercial, privacy, IP, litigation, employment, corporate, regulatory, AI governance, product). 60+ named agent. Connector DocuSign, Ironclad, iManage, CourtListener.</p>
+            <div class="when"><strong>CIRA:</strong> SOLO contratti propri di Gabriele, MAI per clienti CIRA</div>
+          </a>
+
+          <a class="tool-card" href="./buildpartner-plugin/index.html">
+            <h3>BuildPartner</h3>
+            <p class="tool-card-tagline"><strong>AI build partner SaaS.</strong> Expert framework battle-tested per pricing, content, launch, marketing, sales. Skill <code>bp:expert-advice</code>, <code>bp:improve-system</code>. Dashboard + Stripe. Free tier limitato.</p>
+            <div class="when">Quando: serve framework strategico invece di risposta generica</div>
+          </a>
+
+          <a class="tool-card" href="./exa-mcp-server/index.html">
+            <h3>Exa MCP</h3>
+            <p class="tool-card-tagline"><strong>Search neurale via MCP.</strong> Web search, code search, company research. Hosted endpoint <code>mcp.exa.ai/mcp</code>. Tool <code>web_search_exa</code>, <code>web_fetch_exa</code>. Per Pipeline Competitor Research CIRA.</p>
+            <div class="when">Quando: ricerca semantica dopo gh search + Context7 (ordering CIRA)</div>
+          </a>
+
+          <a class="tool-card" href="./codeburn/index.html">
+            <h3>Codeburn</h3>
+            <p class="tool-card-tagline"><strong>Token tracker locale 19 AI tool.</strong> Vede cost/token/perf per task, model, tool, project, provider. NO proxy NO API key, legge JSONL sessions da disco. Pricing via LiteLLM.</p>
+            <div class="when">Quando: audit mensile spending AI. <code>codeburn month</code> primo del mese</div>
+          </a>
+
+          <a class="tool-card" href="./higgsfield-skill/index.html">
+            <h3>Higgsfield Skill</h3>
+            <p class="tool-card-tagline"><strong>Un MCP, 30+ modelli image/video.</strong> Seedance 2.0, Sora 2, Veo, Kling, Nano Banana Pro, GPT Image 2, Flux + Higgsfield exclusive Soul/Cinema. Una OAuth, no per-provider key.</p>
+            <div class="when">Quando: hai già sub Higgsfield. Storyboard, b-roll, poster, cinematic.</div>
+          </a>
+
+          <a class="tool-card" href="./n8n/index.html">
+            <h3>n8n</h3>
+            <p class="tool-card-tagline"><strong>Workflow automation fair-code.</strong> 400+ integration, AI-native LangChain, self-host o cloud. Docker/npx/cloud. Per workflow lineari cross-service deterministic.</p>
+            <div class="when">Quando: backend automation post-MVP cliente, replace Zapier/Make</div>
           </a>
 
         </div>

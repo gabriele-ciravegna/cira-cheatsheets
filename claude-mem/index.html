@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>claude-mem — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">Ardea Cheatsheets</div>
+    <input class="search-box" type="search" id="sidebar-search" placeholder="Search…">
+
+    <div class="nav-section">
+      <h3>Library</h3>
+      <a href="../index.html">Index</a>
+      <a href="../gsd/index.html">GSD</a>
+      <a href="../gstack/index.html">Gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo</a>
+      <a href="../compound-engineering/index.html">Compound Eng</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../cira-custom/index.html">CIRA Custom</a>
+      <a href="../claude-code-basics/index.html">Claude Code</a>
+      <a href="../bash-macos/index.html">Bash + macOS</a>
+      <a href="../caveman/index.html">Caveman</a>
+      <a href="../morph-compact/index.html">Morph Compact</a>
+      <a href="../claude-mem/index.html" class="active">claude-mem</a>
+      <a href="../pai/index.html">PAI</a>
+      <a href="../obsidian-skills/index.html">Obsidian</a>
+      <a href="../codex-plugin-cc/index.html">Codex Plugin</a>
+      <a href="../claude-for-legal/index.html">Claude for Legal</a>
+      <a href="../buildpartner-plugin/index.html">BuildPartner</a>
+      <a href="../exa-mcp-server/index.html">Exa MCP</a>
+      <a href="../codeburn/index.html">Codeburn</a>
+      <a href="../higgsfield-skill/index.html">Higgsfield</a>
+      <a href="../n8n/index.html">n8n</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>Cheatsheet</h3>
+      <a href="#quick-start">Quick start</a>
+      <a href="#how">Come funziona</a>
+      <a href="#cli">CLI / Worker</a>
+      <a href="#memory-format">Formato memorie</a>
+      <a href="#cira">CIRA context</a>
+      <a href="#gotchas">Gotchas</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="tool-header">
+      <h1>claude-mem <span class="version-badge">10.6.3</span></h1>
+      <p class="tagline">Memoria persistente per Claude Code. Ogni sessione salvata in SQLite. A SessionStart inietta automaticamente il contesto delle sessioni precedenti.</p>
+      <div class="when-card"><strong>Quando usarlo:</strong> SEMPRE. È il sistema nervoso che fa "ricordare" Claude tra sessioni. Senza, ogni <code>/clear</code> azzera tutto. Già attivo nel sistema CIRA.</div>
+      <div class="skip-card"><strong>NON usarlo se:</strong> Vuoi sessioni completamente effimere (rarissimo). O se devi escludere contenuto sensibile (usa tag <code>&lt;private&gt;</code>).</div>
+    </header>
+
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <pre><code># Install (npm)
+npm install -g claude-mem
+
+# Worker HTTP auto-avvio a ogni SessionStart
+# Porta: 37777
+
+# Web viewer
+open http://localhost:37777
+
+# Cerca nella memoria via skill
+Skill('mem-search')</code></pre>
+      <p>Worker gira in background, SQLite DB in <code>~/.claude-mem/claude-mem.db</code>. Auto-inject all'avvio Claude Code: l'AI vede subito i progetti + decisioni delle sessioni precedenti.</p>
+    </section>
+
+    <section id="how">
+      <h2>Come funziona</h2>
+      <ol>
+        <li><strong>SessionStart hook</strong> avvia worker <code>:37777</code> se non già up, fetcha memorie correlate al cwd e le inietta come system context.</li>
+        <li><strong>Durante sessione</strong> ogni tool call + user prompt + assistant response indicizzati in SQLite con metadata (timestamp, cwd, session_id, project).</li>
+        <li><strong>A fine sessione</strong> (Stop hook) salva summary + decisioni chiave. Indicizzazione FTS5 per ricerca veloce.</li>
+        <li><strong>Web viewer</strong> <code>:37777</code> per browse sessioni passate, filtrare per progetto/data, leggere transcript.</li>
+      </ol>
+    </section>
+
+    <section id="cli">
+      <h2>CLI / Worker</h2>
+      <div class="cmd-card">
+        <div class="cmd-name">claude-mem serve</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Avvia worker HTTP su :37777. Bootstrappato automatic da SessionStart hook.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Verifica manuale post-blackout: <code>curl :37777/health</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Skill('mem-search')</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Cerca dentro la memoria a tempo di sessione. Query natural language → trova trascript/decisioni rilevanti.</span></div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value">"come avevo fixato il bot Telegram a maggio?" → ritrova session di 2 settimane fa.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">SQLite diretto</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Per ingest custom: INSERT raw in <code>~/.claude-mem/claude-mem.db</code> con singleton sdk_session.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Worker NON espone REST API per write. Per import esterno fai INSERT SQL diretto (vedi memoria <code>reference_claude_mem_sqlite_schema.md</code>).</span></div>
+      </div>
+    </section>
+
+    <section id="memory-format">
+      <h2>Tag privacy</h2>
+      <p>Per escludere contenuto dalla memoria, wrappalo:</p>
+      <pre><code>&lt;private&gt;Token: sk-ant-... &lt;/private&gt;
+&lt;private&gt;Email cliente: foo@bar.com&lt;/private&gt;</code></pre>
+      <p>Hook filtra il contenuto tra <code>&lt;private&gt;</code> tag prima di scrivere al DB. <strong>Comunque</strong> resta nel transcript JSONL Claude Code stesso (<code>~/.claude/projects/</code>) — per zero trace usa env var dedicato + script interattivo.</p>
+    </section>
+
+    <section id="cira">
+      <h2>CIRA Context</h2>
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Stack</div>
+        <h4>Memoria persistente Claude Code</h4>
+        <p>claude-mem è già attivo a livello GLOBAL su <code>~/.claude/CLAUDE.md</code>. Il blocco "Active Systems" lo lista come sistema 0. Worker :37777 boot automatic.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Integration</div>
+        <h4>Memoria file-based parallela</h4>
+        <p>Parallelo a claude-mem: <code>/Users/cira/.claude/projects/-Users-cira/memory/*.md</code> con MEMORY.md index. È <strong>auto memory</strong> built-in del nostro sistema, separato dal SQLite di claude-mem (diversa granularità).</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Use</div>
+        <h4>Backup mensile</h4>
+        <p>Cron domenica 04:00 mirror <code>~/.claude-mem/</code> + <code>memory/</code> → SAMSUNG SSD <code>CIRA-BACKUP-memclaude/</code>. Vedi memoria <code>project_backup_strategy.md</code>.</p>
+      </div>
+    </section>
+
+    <section id="gotchas">
+      <h2>Gotchas &amp; Anti-pattern</h2>
+      <ul>
+        <li>Worker :37777 deve restare up — se sessione Claude Code non parte, verifica <code>lsof -iTCP:37777</code> e riavvia manuale.</li>
+        <li>Token/secrets in chat finiscono nel DB e nei JSONL — usa SEMPRE script interattivo (es. <code>setup_keychain.py</code>) per inserire credenziali, mai paste in chat.</li>
+        <li>SQLite single-writer: NO scrittura concorrente da più sessioni; usa lock o accoda via worker.</li>
+        <li>Db cresce nel tempo — vacuum periodico: <code>sqlite3 ~/.claude-mem/claude-mem.db 'VACUUM'</code>.</li>
+        <li>Web viewer è pubblico su localhost:37777 — NON espone fuori da loopback ma sniffing locale possibile.</li>
+      </ul>
+    </section>
+
+    <footer>
+      Generato 2026-05-15 · Source: <a href="https://github.com/thedotmack/claude-mem">github.com/thedotmack/claude-mem</a> · <a href="javascript:window.print()">Stampa / PDF</a>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/copy.js" defer></script>
+<script src="../assets/search.js" defer></script>
+<script src="../assets/glossary.js" defer></script>
+</body>
+</html>

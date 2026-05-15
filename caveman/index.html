@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Caveman — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">Ardea Cheatsheets</div>
+    <input class="search-box" type="search" id="sidebar-search" placeholder="Search…">
+
+    <div class="nav-section">
+      <h3>Library</h3>
+      <a href="../index.html">Index</a>
+      <a href="../gsd/index.html">GSD</a>
+      <a href="../gstack/index.html">Gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo</a>
+      <a href="../compound-engineering/index.html">Compound Eng</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../cira-custom/index.html">CIRA Custom</a>
+      <a href="../claude-code-basics/index.html">Claude Code</a>
+      <a href="../bash-macos/index.html">Bash + macOS</a>
+      <a href="../caveman/index.html" class="active">Caveman</a>
+      <a href="../morph-compact/index.html">Morph Compact</a>
+      <a href="../claude-mem/index.html">claude-mem</a>
+      <a href="../pai/index.html">PAI</a>
+      <a href="../obsidian-skills/index.html">Obsidian</a>
+      <a href="../codex-plugin-cc/index.html">Codex Plugin</a>
+      <a href="../claude-for-legal/index.html">Claude for Legal</a>
+      <a href="../buildpartner-plugin/index.html">BuildPartner</a>
+      <a href="../exa-mcp-server/index.html">Exa MCP</a>
+      <a href="../codeburn/index.html">Codeburn</a>
+      <a href="../higgsfield-skill/index.html">Higgsfield</a>
+      <a href="../n8n/index.html">n8n</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>Cheatsheet</h3>
+      <a href="#quick-start">Quick start</a>
+      <a href="#levels">Livelli</a>
+      <a href="#commands">Comandi</a>
+      <a href="#auto-clarity">Auto-clarity</a>
+      <a href="#cira">CIRA context</a>
+      <a href="#gotchas">Gotchas</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="tool-header">
+      <h1>Caveman <span class="version-badge">skill/plugin</span></h1>
+      <p class="tagline">Output Claude in stile uomo delle caverne. Taglia ~75% token, mantiene 100% accuratezza tecnica.</p>
+      <div class="when-card"><strong>Quando usarlo:</strong> sessioni lunghe dove output prolisso brucia contesto e costi. Coaching iterativo, debug a ping-pong, build session multi-ora. Brain ancora grosso, bocca piccola.</div>
+      <div class="skip-card"><strong>NON usarlo se:</strong> output deve essere mostrato a clienti, sei in modalità docs/PR (Claude tiene normal mode su code/commit/security comunque), o stai facendo content writing dove il tono conta.</div>
+    </header>
+
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <p>Una volta installato (skill o plugin), attiva al volo:</p>
+      <pre><code>/caveman           # full mode default
+/caveman lite      # solo drop filler/articoli
+/caveman full      # frammenti, sintesi pesante
+/caveman ultra     # telegrafico
+/caveman wenyan    # cinese classico — ancora più corto
+stop caveman       # torna normale
+normal mode        # idem</code></pre>
+      <p>Persiste per turno e sessione finché non revochi. Hook SessionStart può armarlo automatic — controlla <code>~/.claude/hooks/</code>.</p>
+    </section>
+
+    <section id="levels">
+      <h2>Livelli</h2>
+      <div class="cmd-card">
+        <div class="cmd-name">lite</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Toglie filler ("just", "really", "basically") e pleasantries ("happy to help"). Articoli restano.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Vuoi tono diretto ma testo leggibile a voce alta.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">full (default)</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Frammenti OK. Articoli via. Sinonimi corti (fix non "implement solution for"). Pattern: <code>[thing] [action] [reason]. [next step].</code></span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Modalità standard sessione di lavoro. Migliore tradeoff verbosità/leggibilità.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">ultra</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Telegrafico. Tre parole frasi. Tabelle preferite a prosa. Solo info hard.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Status check ricorrenti, monitor heartbeat, healthcheck output.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">wenyan</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Cinese classico: ancora più denso semantico. Sperimentale.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Test pure su context-saving. Non per uso quotidiano.</span></div>
+      </div>
+    </section>
+
+    <section id="commands">
+      <h2>Comandi sessione</h2>
+      <div class="cmd-card">
+        <div class="cmd-name">/caveman</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Attiva caveman mode al livello default (full).</span></div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value">User digita <code>/caveman</code> → tutte risposte successive in stile caveman.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/caveman &lt;level&gt;</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Switch livello senza disabilitare: <code>lite | full | ultra | wenyan</code>.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">stop caveman</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Disattiva. Modalità normale ripristinata immediatamente.</span></div>
+        <div class="cmd-row"><span class="label">See also</span><span class="value">"normal mode" (sinonimo)</span></div>
+      </div>
+    </section>
+
+    <section id="auto-clarity">
+      <h2>Auto-clarity (drop automatico)</h2>
+      <p>Caveman <strong>non si applica</strong> a contesti dove la chiarezza è critica:</p>
+      <ul>
+        <li><strong>Security warning</strong> — output verbose per evitare malintesi</li>
+        <li><strong>Irreversible action confirmation</strong> — git push --force, rm -rf, drop table</li>
+        <li><strong>Multi-step sequence</strong> dove l'ordine frammentato rischia di confondere</li>
+        <li><strong>User chiede di chiarire / ripete la stessa domanda</strong> — segnale che caveman ha tagliato troppo</li>
+        <li><strong>Code / commit message / PR body</strong> — sempre scritti in modalità normale</li>
+      </ul>
+      <p>Dopo la parte critica, caveman riprende.</p>
+    </section>
+
+    <section id="cira">
+      <h2>CIRA Context</h2>
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Uso</div>
+        <h4>Sessioni Telegram bot + coach</h4>
+        <p>Caveman è il tono standard nelle sessioni Aurelio + Telegram dove user invia messaggi rapidi e si aspetta risposte rapide. Ottimizza il costo Opus 4.7 (1M ctx) abbattendo gli output di 3-4×.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Integration</div>
+        <h4>Hook SessionStart</h4>
+        <p>Il hook <code>~/.claude/hooks/</code> emette il system-reminder <em>CAVEMAN MODE ACTIVE — level: full</em> a ogni session start. Persiste finché non dici "stop caveman".</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Benchmark</div>
+        <h4>Risparmio osservato</h4>
+        <p>Stima: 60-75% token output in sessioni coaching/build. Cache prompt warm rimane, output cut riduce solo egress. Cost saving stimato a fine giornata: ~$3-8 su Opus heavy.</p>
+      </div>
+    </section>
+
+    <section id="gotchas">
+      <h2>Gotchas &amp; Anti-pattern</h2>
+      <ul>
+        <li>Caveman non droppa info tecnica — droppa SOLO filler. Se output corretto manca dettagli, probabilmente non è caveman: è il modello che non sa.</li>
+        <li>Codice in caveman è sempre formattato normalmente. Mai abbreviare nomi variabili o saltare parentesi per "essere caveman".</li>
+        <li>Quando user chiede "puoi spiegare meglio?" → drop caveman per quella risposta, poi riprendi.</li>
+        <li>Commit message: caveman <strong>non</strong> si applica. Sempre Conventional Commits completi.</li>
+        <li>Plugin/skill: installa <strong>una</strong> versione sola (eviti doppi system-reminder che possono confliggere).</li>
+      </ul>
+    </section>
+
+    <footer>
+      Generato 2026-05-15 · Source: <a href="https://github.com/JuliusBrussee/caveman">github.com/JuliusBrussee/caveman</a> · <a href="javascript:window.print()">Stampa / PDF</a>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/copy.js" defer></script>
+<script src="../assets/search.js" defer></script>
+<script src="../assets/glossary.js" defer></script>
+</body>
+</html>

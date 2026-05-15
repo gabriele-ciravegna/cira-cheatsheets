@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>n8n — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">Ardea Cheatsheets</div>
+    <input class="search-box" type="search" id="sidebar-search" placeholder="Search…">
+
+    <div class="nav-section">
+      <h3>Library</h3>
+      <a href="../index.html">Index</a>
+      <a href="../gsd/index.html">GSD</a>
+      <a href="../gstack/index.html">Gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo</a>
+      <a href="../compound-engineering/index.html">Compound Eng</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../cira-custom/index.html">CIRA Custom</a>
+      <a href="../claude-code-basics/index.html">Claude Code</a>
+      <a href="../bash-macos/index.html">Bash + macOS</a>
+      <a href="../caveman/index.html">Caveman</a>
+      <a href="../morph-compact/index.html">Morph Compact</a>
+      <a href="../claude-mem/index.html">claude-mem</a>
+      <a href="../pai/index.html">PAI</a>
+      <a href="../obsidian-skills/index.html">Obsidian</a>
+      <a href="../codex-plugin-cc/index.html">Codex Plugin</a>
+      <a href="../claude-for-legal/index.html">Claude for Legal</a>
+      <a href="../buildpartner-plugin/index.html">BuildPartner</a>
+      <a href="../exa-mcp-server/index.html">Exa MCP</a>
+      <a href="../codeburn/index.html">Codeburn</a>
+      <a href="../higgsfield-skill/index.html">Higgsfield</a>
+      <a href="../n8n/index.html" class="active">n8n</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>Cheatsheet</h3>
+      <a href="#quick-start">Quick start</a>
+      <a href="#features">Feature</a>
+      <a href="#deploy">Deploy</a>
+      <a href="#cira">CIRA context</a>
+      <a href="#gotchas">Gotchas</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="tool-header">
+      <h1>n8n <span class="version-badge">fair-code</span></h1>
+      <p class="tagline">Workflow automation per technical team. Code-when-needed flexibility + no-code speed. 400+ integration, AI-native via LangChain, self-host o cloud.</p>
+      <div class="when-card"><strong>Quando usarlo:</strong> workflow ricorrente cross-service (Gmail → Slack → DB → AI agent → email reply). Self-host per privacy / air-gapped. Alternativa Zapier/Make ma open-source.</div>
+      <div class="skip-card"><strong>NON usarlo se:</strong> Workflow è one-shot script Bash/Python. Per orchestrazione AI agent semplice usa Claude Code skill direttamente.</div>
+    </header>
+
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <pre><code># Instant try via npx
+npx n8n
+
+# Docker (recommended self-host)
+docker volume create n8n_data
+docker run -it --rm --name n8n -p 5678:5678 \
+  -v n8n_data:/home/node/.n8n \
+  docker.n8n.io/n8nio/n8n
+
+# Editor
+open http://localhost:5678</code></pre>
+      <p>Cloud: <a href="https://app.n8n.cloud/login">app.n8n.cloud</a>. Docs: <a href="https://docs.n8n.io">docs.n8n.io</a>.</p>
+    </section>
+
+    <section id="features">
+      <h2>Feature</h2>
+      <ul>
+        <li><strong>Code-when-needed</strong>: JavaScript/Python custom, npm packages, o visual interface</li>
+        <li><strong>AI-Native</strong>: agent workflow LangChain con tuoi data + modelli</li>
+        <li><strong>Full control</strong>: self-host fair-code OR cloud</li>
+        <li><strong>Enterprise</strong>: permission avanzati, SSO, air-gapped</li>
+        <li><strong>Community</strong>: 400+ integration, 900+ template pronti</li>
+      </ul>
+    </section>
+
+    <section id="deploy">
+      <h2>Deploy</h2>
+      <div class="cmd-card">
+        <div class="cmd-name">Docker self-host</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Container persistente su tuo server. Volume per state.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Workflow privati, dati sensibili, controllo totale.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">npx n8n (try)</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Run istant senza install. State temporaneo.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Test rapido, demo, prova workflow.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">n8n Cloud</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Hosted SaaS. NO setup. Scaling automatico.</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Non vuoi gestire infra. Tier free per starting, paid scaling.</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Enterprise License</div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Feature aggiuntive + support. Email <code>license@n8n.io</code>.</span></div>
+      </div>
+    </section>
+
+    <section id="cira">
+      <h2>CIRA Context</h2>
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Decision</div>
+        <h4>Quando preferirlo a skill CC</h4>
+        <p>Skill Claude Code (Aurelio, Mercurio) sono ottime per orchestrazione AI-pesante con prompt complessi. <strong>n8n</strong> è meglio per workflow lineari cross-service deterministic (Gmail trigger → check rules → CRM update → Slack notify) senza AI in mezzo.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Use case</div>
+        <h4>Backend automation MVP cliente</h4>
+        <p>Per MVP cliente Valerio (mail), Mercurio (mail demo) — workflow backend post-MVP può migrare a n8n self-host così cliente NON dipende da Claude API in produzione.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Stack</div>
+        <h4>AI-Native LangChain</h4>
+        <p>n8n ha node LangChain nativi — puoi mettere Claude/GPT in mezzo a workflow senza scrivere Python. Trade-off: workflow visual è più rigido di skill Claude Code.</p>
+      </div>
+    </section>
+
+    <section id="gotchas">
+      <h2>Gotchas &amp; Anti-pattern</h2>
+      <ul>
+        <li>License "fair-code" Sustainable Use — NON è MIT/Apache. Leggi termini per commercial use.</li>
+        <li>Self-host richiede infra (Docker + volume + backup) — non è zero-config come Zapier.</li>
+        <li>Workflow JSON portable, ma credenziali NO — re-auth dopo migrazione.</li>
+        <li>Cloud free tier ha limit execution/mese. Stima carico prima.</li>
+        <li>AI node hanno cost API esterni (OpenAI/Anthropic/etc.) — monitora con <a href="../codeburn/index.html">Codeburn</a> + provider dashboard.</li>
+        <li>Per orchestrazione AI agent complessa, valuta prima Claude Code skill / Agent Teams — n8n può essere overkill.</li>
+      </ul>
+    </section>
+
+    <footer>
+      Generato 2026-05-15 · Source: <a href="https://github.com/n8n-io/n8n">github.com/n8n-io/n8n</a> · <a href="javascript:window.print()">Stampa / PDF</a>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/copy.js" defer></script>
+<script src="../assets/search.js" defer></script>
+<script src="../assets/glossary.js" defer></script>
+</body>
+</html>
