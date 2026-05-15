@@ -1,0 +1,61 @@
+{
+  "universal": [
+    {"q": "Che cos'è uno slash command?", "a": "Un comando che inizia con `/` dentro Claude Code. Es: `/gsd-new-project`. Si scrive in REPL e fa partire una skill."},
+    {"q": "Skill vs Comando?", "a": "Una skill è un set di istruzioni riusabili che Claude carica quando serve. Un comando (slash) è il modo per invocarla. Es: `/brainstorming` invoca la skill `brainstorming`."},
+    {"q": "Sub-agent / agent?", "a": "Un 'mini-Claude' che lavora in parallelo su un task specifico, isolato dalla sessione principale. Ritorna solo il risultato finale."},
+    {"q": "Stampa / PDF", "a": "Link 'Stampa' a fondo pagina apre il dialog browser → salva PDF per leggere offline / iPad / cellulare."},
+    {"q": "Come cerco?", "a": "Search box in alto a sinistra. Indicizza 282 comandi cross-tool. Digita 'telegram', 'deploy', 'skill'…"}
+  ],
+  "tools": {
+    "gsd": [
+      {"q": "Cos'è GSD in 1 riga?", "a": "Un sistema che spezza il progetto in milestone → fasi → task atomici, con audit trail completo. Ogni fase ha plan, execute, verify, ship."},
+      {"q": "Quando usarlo?", "a": "Progetto serio (≥3 file, multi-fase). Quando vuoi sapere cosa è stato fatto e perché. Quando devi mostrare audit a un cliente."},
+      {"q": "Quando NON usarlo?", "a": "Task piccolo (singolo file → `/gsd-quick`). Bug fix isolato (`/gsd-debug`). MVP da fare in 1 ora (→ gstack)."},
+      {"q": "Come si installa?", "a": "`npx -y --package=get-shit-done-cc@latest -- get-shit-done-cc --claude --global`. Lo fa da solo, una volta."},
+      {"q": "Default workflow?", "a": "`/gsd-new-project → /gsd-discuss-phase 1 → /gsd-plan-phase 1 → /gsd-execute-phase 1 → /gsd-verify-work 1 → /gsd-ship`"}
+    ],
+    "gstack": [
+      {"q": "Cos'è gstack?", "a": "Una collezione di skill (51) per spedire MVP rapidi. Più veloce di GSD, meno audit trail."},
+      {"q": "Pipeline base", "a": "`/gstack:plan → /gstack:pair-agent → /gstack:ship → /gstack:retro → /gstack:plan-tune`"},
+      {"q": "vs GSD?", "a": "GSD = metodico. gstack = ship-first. Scegli gstack quando velocità conta più del 'cosa ho fatto'."},
+      {"q": "Path A2 in /costruiamo", "a": "Se durante l'intervista /costruiamo dici 'è urgente', ti propone gstack."}
+    ],
+    "superpowers": [
+      {"q": "Cos'è Superpowers?", "a": "Framework di Obra (GitHub) che spinge il TDD: scrivi prima il test (red), poi il codice che lo fa passare (green), poi pulisci (refactor)."},
+      {"q": "Pipeline base", "a": "`brainstorming → writing-plans → tdd-red → tdd-green → tdd-refactor → code-review-excellence`"},
+      {"q": "Quando vale la pena?", "a": "Codice critico testabile. Se la funzione fa qualcosa che, se rotta, ti crea problemi seri → TDD."}
+    ],
+    "ruflo": [
+      {"q": "Cos'è Ruflo?", "a": "Sandbox parallela: crei N varianti di un pezzo, le valuti, scegli la migliore. Utile per UX ambigue."},
+      {"q": "Quando serve?", "a": "Quando non sai quale approccio funziona. Ti fa vedere alternative invece di sceglierne una a caso."},
+      {"q": "Esempio CIRA", "a": "Inbox Mercurio: 5 layout card → scoring → vincitore implementato."}
+    ],
+    "compound-engineering": [
+      {"q": "Cos'è CE?", "a": "Plugin Claude Code con prefisso `ce-*`. Filosofia: ogni cycle migliora i prossimi (review continuo, learnings salvati)."},
+      {"q": "48 reviewer specialisti?", "a": "Sì — ognuno è un sub-agent dedicato a un aspetto: correctness, security, performance, testing, maintainability… si parallelizzano."},
+      {"q": "Entry quotidiano?", "a": "`/compound-engineering:ce-work` — orchestrazione del lavoro corrente con multi-agent."}
+    ],
+    "agent-teams": [
+      {"q": "Teams vs Subagents?", "a": "Teams = agent si parlano (debate, discuss). Subagents = agent isolati, ritornano solo risultato."},
+      {"q": "Quando Teams?", "a": "Decisione strategica multi-prospettiva (es. board CEO/CTO/CFO che discutono)."},
+      {"q": "Quando Subagents?", "a": "Task indipendenti paralleli (es. ricerca multi-source, 9 agent in parallelo)."}
+    ],
+    "cira-custom": [
+      {"q": "Che cos'è CIRA Custom?", "a": "Sono le skill che hai costruito tu. Compongono il tuo sistema nervoso digitale."},
+      {"q": "orchestra", "a": "Router che, su query complessa, mostra quali skill attivare. Tipo 'mi servono aristotle + hormozi + ali-pricing'."},
+      {"q": "/costruiamo", "a": "Meta-skill che fa intervista lunga + propone path build (A1/A2/A3/A4/A5/MIX)."}
+    ],
+    "claude-code-basics": [
+      {"q": "Come avvio Claude Code?", "a": "`cd cartella-progetto && claude`. Apre REPL interattivo. Legge `CLAUDE.md` della cwd."},
+      {"q": "Headless one-shot?", "a": "`claude -p 'task descritto' --output-format json` — non apre REPL, esegue una volta."},
+      {"q": "Resume sessione", "a": "`claude --resume` riprende l'ultima sessione della directory corrente."},
+      {"q": "Slash command essenziali", "a": "`/init` (genera CLAUDE.md), `/clear` (reset), `/compact` (riassumi context), `/cost` (token spesi)."}
+    ],
+    "bash-macos": [
+      {"q": "Perché serve Bash?", "a": "È il sostrato di tutto. Aprire terminale, navigare, lanciare comandi — non si scappa."},
+      {"q": "Comando killer", "a": "`grep -rE 'pattern' .` cerca regex ricorsivo. `ripgrep` (`rg`) è 10× più veloce."},
+      {"q": "launchctl?", "a": "Sistema di macOS che fa partire programmi all'avvio. Il bot Telegram e Aurelio girano tramite launchd."},
+      {"q": "MAI fare", "a": "MAI `pkill` su servizi launchd → usa sempre `launchctl bootout/bootstrap`."}
+    ]
+  }
+}

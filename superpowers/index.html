@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Superpowers — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="layout">
+
+  <!-- ═══════════════════════ SIDEBAR ═══════════════════════ -->
+  <aside class="sidebar">
+    <div class="logo">Ardea Cheatsheets</div>
+
+    <input class="search-box" type="search" id="sidebar-search" placeholder="Search…" aria-label="Search">
+
+    <div class="nav-section">
+      <h3>Library</h3>
+      <a href="../index.html">Index</a>
+      <a href="../gsd/index.html">GSD</a>
+      <a href="../gstack/index.html">Gstack</a>
+      <a href="../superpowers/index.html" class="active">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo</a>
+      <a href="../compound-engineering/index.html">Compound Eng</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../cira-custom/index.html">CIRA Custom</a>
+      <a href="../claude-code-basics/index.html">Claude Code</a>
+      <a href="../bash-macos/index.html">Bash + macOS</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>Cheatsheet</h3>
+      <a href="#quick-start">Quick Start</a>
+      <a href="#discovery">Discovery &amp; Brainstorming</a>
+      <a href="#planning">Writing Plans</a>
+      <a href="#tdd">TDD Workflows</a>
+      <a href="#execute">Executing Plans</a>
+      <a href="#review">Code Review &amp; Verification</a>
+      <a href="#meta">Meta &amp; Context</a>
+      <a href="#workflows">Workflows End-to-End</a>
+      <a href="#cira-examples">CIRA Examples</a>
+      <a href="#stack-integration">Stack Integration</a>
+      <a href="#gotchas">Gotchas &amp; Anti-patterns</a>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════ MAIN ═══════════════════════ -->
+  <main class="content">
+
+    <!-- HEADER -->
+    <header class="tool-header">
+      <h1>Superpowers <span class="version-badge">2.5.0</span></h1>
+      <p class="tagline">TDD-first + brainstorming + verification loop. Spec-light, test-heavy collaborative design.</p>
+      <div class="when-card"><strong>Quando usarlo:</strong> Codice critico testabile con coverage 80%+. TDD obbligatorio. Brainstorm design prima di scrivere. Multi-agent review su architetture complesse.</div>
+      <div class="skip-card"><strong>NON usarlo se:</strong> Prototipo throwaway, spec ricca esiste già (usa GSD invece), task &lt;30min senza test, frontend bootstrap solo (usa frontend-design)</div>
+    </header>
+
+    <!-- QUICK START -->
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <p>Pipeline TDD standard:</p>
+      <pre><code>brainstorming → writing-plans → tdd-red → tdd-green → tdd-refactor → code-review-excellence</code></pre>
+      <p>Skill invocation pattern: <code>Skill('brainstorming')</code> da REPL Claude Code.</p>
+    </section>
+
+    <!-- DISCOVERY & BRAINSTORMING -->
+    <section id="discovery">
+      <h2>Discovery &amp; Brainstorming</h2>
+      <p class="section-desc">Esplora idee design multi-angle prima di scrivere codice</p>
+
+      <div class="cmd-card">
+        <div class="cmd-name">brainstorming</div>
+        <div class="cmd-meta"><span>category: discovery</span></div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Esplorazione idee design multi-angle. Domande chiarificatrici → 2-3 approcci → spec design → documento salvato → transizione a writing-plans</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Feature complessa. UI design. Architettura non-banale. SEMPRE prima di scrivere codice, anche per task &#39;semplici&#39;</span></div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>Skill('brainstorming')</code></span></div>
+        <div class="cmd-row"><span class="label">See also</span><span class="value">writing-plans · multi-agent-brainstorming</span></div>
+        <div class="cmd-gotcha">HARD-GATE: MAI invocare implementation skill prima user approval. Design deve essere approvato, SEMPRE.</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">multi-agent-brainstorming</div>
+        <div class="cmd-meta"><span>category: discovery</span></div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Design review strutturato con multiple specialized agent roles. NOT parallel brainstorm → SEQUENTIAL design review with enforced mandate</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Architettura complessa. Critical design decisions. Team review simulation. Assumption validation needed</span></div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>Skill('multi-agent-brainstorming')</code></span></div>
+        <div class="cmd-row"><span class="label">See also</span><span class="value">brainstorming · code-review-excellence</span></div>
+        <div class="cmd-gotcha">NO parallel brainstorm chaos. Sequential gated review. Decisions explicit. Designer owns final call</div>
+      </div>
+    </section>
+
+    <!-- PLANNING -->
+    <section id="planning">
+      <h2>Writing Plans</h2>
+      <p class="section-desc">Crea implementation plan bite-sized con TDD flow</p>
+
+      <div class="cmd-card">
+        <div class="cmd-name">writing-plans</div>
+        <div class="cmd-meta"><span>category: planning</span></div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Crea comprehensive implementation plan con bite-sized task TDD-first. Specifica file da toccare, codice, test, come verificare</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Dopo brainstorming approved. Design doc finalized. Prima di execute-phase</span></div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>Skill('writing-plans')</code></span></div>
+        <div class="cmd-row"><span class="label">See also</span><span class="value">tdd-workflows-tdd-red · tdd-workflows-tdd-cycle · executing-plans</span></div>
+        <div class="cmd-gotcha">EVERY task MUST have TDD structure. No shortcuts. Assume engineer zero context codebase.</div>
+      </div>
+    </section>
+
+    <!-- TDD WORKFLOWS -->
+    <section id="tdd">
+      <h2>TDD Workflows (red/green/refactor/cycle)</h2>
+      <p class="section-desc">Esegui cicli TDD completi con verifica test-first</p>
+
+      <div class="cmd-card">
+        <div class="cmd-name">tdd-workflows-tdd-red</div>
+        <div class="cmd-meta"><span>category: tdd</span></div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Genera failing test che definiscono expected behavior PRIMA di implementazione. Red phase TDD</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Starting TDD red phase. Edge case coverage needed. Test-first discipline</span></div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>Skill('tdd-workflows-tdd-red')</code></span></div>
+        <div class="cmd-row"><span class="label">See also</span><span class="value">tdd-workflows-tdd-green · tdd-workflows-tdd-refactor · tdd-workflows-tdd-cycle</span></div>
+        <div class="cmd-gotcha">Tests MUST fail quando run. Non-starting per syntax errors. Framework-specific (Jest/pytest/JUnit/Go/RSpec)</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">tdd-workflows-tdd-green</div>
+        <div class="cmd-meta"><span>category: tdd</span></div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Implementa minimal code per far passare failing test. Green phase TDD</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Dopo tdd-red. Tests exist and failing. Need to make them pass</span></div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>Skill('tdd-workflows-tdd-green')</code></span></div>
+        <div class="cmd-row"><span class="label">See also</span><span class="value">tdd-workflows-tdd-red · tdd-workflows-tdd-refactor · tdd-workflows-tdd-cycle</span></div>
+        <div class="cmd-gotcha">Resist urge to refactor/optimize here. That&#39;s refactor phase job</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">tdd-workflows-tdd-refactor</div>
+        <div class="cmd-meta"><span>category: tdd</span></div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Refactor codice con safety net test completo. Refactor phase TDD. Usa tdd-orchestrator agent (Opus)</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Dopo green PASSED. Tests stable. Code smell detectato. Confidence needed da test coverage</span></div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>Skill('tdd-workflows-tdd-refactor')</code></span></div>
+        <div class="cmd-row"><span class="label">See also</span><span class="value">tdd-workflows-tdd-green · tdd-workflows-tdd-cycle</span></div>
+        <div class="cmd-gotcha">Maintain tests GREEN throughout. No behavior changes. Safe refactoring = test-backed</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">tdd-workflows-tdd-cycle</div>
+        <div class="cmd-meta"><span>category: tdd</span></div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Esegui comprehensive TDD workflow red-green-refactor con strict discipline. Full cycle orchestration</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Intera feature implementation. Coverage 80%+ richiesto. Clean code non-negotiable</span></div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>Skill('tdd-workflows-tdd-cycle')</code></span></div>
+        <div class="cmd-row"><span class="label">See also</span><span class="value">tdd-workflows-tdd-red · tdd-workflows-tdd-green · tdd-workflows-tdd-refactor</span></div>
+        <div class="cmd-gotcha">Strict enforcement: RED fail-first, GREEN minimal, REFACTOR tests-pass. No phase skipping</div>
+      </div>
+    </section>
+
+    <!-- EXECUTING PLANS -->
+    <section id="execute">
+      <h2>Executing Plans</h2>
+      <p class="section-desc">Esegui plan task-by-task in sessione separata</p>
+
+      <div class="cmd-card">
+        <div class="cmd-name">executing-plans</div>
+        <div class="cmd-meta"><span>category: execute</span></div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Load implementation plan. Execute task-by-task in separate session. TodoWrite tracking. Checkpoint reviews</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Plan already written (da writing-plans). New session. Tasks need execution step-by-step. Subagent access limited</span></div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>Skill('executing-plans')</code></span></div>
+        <div class="cmd-row"><span class="label">See also</span><span class="value">writing-plans · finishing-a-development-branch · subagent-driven-development</span></div>
+        <div class="cmd-gotcha">Follow plan steps EXACTLY. Don&#39;t skip verifications. Stop if blocker - ask instead of guessing</div>
+      </div>
+    </section>
+
+    <!-- CODE REVIEW & VERIFICATION -->
+    <section id="review">
+      <h2>Code Review &amp; Verification</h2>
+      <p class="section-desc">Review costruttivo con feedback sistematico</p>
+
+      <div class="cmd-card">
+        <div class="cmd-name">code-review-excellence</div>
+        <div class="cmd-meta"><span>category: review</span></div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Transform code review da gatekeeping a knowledge sharing. Constructive feedback + systematic analysis. Focus correctness/security/perf/maintainability</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">PR review. Code changes exist. Mentoring developer via feedback. Security/perf audit</span></div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>Skill('code-review-excellence')</code></span></div>
+        <div class="cmd-row"><span class="label">See also</span><span class="value">code-reviewer · vibers-code-review · multi-agent-brainstorming</span></div>
+        <div class="cmd-gotcha">Don&#39;t implement fixes - review, suggest, ask. Let author fix. Knowledge sharing &gt; gatekeeping</div>
+      </div>
+    </section>
+
+    <!-- META & CONTEXT -->
+    <section id="meta">
+      <h2>Meta &amp; Context Management</h2>
+      <p class="section-desc">Routing skill, context guardian, orchestrazione</p>
+
+      <div class="cmd-card">
+        <div class="cmd-name">skill-router</div>
+        <div class="cmd-meta"><span>category: meta</span></div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Interview user con targeted questions. Raccomanda best skill from library per loro goal. When unsure which skill to use</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">User says &#39;I don&#39;t know where to start&#39; or &#39;which skill should I use&#39;. Vague goal without clear method</span></div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>Skill('skill-router')</code></span></div>
+        <div class="cmd-row"><span class="label">See also</span><span class="value">All superpowers skills</span></div>
+        <div class="cmd-gotcha">Ask one question at time. Skip irrelevant follow-ups. Let discovery guide recommendation</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">context-guardian</div>
+        <div class="cmd-meta"><span>category: meta</span></div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Proteggi contexto critico prima compattazione automatica. Snapshot + integrità verifica. Zero information loss</span></div>
+        <div class="cmd-row"><span class="label">Quando</span><span class="value">Progetto tecnico complesso (21+ skills, security audit, big refactor). Quando context proche del limite</span></div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>Skill('context-guardian')</code></span></div>
+        <div class="cmd-row"><span class="label">See also</span><span class="value">context-agent · context-management-context-save</span></div>
+        <div class="cmd-gotcha">Questo non è context-agent (post-session). Guardian agisce DURING session per pre-empt losses</div>
+      </div>
+    </section>
+
+    <!-- WORKFLOWS -->
+    <section id="workflows">
+      <h2>Workflows End-to-End</h2>
+
+      <div class="callout tip">
+        <strong>TDD Feature Completa</strong> — <em>4–10h · 1-2 engineers</em>
+        <pre><code>brainstorming → design doc APPROVED
+writing-plans → plan doc saved
+tdd-workflows-tdd-red → failing tests
+tdd-workflows-tdd-green → implementation PASS
+tdd-workflows-tdd-refactor → clean code, tests GREEN
+code-review-excellence → review feedback
+commit + PR</code></pre>
+      </div>
+
+      <div class="callout tip">
+        <strong>Brainstorm + Separate Execution</strong> — <em>6–15h across 3 sessions · Designer / Engineer / Reviewer</em>
+        <pre><code>brainstorming (session A) → design doc approved
+writing-plans (session A) → plan doc saved
+executing-plans (session B new) → load plan → execute tasks → finishing-a-development-branch
+code-review-excellence (session C review) → feedback → fixes</code></pre>
+      </div>
+
+      <div class="callout tip">
+        <strong>Complex Architecture Review</strong> — <em>8–15h · Designer + 4-5 reviewer agents + 1 engineer</em>
+        <pre><code>brainstorming (PARTIAL) → rough design
+multi-agent-brainstorming → design validation + Decision Log
+writing-plans → implementation plan
+tdd-workflows-tdd-cycle → full TDD cycle
+code-review-excellence → final review</code></pre>
+      </div>
+    </section>
+
+    <!-- CIRA EXAMPLES -->
+    <section id="cira-examples">
+      <h2>CIRA Examples</h2>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Context</div>
+        <h4>Superpowers vs GSD</h4>
+        <p><strong>GSD</strong>: compliance + audit trail heavy. <strong>Superpowers</strong>: TDD + code quality heavy. Less planning overhead.</p>
+        <p>Usa GSD quando spec-driven complex project, audit trails needed, stakeholder signoff critical.<br>
+        Usa Superpowers quando codice critico, test coverage non-negotiable, TDD discipline required, team review collaboration.</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Integration</div>
+        <h4>Path A3 in /costruiamo v2.5.0</h4>
+        <p>Superpowers è attivo come Path A3 (spec-light + TDD enforcement) nel flow <code>/costruiamo</code>. Il layer TDD è embeddable in <code>/gsd:execute-phase</code> per compliance.</p>
+        <p>Orchestrazione consigliata: <code>skill-router → multi-agent-brainstorming → brainstorming → writing-plans → executing-plans/tdd-cycle → code-review-excellence</code></p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">CIRA Metrics</div>
+        <h4>Target Coverage &amp; Quality</h4>
+        <p>Coverage: <strong>80% minimo</strong>, 85%+ raccomandato, 100% critical path.<br>
+        Code quality: cyclomatic complexity &lt;10, method &lt;20 lines, class &lt;200 lines.<br>
+        Test speed: unit &lt;100ms, integration &lt;1s, E2E &lt;5s per scenario.</p>
+      </div>
+    </section>
+
+    <!-- STACK INTEGRATION -->
+    <section id="stack-integration">
+      <h2>Stack Integration</h2>
+      <ul>
+        <li><strong>GSD</strong> — Embeddable: superpowers TDD dentro <code>/gsd:execute-phase</code> per tasks. Coverage 80%+ requirement comune</li>
+        <li><strong>Gstack</strong> — Complementare: usa TDD layer in <code>/gstack:pair-agent</code> per realtime collaboration</li>
+        <li><strong>Ruflo</strong> — Compatibile per UX iteration loop (brainstorm → prototype → test → refactor)</li>
+        <li><strong>Cloud env</strong> — Subagent support highly recommended (Sonnet + Haiku parallel execution). Works without but slower</li>
+        <li><strong>GitHub</strong> — All commits TDD-backed. PR flows match code-review-excellence</li>
+        <li><strong>Tooling</strong> — Jest/pytest/JUnit detection automatic. No framework lock-in</li>
+      </ul>
+    </section>
+
+    <!-- GOTCHAS -->
+    <section id="gotchas">
+      <h2>Gotchas &amp; Anti-patterns</h2>
+      <ul>
+        <li>Skip brainstorming thinking &#39;too simple&#39; → WRONG. Every feature needs design approval</li>
+        <li>Start code before design doc approved → WRONG. Brainstorm HARD-GATE</li>
+        <li>Skip tdd-red phase → WRONG. Tests MUST fail first defining behavior</li>
+        <li>Refactor while tests failing → WRONG. Only refactor with tests GREEN</li>
+        <li>Use multi-agent-brainstorming for casual ideas → WRONG. Reserved for critical architecture</li>
+        <li>Don&#39;t stop at blocker thinking you can force through → WRONG. Ask help immediately</li>
+        <li>Run executing-plans in same session as writing-plans → CAN work but defeats separate-context isolation</li>
+        <li>Review code without understanding requirements → WRONG. Code-review needs context + tests</li>
+      </ul>
+    </section>
+
+    <footer>
+      Generato 2026-05-15 · Source: <a href="https://github.com/obra/superpowers">github.com/obra/superpowers</a> · <a href="javascript:window.print()">Stampa / PDF</a>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/copy.js" defer></script>
+<script src="../assets/search.js" defer></script>
+  <script src="../assets/glossary.js" defer></script>
+</body>
+</html>

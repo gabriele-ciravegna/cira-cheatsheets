@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CIRA Custom Stack — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="layout">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
+    <div class="logo">Cheatsheet</div>
+
+    <nav class="nav-section">
+      <h3>On this page</h3>
+      <a href="#quick-start">Quick Start</a>
+      <a href="#router">Router &amp; Meta</a>
+      <a href="#build">Build Orchestration</a>
+      <a href="#mentori">Founders &amp; Mentori</a>
+      <a href="#pensiero">Pensiero Strategico</a>
+      <a href="#diagnostics">Diagnostics</a>
+      <a href="#workflows">Workflows E2E</a>
+      <a href="#cira-examples">CIRA Examples</a>
+      <a href="#stack-integration">Stack Integration</a>
+    </nav>
+
+    <nav class="nav-section">
+      <h3>Library</h3>
+      <a href="../gsd/index.html">GSD</a>
+      <a href="../gstack/index.html">gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo (PAI)</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../compound-engineering/index.html">Compound Engineering</a>
+      <a href="../cira-custom/index.html" class="active">CIRA Custom Stack</a>
+      <a href="../claude-code-basics/index.html">Claude Code Basics</a>
+      <a href="../inventory/index.html">Master Inventory</a>
+      <a href="../index.html">← All Cheatsheets</a>
+    </nav>
+  </aside>
+
+  <!-- ── Main content ── -->
+  <main class="content">
+
+    <!-- Header -->
+    <div class="tool-header">
+      <h1>CIRA Custom Stack <span class="version-badge">rolling</span></h1>
+      <p class="tagline">Skill custom CIRA Management — orchestra router + costruiamo build + mentori + brand</p>
+      <div class="when-card">
+        <strong>Quando usarlo:</strong> Lavoro CIRA quotidiano: routing decisioni multi-skill, build via /costruiamo, coaching mentori
+      </div>
+      <div class="skip-card">
+        <strong>Skip quando:</strong> Code review puro (→ gsd/ce), bug fix isolato
+      </div>
+    </div>
+
+    <!-- ── Quick Start ── -->
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+
+      <h3>Orchestra-first rule</h3>
+      <p>Su query multi-aspetto (emotion+context+decision) attiva <code>orchestra</code> PRIMA, mostra rete neurale completa, aspetta conferma. NO singola skill mentore.</p>
+
+      <h3>/costruiamo trigger</h3>
+      <pre><code>User: "costruiamo X"
+→ orchestra Step 1
+→ brandkit Step 0.5
+→ template-check Step 1.5
+→ intervista 10-15 domande
+→ path A1 (GSD) | A2 (gstack) | A3 (superpowers) | A4 (ce) | A5 (ruflo) | mix
+→ execute con checkpoint</code></pre>
+    </section>
+
+    <!-- ── Router & Meta ── -->
+    <section id="router">
+      <h2>Router &amp; Meta</h2>
+      <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px;">orchestra + skill-creator + rete-neurale</p>
+
+      <div class="cmd-card">
+        <div class="cmd-name">orchestra</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Rituale di apertura OBBLIGATORIO su ogni task complesso — scansiona risorse candidate, mostra longlist + shortlist + scartato con motivi, annuncia sequenza operativa, e ATTENDE CONFERMA prima di muovere.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Query multi-aspetto, coaching personale, routing skill</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Esempio</span>
+          <span class="value"><code>User: 'sono bloccato su pricing'</code> → orchestra invoca aristotle + hormozi + ali-pricing</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value"><code>/costruiamo</code> (per build), <code>rete-neurale-da-fonte</code></span>
+        </div>
+        <div class="cmd-gotcha">Orchestra-first rule: attiva PRIMA su query multi-aspetto, mostra rete, aspetta conferma</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">skill-creator-cira</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Crea, modifica e fa evolvere skill per il sistema CIRA Management. Fonde il core Anthropic skill-creator con i 3 moduli del neural network CIRA (wikilinks, anti-conflitto, auto-aggiornamento) in una checklist canonica di 8 moduli — M1-M8.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Creare/modificare skill CIRA-ready (M1-M8 checklist)</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Esempio</span>
+          <span class="value"><code>'crea skill per X'</code></span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value"><code>rete-neurale-da-fonte</code> (wikilinks)</span>
+        </div>
+        <div class="cmd-gotcha">Ogni skill nuova CIRA aggiunta a MR immediately dopo verify-skill.py exit 0</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">rete-neurale-da-fonte</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Meta-skill che trasforma una fonte (libro, canale YouTube, corpus multi-script) in skill CIRA-ready M1-M8 integrate nella rete neurale. Framework a 7 sessioni A-G con orchestrazione agenti.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Estrarre rete neurale skill da corpus testuale, pipeline automatica</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Esempio</span>
+          <span class="value">Trasforma canale YouTube in suite di skill integrate</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value"><code>skill-creator-cira</code>, <code>knowledge-base-builder</code></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Build Orchestration ── -->
+    <section id="build">
+      <h2>Build Orchestration</h2>
+      <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px;">costruiamo + orchestratore-siti + app-builder + saas-mvp-launcher</p>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/costruiamo X</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Flow CIRA per costruire qualcosa di nuovo — sito, app, agente Telegram, MVP, sistema. v2.5.0 INTERVIEW-FIRST: nessun framework default, routing emerge da intervista lunga (10-15 domande) → 1-3 path proposti con razionale → utente sceglie → annuncio step+comandi → execute con checkpoint.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Inizio progetto nuovo. Trigger: <code>'costruiamo X'</code>, <code>'facciamo l app'</code>, <code>'lets build'</code></span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Esempio</span>
+          <span class="value"><code>/costruiamo agente telegram per gestione email</code></span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value"><code>orchestra (Step 1)</code>, <code>brandkit (Step 0.5)</code>, <code>/gsd-* (path A1)</code>, <code>/gstack:* (path A2)</code>, <code>superpowers (path A3)</code>, <code>ruflo (path A5)</code></span>
+        </div>
+        <div class="cmd-gotcha">v2.5.0 INTERVIEW-FIRST — nessun framework default, intervista 10-15 domande obbligatoria</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">orchestratore-siti</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Layer specializzato PRE-/costruiamo. Si attiva quando il task riguarda un sito (landing, ecommerce, dashboard pubblico, redesign). Carica la knowledge base canonica CIRA per siti, impone Phase 1 PRE-BUILD QUESTIONS, sceglie la combo design in COMPATIBILITY-MATRIX, POI delega a /costruiamo.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Build sito multipagina, design+content, landing page</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Esempio</span>
+          <span class="value"><code>User: 'costruiamo sito'</code></span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value"><code>app-builder</code>, <code>/costruiamo</code>, <code>designlang</code></span>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">app-builder</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Orchestratore che da una richiesta in linguaggio naturale porta a una app full-stack: classifica il tipo di progetto (SaaS, landing, mobile, CLI, API...), sceglie lo stack, scaffolda la directory, coordina agenti specializzati.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Costruire applicazione web/mobile end-to-end, full-stack da zero</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Esempio</span>
+          <span class="value"><code>User: 'costruisci app'</code></span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value"><code>saas-mvp-launcher</code>, <code>/costruiamo</code></span>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">saas-mvp-launcher</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Roadmap operativa per portare un'idea SaaS a MVP in produzione in 4-6 settimane. Copre il cantiere intero — validazione, scelta stack moderno 2026, schema DB multi-tenant, auth via provider, pagamenti Stripe, deploy, checklist pre-launch.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Lanciare MVP SaaS con stack predefinito, roadmap operativa</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Esempio</span>
+          <span class="value"><code>User: 'avvia SaaS'</code></span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value"><code>app-builder</code>, <code>/costruiamo</code></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Founders & Mentori ── -->
+    <section id="mentori">
+      <h2>Founders &amp; Mentori</h2>
+      <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px;">founders-randolph + founders-culture + founders-first-principles</p>
+
+      <div class="cmd-card">
+        <div class="cmd-name">founders-randolph-test-driven</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Skill-autore su Marc Randolph (That Will Never Work, Netflix 1997-2002) — founder che sostituisce l'epifania con il test disciplinato, lo scrappy MVP e la persistenza verso il no.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Mentore Marc Randolph — scrappy MVP, test-driven, nobody knows anything</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Esempio</span>
+          <span class="value"><code>User: 'come testo un'idea?'</code> → invoca</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value"><code>founders-first-principles</code>, <code>aristotle</code></span>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">founders-culture-design</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Hub cross-atoms su CULTURA AZIENDALE COME SISTEMA DI FILTRI / ACCOUNTABILITY / HIRING — sei founder (Bezos, Jobs, Randolph, Branson, Marchionne, Musk) sul tema cultura come meccanismo di selezione radicale.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Cultura aziendale come filtro — Bezos/Jobs/Randolph/Branson/Marchionne/Musk</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Esempio</span>
+          <span class="value"><code>User: 'cultura A-players only?'</code> → invoca</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value"><code>willink-combat-leadership</code>, <code>hormozi-hiring</code></span>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">founders-first-principles</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Hub cross-atoms su first principles applicato dai founder (Musk, Bezos, Jobs, Marchionne, Randolph, Branson). Gemello operativo di aristotle-first-principles — qui smontaggio quantitativo applicato al business.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Decomposizione first-principles da founder mindset, working backwards</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Esempio</span>
+          <span class="value"><code>User: 'Physics del problema'</code></span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value"><code>aristotle-first-principles</code>, <code>cira-diagnosis-protocol</code></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Pensiero Strategico ── -->
+    <section id="pensiero">
+      <h2>Pensiero Strategico</h2>
+      <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px;">aristotle + sinek</p>
+
+      <div class="cmd-card">
+        <div class="cmd-name">aristotle-first-principles</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">First principles strategic deconstruction for when you're stuck and don't know why. Strips away inherited assumptions, finds irreducible truths, and rebuilds solutions from zero.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Decostruzione strategica bloccato + perché, quando il convenzionale gira a vuoto</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Esempio</span>
+          <span class="value"><code>User: 'sono bloccato su pricing, ci giriamo intorno'</code> → invoca</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value"><code>founders-first-principles</code></span>
+        </div>
+        <div class="cmd-gotcha">NON usare per task tecnico — solo strategico/decisionale</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">sinek-golden-circle</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Framework Simon Sinek per la comunicazione WHY-first e la leadership ispirante. Comunica dall'interno verso l'esterno, partendo dal WHY.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Why-How-What positioning brand/offer, leadership ispirante</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Esempio</span>
+          <span class="value"><code>User: 'non so come comunicare il valore di quello che faccio'</code></span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value"><code>godin-brand-recognition</code>, <code>merenda-positioning</code></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Diagnostics ── -->
+    <section id="diagnostics">
+      <h2>Diagnostics</h2>
+      <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px;">cira-diagnosis-protocol + network-functional-probe</p>
+
+      <div class="cmd-card">
+        <div class="cmd-name">cira-diagnosis-protocol</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Protocollo di diagnosi strategico CIRA Management — analizza ogni nuovo prospect/cliente con 11 framework (McKinsey, Porter, Aristotele, Greene, Kahneman, Aurelio, Finance, Stochastic) in sequenza rigida e genera un Diagnosis Document PRIMA di ogni offerta.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Pre-diagnosi cliente: recap → competitor → market → synthesis</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Esempio</span>
+          <span class="value">Nuovo cliente. <code>User: 'diagnosi cliente'</code></span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value"><code>competitor-research-pipeline</code>, <code>cira-diagnosis-protocol</code></span>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">network-functional-probe</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Probe funzionale settimanale della rete neurale CIRA. Lancia 10 query realistiche del lavoro Gabriele e verifica che le skill attese si attivino davvero via match deterministico sui trigger frontmatter. Output verde/giallo/rosso.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Probe settimanale per verificare routing skill e activation della rete neurale</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Esempio</span>
+          <span class="value"><code>'lancia network probe'</code></span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value"><code>cira-diagnosis-protocol</code></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Workflows E2E ── -->
+    <section id="workflows">
+      <h2>Workflows End-to-End</h2>
+
+      <div class="callout tip">
+        <strong>Build MVP CIRA-style</strong><br>
+        <code>/costruiamo</code> → intervista 10-15Q → path execution (GSD/gstack/superpowers/ruflo)<br>
+        <span style="color:var(--text-dim);font-size:13px;">Tempo stimato: 3-8h per phase</span>
+      </div>
+
+      <div class="callout tip">
+        <strong>Coaching mattutino</strong><br>
+        <code>orchestra</code> → reparto Biyleu → skill mentore (1-3) → action<br>
+        <span style="color:var(--text-dim);font-size:13px;">Tempo stimato: 15-30 min</span>
+      </div>
+
+      <div class="callout tip">
+        <strong>Diagnosi nuovo cliente</strong><br>
+        <code>cira-diagnosis-protocol</code> → <code>competitor-research-pipeline</code> → synthesis → proposta<br>
+        <span style="color:var(--text-dim);font-size:13px;">Tempo stimato: 2-4 ore</span>
+      </div>
+    </section>
+
+    <!-- ── CIRA Examples ── -->
+    <section id="cira-examples">
+      <h2>CIRA Examples</h2>
+
+      <div class="cira-example">
+        <div class="cira-tag">Caso reale</div>
+        <h4>Mercurio MVP</h4>
+        <p style="color:var(--text-muted);font-size:14px;margin:0;"><code>/costruiamo</code> → GSD path A1 → execute</p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">Caso reale</div>
+        <h4>Aurelio coach Telegram</h4>
+        <p style="color:var(--text-muted);font-size:14px;margin:0;">Tavolo Consiglieri 67 mentori + skill <code>founders-*</code></p>
+      </div>
+
+      <div class="cira-example">
+        <div class="cira-tag">Caso reale</div>
+        <h4>Pricing cliente bloccato</h4>
+        <p style="color:var(--text-muted);font-size:14px;margin:0;"><code>orchestra</code> → <code>aristotle-first-principles</code> + <code>ali-pricing-strategy</code></p>
+      </div>
+    </section>
+
+    <!-- ── Stack Integration ── -->
+    <section id="stack-integration">
+      <h2>Stack Integration</h2>
+      <ul style="color:var(--text);font-size:14px;line-height:2;padding-left:20px;">
+        <li><strong style="color:var(--accent);">gsd</strong> — /costruiamo path A1 chiama <code>/gsd-*</code></li>
+        <li><strong style="color:var(--accent);">gstack</strong> — /costruiamo path A2 chiama <code>/gstack:*</code></li>
+        <li><strong style="color:var(--accent);">superpowers</strong> — /costruiamo path A3 chiama <code>brainstorming + tdd-*</code></li>
+        <li><strong style="color:var(--accent);">ruflo</strong> — /costruiamo path A5 (sandbox)</li>
+        <li><strong style="color:var(--accent);">compound-engineering</strong> — /costruiamo opzionale <code>ce-only</code> path</li>
+      </ul>
+    </section>
+
+    <footer>
+      CIRA Custom Stack — rolling &nbsp;·&nbsp; <a href="../index.html">← Cheatsheet Library</a>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/copy.js"></script>
+  <script src="../assets/glossary.js" defer></script>
+</body>
+</html>

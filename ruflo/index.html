@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruflo — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+  <link rel="stylesheet" href="../assets/print.css" media="print" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">Ardea</div>
+  <div class="sidebar-section">Cheatsheet</div>
+  <ul class="sidebar-links">
+    <li><a href="../agent-teams/index.html">Agent Teams</a></li>
+    <li><a href="../bash-macos/index.html">Bash macOS</a></li>
+    <li><a href="../cira-custom/index.html">CIRA Custom</a></li>
+    <li><a href="../claude-code-basics/index.html">Claude Code Basics</a></li>
+    <li><a href="../compound-engineering/index.html">Compound Engineering</a></li>
+    <li><a href="../gsd/index.html">GSD</a></li>
+    <li><a href="../gstack/index.html">Gstack</a></li>
+    <li><a href="../inventory/index.html">Inventory</a></li>
+    <li><a href="../ruflo/index.html" class="active">Ruflo</a></li>
+    <li><a href="../superpowers/index.html">Superpowers</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ MAIN -->
+<main class="main-content">
+
+  <!-- TOOL HEADER -->
+  <header class="tool-header">
+    <h1>Ruflo <span class="version-badge">3.7.0-alpha.23</span></h1>
+    <p class="tagline">Sandbox parallel iterations + scoring + promote winner. Per scelte design-critical con coordinamento swarm automatico</p>
+    <div class="when-card">
+      <strong>Quando usarlo:</strong>
+      <ul>
+        <li>UX/UI ambigua con N approcci alternativi</li>
+        <li>Scelte design-critical che richiedono A/B di varianti parallele</li>
+        <li>Iterazione rapida con scoring automatico e promozione winner</li>
+        <li>Orchestrazione multi-agent su design problem complesso</li>
+      </ul>
+    </div>
+    <div class="skip-card">
+      <strong>NON usarlo se:</strong>
+      <ul>
+        <li>Soluzione obvia o deterministica</li>
+        <li>Deadline urgente (setup init richiede ~2 minuti)</li>
+        <li>Repository monolitico senza isolamento sandbox</li>
+        <li>Ambito limitato a single-agent execution</li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ═══ QUICK START ═══ -->
+  <section id="quick-start">
+    <h2>Quick Start</h2>
+
+    <div class="callout tip">
+      <strong>Install</strong><br/>
+      <code>npm install -g ruflo</code><br/>
+      <small>Binary: <code>/Users/cira/.local/node-v22.14.0-darwin-arm64/lib/node_modules/ruflo</code></small><br/>
+      <small>Verifica: <code>ruflo --version</code></small>
+    </div>
+
+    <div class="callout tip">
+      <strong>Pipeline base</strong><br/>
+      <code>ruflo init --full --start-all</code> &rarr; inizializza tutto + avvia daemon/memory/swarm<br/>
+      <code>ruflo task create -t design -d 'N varianti'</code> &rarr; definisci task paralleli<br/>
+      <code>ruflo swarm init --v3-mode &amp;&amp; ruflo swarm start -o 'obiettivo' -s development</code> &rarr; avvia competition<br/>
+      <code>ruflo analyze code --format json</code> &rarr; score ogni variante<br/>
+      <code>ruflo task list --all</code> &rarr; review + pick winner
+    </div>
+
+    <div class="callout tip">
+      <strong>Performance metrics</strong><br/>
+      <small>
+        Init: ~2 min &nbsp;&middot;&nbsp;
+        Parallel agents: up to 15 (V3 mesh) &nbsp;&middot;&nbsp;
+        Memory search: 150x&ndash;12,500x faster (HNSW) &nbsp;&middot;&nbsp;
+        Consensus: &lt;500ms/round &nbsp;&middot;&nbsp;
+        Task create: &lt;100ms &nbsp;&middot;&nbsp;
+        Analyze 10k LOC: &lt;5s
+      </small>
+    </div>
+  </section>
+
+  <!-- ═══ PRIMARY COMMANDS ═══ -->
+  <section id="commands-primary">
+    <h2>Comandi &mdash; PRIMARY</h2>
+
+    <div class="cmd-card">
+      <div class="cmd-name">init</div>
+      <div class="cmd-meta"><span>category: PRIMARY</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Inizializza Ruflo nella directory corrente + crea .claude/, agenti, hooks</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">All&rsquo;inizio di qualsiasi progetto che richieda orchestrazione multi-agent</span></div>
+      <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>ruflo init --full --start-all</code></span></div>
+      <div class="cmd-row"><span class="label">Subcommands</span><span class="value">
+        <code>wizard</code> &mdash; Interactive setup wizard per configurazione completa<br/>
+        <code>check</code> &mdash; Verifica se Ruflo &egrave; gi&agrave; inizializzato<br/>
+        <code>skills</code> &mdash; Inizializza solo skills<br/>
+        <code>hooks</code> &mdash; Inizializza solo hooks configuration<br/>
+        <code>upgrade</code> &mdash; Aggiorna statusline e helpers preservando dati existing
+      </span></div>
+      <div class="cmd-row"><span class="label">Flags</span><span class="value">
+        <code>-f, --force</code> &nbsp; Sovrascrivi configurazione existente<br/>
+        <code>-m, --minimal</code> &nbsp; Crea configurazione minimale<br/>
+        <code>--full</code> &nbsp; Crea configurazione completa con tutti i componenti<br/>
+        <code>--skip-claude</code> &nbsp; Salta creazione .claude/ (runtime only)<br/>
+        <code>--only-claude</code> &nbsp; Crea solo .claude/ directory (salta runtime)<br/>
+        <code>--start-all</code> &nbsp; Auto-avvia daemon, memory, swarm dopo init<br/>
+        <code>--with-embeddings</code> &nbsp; Inizializza ONNX embedding subsystem con supporto hyperbolic<br/>
+        <code>--codex</code> &nbsp; Inizializza per OpenAI Codex CLI
+      </span></div>
+      <div class="cmd-row"><span class="label">Output</span><span class="value">Crea .claude/, .claude-flow/, CLAUDE.md, helpers, agent configs</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">start</div>
+      <div class="cmd-meta"><span>category: PRIMARY</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Avvia il sistema di orchestrazione Ruflo (daemon, memory, swarm)</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Dopo init, per avviare background orchestration</span></div>
+      <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>ruflo start</code></span></div>
+      <div class="cmd-row"><span class="label">Flags</span><span class="value"><code>--foreground</code> &nbsp; Esegui in foreground (no daemonization)</span></div>
+      <div class="cmd-gotcha">Ruflo manage processi background automaticamente via launchd</div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">status</div>
+      <div class="cmd-meta"><span>category: PRIMARY</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Mostra lo stato del sistema Ruflo (daemon, agents, memory, swarm)</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per debugging + health check</span></div>
+      <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>ruflo status</code></span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">agent</div>
+      <div class="cmd-meta"><span>category: PRIMARY</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Gestione agenti (list, status, scale, assign)</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per introspectare/controllare agenti in swarm</span></div>
+      <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>ruflo agent list</code></span></div>
+      <div class="cmd-row"><span class="label">Subcommands</span><span class="value">
+        <code>list</code> &mdash; Elenca tutti agenti disponibili con status<br/>
+        <code>status</code> &mdash; Dettagli di uno specifico agent<br/>
+        <code>scale</code> &mdash; Scala numero di agenti in swarm<br/>
+        <code>assign</code> &mdash; Assegna task a specifico agent
+      </span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">swarm</div>
+      <div class="cmd-meta"><span>category: PRIMARY</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Coordinazione swarm (init, start, coordinate hierarchical mesh)</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per avviare N iterazioni parallele + coordination automatica</span></div>
+      <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>ruflo swarm init --v3-mode &amp;&amp; ruflo swarm start -o 'Design UI variations' -s development</code></span></div>
+      <div class="cmd-row"><span class="label">Subcommands</span><span class="value">
+        <code>init</code> &mdash; Inizializza nuovo swarm<br/>
+        <code>start</code> &mdash; Avvia esecuzione swarm<br/>
+        <code>status</code> &mdash; Mostra swarm status<br/>
+        <code>stop</code> &mdash; Arresta swarm execution<br/>
+        <code>scale</code> &mdash; Scala agenti count in swarm<br/>
+        <code>coordinate</code> &mdash; Esegui 15-agent hierarchical mesh coordination (V3)
+      </span></div>
+      <div class="cmd-row"><span class="label">Flags</span><span class="value">
+        <code>--v3-mode</code> &nbsp; Usa V3 swarm coordination engine<br/>
+        <code>-o, --objective</code> &nbsp; Objective high-level per swarm (es. &lsquo;Build API&rsquo;)<br/>
+        <code>-s, --stage</code> &nbsp; Stage/environment (development, staging, production)<br/>
+        <code>--agents</code> &nbsp; Numero agenti per coordinate command
+      </span></div>
+      <div class="cmd-row"><span class="label">See also</span><span class="value">task &middot; analyze</span></div>
+      <div class="cmd-gotcha">15-agent mesh &egrave; default per V3 coordination, genera consensus-based decisioning</div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">task</div>
+      <div class="cmd-meta"><span>category: PRIMARY</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Gestione task (create, list, status, assign, retry, cancel)</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per definire N varianti parallele come task + tracciare execution</span></div>
+      <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>ruflo task create -t design -d 'Generate 5 UI card variations' &amp;&amp; ruflo task list --all</code></span></div>
+      <div class="cmd-row"><span class="label">Subcommands</span><span class="value">
+        <code>create</code> (alias: new, add) &mdash; Crea nuovo task<br/>
+        <code>list</code> (alias: ls) &mdash; Elenca task pending/running<br/>
+        <code>status</code> (alias: info, get) &mdash; Dettagli task + status<br/>
+        <code>cancel</code> (alias: abort, stop) &mdash; Cancella task running<br/>
+        <code>assign</code> &mdash; Assegna task a uno/pi&ugrave; agenti<br/>
+        <code>retry</code> (alias: rerun) &mdash; Riprova task fallito
+      </span></div>
+      <div class="cmd-row"><span class="label">Flags</span><span class="value">
+        <code>-t, --type</code> &nbsp; Task type (design, implementation, testing, etc.)<br/>
+        <code>-d, --description</code> &nbsp; Descrizione task<br/>
+        <code>--all</code> &nbsp; Mostra ALL tasks incluso completed<br/>
+        <code>--agent</code> &nbsp; Agent ID per assign
+      </span></div>
+      <div class="cmd-row"><span class="label">See also</span><span class="value">swarm &middot; analyze</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">memory</div>
+      <div class="cmd-meta"><span>category: PRIMARY</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Gestione vector memory (HNSW-indexed AgentDB)</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per search cross-session + learning patterns</span></div>
+      <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>ruflo memory search 'UI card layout variations'</code></span></div>
+      <div class="cmd-row"><span class="label">Subcommands</span><span class="value">
+        <code>search</code> &mdash; Semantic search across vector memory<br/>
+        <code>store</code> &mdash; Persisti pattern/insights in vector DB<br/>
+        <code>recall</code> &mdash; Retrieve learned patterns per task type
+      </span></div>
+      <div class="cmd-row"><span class="label">Performance</span><span class="value">150x&ndash;12,500x faster search vs flat VECTOR DB</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">session</div>
+      <div class="cmd-meta"><span>category: PRIMARY</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Gestione sessioni (list, resume, archive)</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per riprendere iterazioni parallele da precedenti sessioni</span></div>
+      <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>ruflo session list &amp;&amp; ruflo session resume session-ui-variants-001</code></span></div>
+      <div class="cmd-row"><span class="label">Subcommands</span><span class="value">
+        <code>list</code> &mdash; Elenca tutte sessioni<br/>
+        <code>resume</code> &mdash; Riprendi sessione precedente<br/>
+        <code>archive</code> &mdash; Archivia completed session
+      </span></div>
+    </div>
+  </section>
+
+  <!-- ═══ ADVANCED COMMANDS ═══ -->
+  <section id="commands-advanced">
+    <h2>Comandi &mdash; ADVANCED</h2>
+
+    <div class="cmd-card">
+      <div class="cmd-name">neural</div>
+      <div class="cmd-meta"><span>category: ADVANCED</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Neural pattern training, MoE, Flash Attention, pattern learning</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per ottimizzare routing decisioni multi-agent</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">security</div>
+      <div class="cmd-meta"><span>category: ADVANCED</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Security scanning, CVE detection, threat modeling, AI defense</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Pre-deployment security audit su agenti + task orchestration</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">performance</div>
+      <div class="cmd-meta"><span>category: ADVANCED</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Performance profiling, benchmarking, optimization, metrics</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per misurare latency iterazioni parallele + swarm overhead</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">embeddings</div>
+      <div class="cmd-meta"><span>category: ADVANCED</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Vector embeddings, semantic search, similarity operations</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per pattern matching su precedenti iterazioni design</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">hive-mind</div>
+      <div class="cmd-meta"><span>category: ADVANCED</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Queen-led consensus-based multi-agent coordination</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per decision aggregation su multiple swarms</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">autopilot</div>
+      <div class="cmd-meta"><span>category: ADVANCED</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Persistent swarm completion &mdash; mantiene agenti working finch&eacute; ALL task non sono DONE</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per long-running design iterations non-interactive</span></div>
+    </div>
+  </section>
+
+  <!-- ═══ ANALYSIS COMMANDS ═══ -->
+  <section id="commands-analysis">
+    <h2>Comandi &mdash; ANALYSIS</h2>
+
+    <div class="cmd-card">
+      <div class="cmd-name">analyze</div>
+      <div class="cmd-meta"><span>category: ANALYSIS</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Code analysis, diff classification, risk assessment, complexity</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per scoring varianti design (code quality, complexity, risk)</span></div>
+      <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>ruflo analyze code src/ --format json</code></span></div>
+      <div class="cmd-row"><span class="label">Subcommands</span><span class="value">
+        <code>diff</code> &mdash; Analizza git diff per change risk assessment<br/>
+        <code>code</code> &mdash; Static code analysis + quality assessment<br/>
+        <code>complexity</code> (alias: cx) &mdash; Analizza code complexity metrics<br/>
+        <code>boundaries</code> &mdash; Trova natural code boundaries usando MinCut algorithm<br/>
+        <code>modules</code> &mdash; Detect module communities usando Louvain algorithm<br/>
+        <code>circular</code> &mdash; Detect circular dependencies
+      </span></div>
+      <div class="cmd-row"><span class="label">Flags</span><span class="value">
+        <code>-f, --format</code> &nbsp; Output format: text, json, table<br/>
+        <code>--threshold</code> &nbsp; Soglia per complexity (default 15)<br/>
+        <code>--risk</code> &nbsp; Per diff, includi risk assessment
+      </span></div>
+      <div class="cmd-row"><span class="label">Scoring use</span><span class="value">Analizza ciascuna variante design, genera JSON score profile</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">route</div>
+      <div class="cmd-meta"><span>category: ANALYSIS</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Intelligent task-to-agent routing usando Q-Learning</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per assegnare task design a miglior agent per specializzazione</span></div>
+    </div>
+  </section>
+
+  <!-- ═══ UTILITY COMMANDS ═══ -->
+  <section id="commands-utility">
+    <h2>Comandi &mdash; UTILITY</h2>
+
+    <div class="cmd-card">
+      <div class="cmd-name">config</div>
+      <div class="cmd-meta"><span>category: UTILITY</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Gestione configurazione (get, set, list, validate)</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per customizzare routing, agent specs, embedding models</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">doctor</div>
+      <div class="cmd-meta"><span>category: UTILITY</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">System diagnostics + health checks</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Troubleshooting daemon, memory, swarm issues</span></div>
+      <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>ruflo doctor</code></span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">daemon</div>
+      <div class="cmd-meta"><span>category: UTILITY</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Gestione background worker daemon (Node.js-based, auto-runs come shell helpers)</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per controllare daemon lifecycle</span></div>
+      <div class="cmd-row"><span class="label">Subcommands</span><span class="value">
+        <code>start</code> &mdash; Avvia daemon<br/>
+        <code>stop</code> &mdash; Arresta daemon<br/>
+        <code>restart</code> &mdash; Restart daemon<br/>
+        <code>logs</code> &mdash; Mostra daemon logs
+      </span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">hooks</div>
+      <div class="cmd-meta"><span>category: UTILITY</span></div>
+      <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Self-learning hooks system per intelligent workflow automation</span></div>
+      <div class="cmd-row"><span class="label">Quando</span><span class="value">Per attivare auto-learning su pattern ricorrenti</span></div>
+    </div>
+  </section>
+
+  <!-- ═══ WORKFLOWS ═══ -->
+  <section id="workflows">
+    <h2>Workflows End-to-End</h2>
+
+    <div class="callout tip">
+      <strong>Sandbox Design Competition &mdash; 5 varianti UI card layout</strong><br/>
+      <small>Tempo stimato: 5&ndash;15 minuti per 5 varianti parallele</small><br/><br/>
+      <code>1. ruflo init --full --start-all</code><br/>
+      <code>2. ruflo task create -t design -d 'Generate 5 card layouts: minimal/bold/glass/shadow/flat'</code><br/>
+      <code>3. ruflo swarm init --v3-mode</code><br/>
+      <code>4. ruflo swarm start -o 'Design card variations' -s development --agents 5</code><br/>
+      <code>5. (agents iterate in parallel, each generates variant)</code><br/>
+      <code>6. ruflo analyze code --format json</code> <small>&rarr; score each variant: complexity, readability, patterns</small><br/>
+      <code>7. ruflo memory store</code> <small>&rarr; best patterns from winner variant</small><br/>
+      <code>8. ruflo task list --all</code> <small>&rarr; review all variant submissions</small><br/>
+      <code>9. Manual promotion: pick winner &rarr; implement in main codebase</code>
+    </div>
+
+    <div class="callout tip">
+      <strong>Iterazione Rapida con Memory Learning</strong><br/><br/>
+      <code>1. ruflo session resume session-ui-variants-001</code><br/>
+      <code>2. ruflo memory search 'card layout patterns from prior sessions'</code><br/>
+      <code>3. Nuovo task con insights precedenti pre-loaded</code><br/>
+      <code>4. ruflo swarm coordinate --agents 15</code> <small>&rarr; use learned patterns</small><br/>
+      <code>5. ruflo analyze diff --risk</code> <small>&rarr; valuta incrementale changes</small><br/>
+      <code>6. Promote vincitore + persist new patterns</code>
+    </div>
+
+    <div class="callout tip">
+      <strong>Merge con /costruiamo workflow</strong><br/><br/>
+      <code>1. /costruiamo</code> trigger con path <code>'ruflo-only'</code><br/>
+      <code>2. Ruflo init inline</code> &rarr; crea sandbox temporaneo<br/>
+      <code>3. Task definition from /costruiamo phase1</code><br/>
+      <code>4. Parallel agent iterations + scoring</code><br/>
+      <code>5. Results fed back a /costruiamo phase2</code> <small>(tdd-guide, code-reviewer)</small>
+    </div>
+  </section>
+
+  <!-- ═══ CIRA EXAMPLES ═══ -->
+  <section id="cira-examples">
+    <h2>CIRA Examples</h2>
+
+    <div class="cira-example">
+      <div class="cira-tag">CIRA</div>
+      <strong>Mercurio inbox design &mdash; 5 card layout varianti</strong><br/>
+      <code>ruflo task create -t design 'minimal|bold|glass|shadow|flat'; ruflo swarm coordinate; ruflo analyze code --format json; pick winner</code><br/>
+      <small>Output: JSON score per variant, best &rarr; implementation</small>
+    </div>
+
+    <div class="cira-example">
+      <div class="cira-tag">CIRA</div>
+      <strong>PAI workspace design &mdash; 3 orchestration topologies</strong><br/>
+      <code>Generate mesh/hierarchical/hybrid &rarr; ruflo swarm coordinate &rarr; score consensus &rarr; promote winner</code><br/>
+      <small>Integration: 3 patch PAI (mode + fast-path hook + coordination) &mdash; position: <code>.claude/components/ruflo/</code></small>
+    </div>
+
+    <div class="cira-example">
+      <div class="cira-tag">CIRA</div>
+      <strong>Aurelio bot &mdash; 4 interaction UX flows</strong><br/>
+      <code>Swarm generate &rarr; scoring on response latency + accuracy &rarr; pick winner per session context</code><br/>
+      <small>Learning: <code>ruflo memory store</code> successful interaction patterns cross-session</small>
+    </div>
+  </section>
+
+  <!-- ═══ STACK INTEGRATION ═══ -->
+  <section id="stack-integration">
+    <h2>Stack Integration</h2>
+
+    <div class="cmd-card">
+      <div class="cmd-name">GSD</div>
+      <div class="cmd-row"><span class="label">Dove</span><span class="value">Embeddable in /gsd:discuss-phase per esplorare alternative approaches</span></div>
+      <div class="cmd-row"><span class="label">Come</span><span class="value">Task creation &rarr; swarm explore &rarr; analyze + score &rarr; brief GSD con risultati</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">/costruiamo</div>
+      <div class="cmd-row"><span class="label">Dove</span><span class="value">Nuovo path &lsquo;ruflo-only&rsquo; o &lsquo;mix&rsquo; in v2.5.0</span></div>
+      <div class="cmd-row"><span class="label">Come</span><span class="value">Init sandbox &rarr; iterate parallele &rarr; score &rarr; tdd-guide su winner</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">PAI</div>
+      <div class="cmd-row"><span class="label">Position</span><span class="value"><code>.claude/components/ruflo/</code></span></div>
+      <div class="cmd-row"><span class="label">Patch 1</span><span class="value">mode flag per Ruflo integration (<code>--ruflo-mode</code>)</span></div>
+      <div class="cmd-row"><span class="label">Patch 2</span><span class="value">fast-path hook per skip non-critical validation</span></div>
+      <div class="cmd-row"><span class="label">Patch 3</span><span class="value">coordination bridge tra Ruflo swarm + PAI workspace</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-name">Claude Code CLI</div>
+      <div class="cmd-row"><span class="label">Come</span><span class="value">Ruflo MCP server registrato su init, slash commands + agent definitions per-plugin</span></div>
+      <div class="cmd-row"><span class="label">Plugin marketplace</span><span class="value">32 native Claude Code plugins + 21 npm plugins disponibili</span></div>
+    </div>
+
+    <div class="callout tip">
+      <strong>Key Concepts</strong><br/>
+      <strong>Sandbox</strong>: Isolated execution per agent variation, no cross-contamination<br/>
+      <strong>Swarm Coordination</strong>: Hierarchical/mesh/adaptive topologies con automatic consensus<br/>
+      <strong>Self-Learning</strong>: SONA neural patterns, ReasoningBank, trajectory learning across sessions<br/>
+      <strong>Vector Memory</strong>: AgentDB + HNSW per semantic search + pattern recall<br/>
+      <strong>Federation</strong>: Zero-trust cross-machine agent communication (secure)<br/>
+      <strong>Plugin Marketplace</strong>: 32 native Claude Code plugins + 21 npm plugins disponibili
+    </div>
+
+    <div class="callout tip">
+      <strong>Links</strong><br/>
+      Repo: <a href="https://github.com/ruvnet/claude-flow" target="_blank">github.com/ruvnet/claude-flow</a><br/>
+      Web UI: <a href="https://flo.ruv.io/" target="_blank">flo.ruv.io</a> (self-hostable demo)<br/>
+      Goal Planner: <a href="https://goal.ruv.io/" target="_blank">goal.ruv.io</a> &mdash; GOAP A* planner (plain-English &rarr; executable plans)<br/>
+      Agent Dashboard: <a href="https://goal.ruv.io/agents" target="_blank">goal.ruv.io/agents</a> (live agent status + metrics)<br/>
+      Support: <a href="mailto:support@ruv.io">support@ruv.io</a>
+    </div>
+  </section>
+
+  <!-- ═══ GOTCHAS ═══ -->
+  <section id="gotchas">
+    <h2>Gotchas &amp; Tips</h2>
+
+    <div class="cmd-card">
+      <div class="cmd-gotcha">Ruflo daemon processes run via launchd on macOS &mdash; mai pkill</div>
+      <div class="cmd-row"><span class="label">Fix</span><span class="value">Usa <code>ruflo daemon stop</code> o <code>launchctl stop</code> command</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-gotcha">Init crea .claude-flow/ directory in repo root &mdash; non gitignore se vuoi condividere config</div>
+      <div class="cmd-row"><span class="label">Fix</span><span class="value">Review .gitignore, decide se .claude-flow/ &egrave; shareable (env vars mantenere separate)</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-gotcha">Memory vector DB starts fresh dopo init; occorrono ~10 task per buon learning signal</div>
+      <div class="cmd-row"><span class="label">Fix</span><span class="value">Importa patterns da previous sessions con <code>ruflo session resume</code> o <code>ruflo memory recall</code></span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-gotcha">15-agent mesh coordination ha overhead latency; per quick decision usare --agents 3-5</div>
+      <div class="cmd-row"><span class="label">Fix</span><span class="value">Balance parallelism vs consensus latency dipende dall&rsquo;obiettivo</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-row"><span class="label">Tip</span><span class="value">Sempre esegui <code>ruflo analyze</code> su output variation prima di manual scoring &mdash; objective metrics + early detection red flags (complexity, circular deps)</span></div>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-row"><span class="label">Tip</span><span class="value">Ruflo memory search &egrave; semantic, non literal &mdash; cerca pattern type, non stringa esatta</span></div>
+      <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>ruflo memory search 'layout patterns for cards under 200px width'</code></span></div>
+    </div>
+  </section>
+
+  <footer>Generato 2026-05-15 &middot; Source: ruflo npm package &middot; <a href="javascript:window.print()">Stampa / PDF</a></footer>
+
+</main>
+
+<script src="../assets/copy.js"></script>
+<script src="../assets/search.js"></script>
+  <script src="../assets/glossary.js" defer></script>
+</body>
+</html>

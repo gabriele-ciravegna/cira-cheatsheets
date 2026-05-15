@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gstack — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/print.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="logo">⌘ CHEATSHEETS</div>
+      <input type="search" class="search-box" id="global-search" data-root=".." placeholder="Cerca…">
+      <div id="search-results"></div>
+
+      <div class="nav-section">
+        <h3>Cheatsheet</h3>
+        <a href="../index.html">← Index</a>
+        <a href="../gsd/index.html">GSD</a>
+        <a href="../gstack/index.html" class="active">Gstack</a>
+        <a href="../superpowers/index.html">Superpowers</a>
+        <a href="../ruflo/index.html">Ruflo</a>
+        <a href="../compound-engineering/index.html">Compound Eng</a>
+        <a href="../agent-teams/index.html">Agent Teams</a>
+        <a href="../cira-custom/index.html">CIRA Custom</a>
+        <a href="../claude-code-basics/index.html">Claude Code</a>
+        <a href="../bash-macos/index.html">Bash + macOS</a>
+      </div>
+
+      <div class="nav-section">
+        <h3>Sezioni</h3>
+        <a href="#quick-start">Quick Start</a>
+        <a href="#plan">Plan &amp; Strategy</a>
+        <a href="#execute">Pair-Agent Execution</a>
+        <a href="#ship">Ship &amp; Deploy</a>
+        <a href="#retro">Retro &amp; Health</a>
+        <a href="#design">Design</a>
+        <a href="#infra">Infra &amp; Setup</a>
+        <a href="#openclaw">Openclaw</a>
+        <a href="#extras">Extras</a>
+        <a href="#workflows">Workflow End-to-End</a>
+        <a href="#stack-integration">Integrazione Stack</a>
+        <a href="#all-commands">Tutti i Comandi</a>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="tool-header">
+        <h1>Gstack <span class="version-badge">2.x</span></h1>
+        <p class="tagline">Ship-first toolkit. Plan → pair-agent → ship → retro → tune.</p>
+        <div class="when-card"><strong>Quando usarlo:</strong> Velocità prioritaria su audit trail. MVP ready in 1-2 sessioni. Path A2 in /costruiamo intervista.</div>
+        <div class="skip-card"><strong>NON usarlo se:</strong> Compliance audit obbligatorio (→ GSD), bug fix singolo (→ /gsd-debug)</div>
+      </header>
+
+      <!-- ─── QUICK START ─── -->
+      <section id="quick-start">
+        <h2>Quick Start</h2>
+        <p>Pipeline ship-first standard:</p>
+        <pre><button class="copy-btn">copy</button><code>/gstack:plan → /gstack:pair-agent → /gstack:ship → /gstack:retro → /gstack:plan-tune</code></pre>
+        <p style="color:var(--text-muted);font-size:13px;">Install: symlinked in <code>~/.claude/skills/</code> from <code>~/WORK/CLAUDE/REPOS/gstack/</code></p>
+      </section>
+
+      <!-- ─── PLAN & STRATEGY ─── -->
+      <section id="plan">
+        <h2>Plan &amp; Strategy</h2>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:plan</div>
+          <div class="cmd-meta"><span>category: plan</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Crea piano dettagliato per progetto, analizza baseline, prepara strategie</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Inizio progetto o fase nuova</span></div>
+          <div class="cmd-row"><span class="label">Trigger</span><span class="value"><code>plan it</code> · <code>create plan</code> · <code>strategy session</code></span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">/gstack:plan-ceo-review · /gstack:plan-design-review · /gstack:plan-eng-review</span></div>
+          <div class="cmd-gotcha">⚠ Non eseguire in parallelo con /gsd-plan-phase</div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:plan-ceo-review</div>
+          <div class="cmd-meta"><span>category: plan</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">CEO perspective review del piano</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Dopo /gstack:plan, per validazione strategica</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:plan-design-review</div>
+          <div class="cmd-meta"><span>category: plan</span><span>v2.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Design phase review del piano</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Dopo /gstack:plan, prima di avviare la fase design</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:plan-devex-review</div>
+          <div class="cmd-meta"><span>category: plan</span><span>v2.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Developer experience review del piano</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Verifica ergonomia dev prima dell'execution</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:plan-eng-review</div>
+          <div class="cmd-meta"><span>category: plan</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Engineering phase review del piano</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Validazione tecnica prima di iniziare execution</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:plan-tune</div>
+          <div class="cmd-meta"><span>category: plan</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Piano tune &amp; optimize — adatta la strategia post-retro</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Dopo /gstack:retro per affinare il prossimo ciclo</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:autoplan</div>
+          <div class="cmd-meta"><span>category: plan</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Automatic review pipeline — esegue tutti i review automaticamente</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando si vuole review completo senza scegliere quale</span></div>
+        </div>
+      </section>
+
+      <!-- ─── PAIR-AGENT EXECUTION ─── -->
+      <section id="execute">
+        <h2>Pair-Agent Execution</h2>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:pair-agent</div>
+          <div class="cmd-meta"><span>category: execute</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Coppia LLM+verifier per execution con peer review continuo</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Dopo /gstack:plan. Execution rapido con quality gate integrato</span></div>
+          <div class="cmd-row"><span class="label">Trigger</span><span class="value"><code>pair with agent</code> · <code>connect remote agent</code> · <code>share my browser</code></span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">/gstack:plan · /gstack:ship</span></div>
+          <div class="cmd-gotcha">⚠ Non eseguire in parallelo con /gsd-execute-phase</div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:pair-agent — connessione remota</div>
+          <div class="cmd-meta"><span>category: execute</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Connessione remota: setup key per agenti OpenClaw/Hermes/Codex/Cursor</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Condivisione browser con altro agente</span></div>
+          <div class="cmd-row"><span class="label">Trigger</span><span class="value"><code>pair agent</code> · <code>connect agent</code> · <code>share browser</code></span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">/gstack:open-gstack-browser</span></div>
+          <div class="cmd-gotcha">⚠ Richiede setup key una sola volta</div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:investigate</div>
+          <div class="cmd-meta"><span>category: execute</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Deep investigation + synthesis</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Analisi approfondita di un problema o codebase</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:review</div>
+          <div class="cmd-meta"><span>category: execute</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Code review strutturato</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Prima di /gstack:ship per validare il codice</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:careful</div>
+          <div class="cmd-meta"><span>category: execute</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Modalità cautela — esecuzione conservativa con checkpoint</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Operazioni rischiose o destructive</span></div>
+        </div>
+      </section>
+
+      <!-- ─── SHIP & DEPLOY ─── -->
+      <section id="ship">
+        <h2>Ship &amp; Deploy</h2>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:ship</div>
+          <div class="cmd-meta"><span>category: ship</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Rilevamento ramo base, test, review diff, bump VERSION, CHANGELOG, commit, push, PR</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Codice pronto per deployment</span></div>
+          <div class="cmd-row"><span class="label">Trigger</span><span class="value"><code>ship it</code> · <code>create a pr</code> · <code>push to main</code> · <code>deploy this</code></span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">/gstack:land-and-deploy · /gstack:retro</span></div>
+          <div class="cmd-gotcha">⚠ Non usare git direttamente — lascia a /gstack:ship</div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:land-and-deploy</div>
+          <div class="cmd-meta"><span>category: ship</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Land branch e deploy su ambiente target</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Dopo PR approvata, per completare il ciclo di deploy</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:canary</div>
+          <div class="cmd-meta"><span>category: ship</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Canary monitoring post-deploy</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Subito dopo deploy in produzione per monitoraggio graduale</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:landing-report</div>
+          <div class="cmd-meta"><span>category: ship</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Report post-landing con metriche deploy</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Dopo /gstack:land-and-deploy per documentare il deploy</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:document-release</div>
+          <div class="cmd-meta"><span>category: ship</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Documentazione release ufficiale</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Dopo deploy stabile per aggiornare CHANGELOG e docs</span></div>
+        </div>
+      </section>
+
+      <!-- ─── RETRO & HEALTH ─── -->
+      <section id="retro">
+        <h2>Retro &amp; Health</h2>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:retro</div>
+          <div class="cmd-meta"><span>category: retro</span><span>v2.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Retrospettiva settimanale. Analizza git history, work patterns, metriche qualità</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Fine settimana/sprint</span></div>
+          <div class="cmd-row"><span class="label">Trigger</span><span class="value"><code>weekly retro</code> · <code>what did we ship</code> · <code>engineering retrospective</code></span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">/gstack:ship · /gstack:plan-tune</span></div>
+          <div class="cmd-gotcha">⚠ Salva history in ~/.gstack/projects/{repo}/retros/</div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:health</div>
+          <div class="cmd-meta"><span>category: retro</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Project health check — metriche, debito tecnico, dipendenze</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Check periodico dello stato del progetto</span></div>
+        </div>
+      </section>
+
+      <!-- ─── DESIGN ─── -->
+      <section id="design">
+        <h2>Design</h2>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:design-consultation</div>
+          <div class="cmd-meta"><span>category: design</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Consulenza design — analisi stile, palette, pattern UI</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Inizio progetto con componente visual rilevante</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:design-html</div>
+          <div class="cmd-meta"><span>category: design</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Generazione HTML da specifiche design</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Dopo /gstack:design-consultation, per scaffolding HTML</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:design-review</div>
+          <div class="cmd-meta"><span>category: design</span><span>v2.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Review della fase design</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Valida output design prima di passare all'execution</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:design-shotgun</div>
+          <div class="cmd-meta"><span>category: design</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Rapid design shotgun approach — genera N varianti velocemente</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Brainstorming visual rapido per scegliere direzione</span></div>
+        </div>
+      </section>
+
+      <!-- ─── INFRA & SETUP ─── -->
+      <section id="infra">
+        <h2>Infra &amp; Setup</h2>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:setup-deploy</div>
+          <div class="cmd-meta"><span>category: infra</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Setup deployment pipeline — CI/CD, environment, secrets</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Primo setup di un nuovo progetto o cambio infra</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:setup-browser-cookies</div>
+          <div class="cmd-meta"><span>category: infra</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Setup browser cookies per automazioni web</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Setup iniziale per pair-agent con browser sharing</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:open-gstack-browser</div>
+          <div class="cmd-meta"><span>category: infra</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Apre browser condiviso Gstack per pair-agent</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Avvio sessione pair-agent</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:setup-gbrain</div>
+          <div class="cmd-meta"><span>category: infra</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Setup GBrain — sistema memoria distribuita Gstack</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Prima configurazione workspace Gstack</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:sync-gbrain</div>
+          <div class="cmd-meta"><span>category: infra</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Sincronizza GBrain con stato corrente</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Dopo sessioni lunghe o cambio contesto importante</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:unfreeze</div>
+          <div class="cmd-meta"><span>category: infra</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Unfreeze deploy bloccato</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Deploy bloccato o pipeline in stallo</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:freeze</div>
+          <div class="cmd-meta"><span>category: infra</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Freeze deploy — blocca pipeline intenzionalmente</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Pausa pianificata o incident in corso</span></div>
+        </div>
+      </section>
+
+      <!-- ─── OPENCLAW ─── -->
+      <section id="openclaw">
+        <h2>Openclaw</h2>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:gstack-openclaw-ceo-review</div>
+          <div class="cmd-meta"><span>category: openclaw</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">CEO review via Openclaw — prospettiva strategica esterna</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Decisioni strategiche importanti o pivot</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:gstack-openclaw-investigate</div>
+          <div class="cmd-meta"><span>category: openclaw</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Deep investigation tramite Openclaw</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Bug complesso o analisi competitiva</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:gstack-openclaw-retro</div>
+          <div class="cmd-meta"><span>category: openclaw</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Retrospettiva con peer review Openclaw</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Fine sprint per feedback esterno qualificato</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:gstack-openclaw-office-hours</div>
+          <div class="cmd-meta"><span>category: openclaw</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Office hours con team Openclaw</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Sessione collaborativa pianificata</span></div>
+        </div>
+      </section>
+
+      <!-- ─── EXTRAS ─── -->
+      <section id="extras">
+        <h2>Extras</h2>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:qa</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Quality assurance run — test suite + lint + type check</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Prima di /gstack:ship per validare qualità</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:qa-only</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Solo QA — senza modifiche al codice</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Verifica stato progetto senza eseguire fix</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:learn</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Sessione di apprendimento guidata</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Onboarding su nuova tecnologia o pattern</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:benchmark</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Benchmark performance del progetto</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Analisi bottleneck o confronto tra implementazioni</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:benchmark-models</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Benchmark tra modelli LLM per task specifico</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Scegliere il modello ottimale per un use case</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:skillify</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Trasforma un pattern ricorrente in skill installabile</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Consolidare pattern CIRA in skill riutilizzabile</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:make-pdf</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Genera PDF da documento o report</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Export documenti per stakeholder</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:scrape</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Scraping web con sintesi contestuale</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Raccolta dati da siti durante research</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:hackernews-frontpage</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Digest HackerNews frontpage con filtri rilevanza</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Briefing veloce sulle news tech del giorno</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:gstack-upgrade</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Aggiorna Gstack toolkit all'ultima versione</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Dopo nuova release Gstack</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:cso</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Chief Security Officer review — analisi sicurezza</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Audit sicurezza prima di deploy in produzione</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:context-save</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Salva contesto sessione per ripresa futura</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Fine sessione con lavoro in corso</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:context-restore</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Ripristina contesto sessione salvata</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Inizio sessione dopo /gstack:context-save</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:guard</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v0.1</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Guard rails — enforce regole e policy nel workflow</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Sessioni con agenti esterni o operazioni ad alto rischio</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gstack:codex</div>
+          <div class="cmd-meta"><span>category: extras</span><span>v1.0</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Code exploration — navigazione e comprensione codebase</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Onboarding su codebase esistente o audit tecnico</span></div>
+        </div>
+      </section>
+
+      <!-- ─── WORKFLOW END-TO-END ─── -->
+      <section id="workflows">
+        <h2>Workflow End-to-End</h2>
+
+        <div class="cmd-card" style="border-left-color: var(--success);">
+          <div class="cmd-name" style="color: var(--success);">Ship MVP rapido</div>
+          <div class="cmd-meta"><span>durata: 1-2 sessioni</span></div>
+          <div class="cmd-row"><span class="label">Pipeline</span><span class="value">
+            <ol style="margin:4px 0;padding-left:18px;line-height:2.2;">
+              <li><code>/gstack:plan</code> — pianificazione</li>
+              <li><code>/gstack:pair-agent</code> — esecuzione pair-programming</li>
+              <li><code>/gstack:ship</code> — deployment</li>
+              <li><code>/gstack:retro</code> — retrospettiva</li>
+            </ol>
+          </span></div>
+        </div>
+
+        <div class="cmd-card" style="border-left-color: var(--info);">
+          <div class="cmd-name" style="color: var(--info);">Design to Ship</div>
+          <div class="cmd-meta"><span>durata: 2-3 sessioni</span></div>
+          <div class="cmd-row"><span class="label">Pipeline</span><span class="value">
+            <ol style="margin:4px 0;padding-left:18px;line-height:2.2;">
+              <li><code>/gstack:design-consultation</code> — consulenza design</li>
+              <li><code>/gstack:design-html</code> — generazione HTML</li>
+              <li><code>/gstack:design-review</code> — review</li>
+              <li><code>/gstack:pair-agent</code> — coding</li>
+              <li><code>/gstack:ship</code> — deploy</li>
+            </ol>
+          </span></div>
+        </div>
+      </section>
+
+      <!-- ─── STACK INTEGRATION ─── -->
+      <section id="stack-integration">
+        <h2>Integrazione Stack</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>Relazione con Gstack</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>/gsd</code></td>
+              <td>Alternative: GSD è spec-heavy. gstack è ship-first. Sceglie via /costruiamo intervista.</td>
+            </tr>
+            <tr>
+              <td><code>/superpowers</code></td>
+              <td>Compatibile per TDD layer dentro pair-agent</td>
+            </tr>
+            <tr>
+              <td><code>/costruiamo</code></td>
+              <td>Path A2 in /costruiamo v2.5.0 flow</td>
+            </tr>
+            <tr>
+              <td style="color:var(--danger);">⚠ Warning</td>
+              <td style="color:var(--danger);">Non eseguire /gstack:plan parallelo a /gsd-plan-phase su stesso repo</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ─── ALL COMMANDS TABLE ─── -->
+      <section id="all-commands">
+        <h2>Tutti i Comandi (50)</h2>
+        <p style="color:var(--text-muted);font-size:13px;">Reference completo — tutte le skill gstack installate.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Comando</th>
+              <th>Categoria</th>
+              <th>Descrizione</th>
+              <th>Ver.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>/gstack:plan</code></td><td>plan</td><td>Pianificazione progetto</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:plan-ceo-review</code></td><td>plan</td><td>CEO perspective review</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:plan-design-review</code></td><td>plan</td><td>Design phase review</td><td>2.0</td></tr>
+            <tr><td><code>/gstack:plan-devex-review</code></td><td>plan</td><td>Developer experience review</td><td>2.0</td></tr>
+            <tr><td><code>/gstack:plan-eng-review</code></td><td>plan</td><td>Engineering phase review</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:plan-tune</code></td><td>plan</td><td>Piano tune &amp; optimize</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:autoplan</code></td><td>plan</td><td>Automatic review pipeline</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:pair-agent</code></td><td>execute</td><td>Pair programming LLM+verifier</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:investigate</code></td><td>execute</td><td>Deep investigation + synthesis</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:review</code></td><td>execute</td><td>Code review</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:careful</code></td><td>execute</td><td>Modalità cautela con checkpoint</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:ship</code></td><td>ship</td><td>Ship workflow: git+test+PR</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:land-and-deploy</code></td><td>ship</td><td>Land branch and deploy</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:canary</code></td><td>ship</td><td>Canary monitoring post-deploy</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:landing-report</code></td><td>ship</td><td>Landing report</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:document-release</code></td><td>ship</td><td>Documentazione release ufficiale</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:retro</code></td><td>retro</td><td>Weekly engineering retrospective</td><td>2.0</td></tr>
+            <tr><td><code>/gstack:health</code></td><td>retro</td><td>Project health check</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:design-consultation</code></td><td>design</td><td>Design consultation</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:design-html</code></td><td>design</td><td>Generate HTML from design</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:design-review</code></td><td>design</td><td>Design phase review</td><td>2.0</td></tr>
+            <tr><td><code>/gstack:design-shotgun</code></td><td>design</td><td>Rapid design shotgun approach</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:setup-deploy</code></td><td>infra</td><td>Setup deployment pipeline</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:setup-browser-cookies</code></td><td>infra</td><td>Setup browser cookies</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:open-gstack-browser</code></td><td>infra</td><td>Open shared Gstack browser</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:setup-gbrain</code></td><td>infra</td><td>Setup GBrain memoria distribuita</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:sync-gbrain</code></td><td>infra</td><td>Sync GBrain</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:unfreeze</code></td><td>infra</td><td>Unfreeze deploy</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:freeze</code></td><td>infra</td><td>Freeze deploy intenzionale</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:gstack-openclaw-ceo-review</code></td><td>openclaw</td><td>CEO review via Openclaw</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:gstack-openclaw-investigate</code></td><td>openclaw</td><td>Deep investigation Openclaw</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:gstack-openclaw-retro</code></td><td>openclaw</td><td>Retro con peer review Openclaw</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:gstack-openclaw-office-hours</code></td><td>openclaw</td><td>Office hours Openclaw</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:qa</code></td><td>extras</td><td>Quality assurance run</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:qa-only</code></td><td>extras</td><td>QA solo senza fix</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:learn</code></td><td>extras</td><td>Sessione apprendimento guidata</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:benchmark</code></td><td>extras</td><td>Benchmark performance</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:benchmark-models</code></td><td>extras</td><td>Benchmark modelli LLM</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:skillify</code></td><td>extras</td><td>Crea skill da pattern</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:make-pdf</code></td><td>extras</td><td>Genera PDF da documento</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:scrape</code></td><td>extras</td><td>Web scraping con sintesi</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:hackernews-frontpage</code></td><td>extras</td><td>Digest HackerNews</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:gstack-upgrade</code></td><td>extras</td><td>Aggiorna Gstack toolkit</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:cso</code></td><td>extras</td><td>Chief Security Officer review</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:context-save</code></td><td>extras</td><td>Salva contesto sessione</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:context-restore</code></td><td>extras</td><td>Ripristina contesto sessione</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:guard</code></td><td>extras</td><td>Guard rails e policy</td><td>0.1</td></tr>
+            <tr><td><code>/gstack:codex</code></td><td>extras</td><td>Code exploration</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:gsd-ns-review</code></td><td>extras</td><td>GSD namespace review</td><td>1.0</td></tr>
+            <tr><td><code>/gstack:root</code></td><td>extras</td><td>Root context setup</td><td>1.0</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <footer>Generato 2026-05-15 · Gstack v2.x · <a href="javascript:window.print()">Stampa / PDF</a></footer>
+    </main>
+  </div>
+  <script src="../assets/copy.js" defer></script>
+  <script src="../assets/search.js" defer></script>
+  <script src="../assets/glossary.js" defer></script>
+</body>
+</html>

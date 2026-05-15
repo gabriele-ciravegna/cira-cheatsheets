@@ -1,0 +1,2258 @@
+[
+  {
+    "tool": "gsd",
+    "name": "/gsd:debug",
+    "what": "Debug session per issue",
+    "when": "Quando necessario debug",
+    "href": "gsd/index.html",
+    "category": "micro-flow"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:do",
+    "what": "Esecuzione task diretto",
+    "when": "Quando necessario do",
+    "href": "gsd/index.html",
+    "category": "micro-flow"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:fast",
+    "what": "Fast-path execution minimal",
+    "when": "Quando necessario fast",
+    "href": "gsd/index.html",
+    "category": "micro-flow"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:plant-seed",
+    "what": "Pianta seed idea di progetto",
+    "when": "Quando necessario plant-seed",
+    "href": "gsd/index.html",
+    "category": "micro-flow"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:quick",
+    "what": "Quick task ad-hoc",
+    "when": "Quando necessario quick",
+    "href": "gsd/index.html",
+    "category": "micro-flow"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:sketch",
+    "what": "Sketch initiale di idea",
+    "when": "Quando necessario sketch",
+    "href": "gsd/index.html",
+    "category": "micro-flow"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:sketch-wrap-up",
+    "what": "Wrap-up sketch",
+    "when": "Quando necessario sketch-wrap-up",
+    "href": "gsd/index.html",
+    "category": "micro-flow"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:spike",
+    "what": "Technical spike investigation",
+    "when": "Quando necessario spike",
+    "href": "gsd/index.html",
+    "category": "micro-flow"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:spike-wrap-up",
+    "what": "Wrap-up spike",
+    "when": "Quando necessario spike-wrap-up",
+    "href": "gsd/index.html",
+    "category": "micro-flow"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:add-phase",
+    "what": "Crea una nuova phase nel progetto",
+    "when": "Quando necessario add-phase",
+    "href": "gsd/index.html",
+    "category": "phases"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:ai-integration-phase",
+    "what": "Phase specializzata per integrazioni IA",
+    "when": "Quando necessario ai-integration-phase",
+    "href": "gsd/index.html",
+    "category": "phases"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:discovery-phase",
+    "what": "Discovery iniziale per phase",
+    "when": "Quando necessario discovery-phase",
+    "href": "gsd/index.html",
+    "category": "phases"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:edit-phase",
+    "what": "Modifica configurazione phase",
+    "when": "Quando necessario edit-phase",
+    "href": "gsd/index.html",
+    "category": "phases"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:insert-phase",
+    "what": "Inserisci phase in mezzo",
+    "when": "Quando necessario insert-phase",
+    "href": "gsd/index.html",
+    "category": "phases"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:mvp-phase",
+    "what": "MVP-specific phase",
+    "when": "Quando necessario mvp-phase",
+    "href": "gsd/index.html",
+    "category": "phases"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:remove-phase",
+    "what": "Rimuovi phase dal progetto",
+    "when": "Quando necessario remove-phase",
+    "href": "gsd/index.html",
+    "category": "phases"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:secure-phase",
+    "what": "Phase per security hardening",
+    "when": "Quando necessario secure-phase",
+    "href": "gsd/index.html",
+    "category": "phases"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:spec-phase",
+    "what": "Spec fase in dettaglio",
+    "when": "Quando necessario spec-phase",
+    "href": "gsd/index.html",
+    "category": "phases"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:ui-phase",
+    "what": "UI-specific phase",
+    "when": "Quando necessario ui-phase",
+    "href": "gsd/index.html",
+    "category": "phases"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:ultraplan-phase",
+    "what": "Ultra-detailed planning",
+    "when": "Quando necessario ultraplan-phase",
+    "href": "gsd/index.html",
+    "category": "phases"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:discuss-phase-assumptions",
+    "what": "Discuti assumptions specifiche",
+    "when": "Quando necessario discuss-phase-assumptions",
+    "href": "gsd/index.html",
+    "category": "planning"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:discuss-phase-power",
+    "what": "Modalità power per discussion intensiva",
+    "when": "Quando necessario discuss-phase-power",
+    "href": "gsd/index.html",
+    "category": "planning"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:plan-milestone-gaps",
+    "what": "Piano per gaps di milestone",
+    "when": "Quando necessario plan-milestone-gaps",
+    "href": "gsd/index.html",
+    "category": "planning"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:plan-review-convergence",
+    "what": "Review convergenza di plan",
+    "when": "Quando necessario plan-review-convergence",
+    "href": "gsd/index.html",
+    "category": "planning"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:autonomous",
+    "what": "Esecuzione autonoma senza intervento",
+    "when": "Quando necessario autonomous",
+    "href": "gsd/index.html",
+    "category": "execution"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:execute-plan",
+    "what": "Esegui singolo PLAN.md",
+    "when": "Quando necessario execute-plan",
+    "href": "gsd/index.html",
+    "category": "execution"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:audit-fix",
+    "what": "Audit e fix di issues trovati",
+    "when": "Quando necessario audit-fix",
+    "href": "gsd/index.html",
+    "category": "review-quality"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:audit-milestone",
+    "what": "Audit completo di uno milestone",
+    "when": "Quando necessario audit-milestone",
+    "href": "gsd/index.html",
+    "category": "review-quality"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:audit-uat",
+    "what": "User acceptance test audit",
+    "when": "Quando necessario audit-uat",
+    "href": "gsd/index.html",
+    "category": "review-quality"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:code-review",
+    "what": "Code review completo",
+    "when": "Quando necessario code-review",
+    "href": "gsd/index.html",
+    "category": "review-quality"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:code-review-fix",
+    "what": "Fix issues da code review",
+    "when": "Quando necessario code-review-fix",
+    "href": "gsd/index.html",
+    "category": "review-quality"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:eval-review",
+    "what": "Evaluation review di work",
+    "when": "Quando necessario eval-review",
+    "href": "gsd/index.html",
+    "category": "review-quality"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:ui-review",
+    "what": "Review UI implementation",
+    "when": "Quando necessario ui-review",
+    "href": "gsd/index.html",
+    "category": "review-quality"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:validate-phase",
+    "what": "Valida phase completion",
+    "when": "Quando necessario validate-phase",
+    "href": "gsd/index.html",
+    "category": "verify-test"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:verify-phase",
+    "what": "Verifica phase results",
+    "when": "Quando necessario verify-phase",
+    "href": "gsd/index.html",
+    "category": "verify-test"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:graduation",
+    "what": "Graduation da beta a production",
+    "when": "Quando necessario graduation",
+    "href": "gsd/index.html",
+    "category": "output-shipping"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:pr-branch",
+    "what": "Crea branch da PR",
+    "when": "Quando necessario pr-branch",
+    "href": "gsd/index.html",
+    "category": "output-shipping"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:list-workspaces",
+    "what": "Elenca workspace disponibili",
+    "when": "Quando necessario list-workspaces",
+    "href": "gsd/index.html",
+    "category": "workspace"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:new-workspace",
+    "what": "Crea workspace nuovo",
+    "when": "Quando necessario new-workspace",
+    "href": "gsd/index.html",
+    "category": "workspace"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:remove-workspace",
+    "what": "Rimuovi workspace",
+    "when": "Quando necessario remove-workspace",
+    "href": "gsd/index.html",
+    "category": "workspace"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:extract-learnings",
+    "what": "Estrai learnings da phase",
+    "when": "Quando necessario extract-learnings",
+    "href": "gsd/index.html",
+    "category": "management"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:health",
+    "what": "Health check del progetto",
+    "when": "Quando necessario health",
+    "href": "gsd/index.html",
+    "category": "management"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:manager",
+    "what": "Manager view di progetto",
+    "when": "Quando necessario manager",
+    "href": "gsd/index.html",
+    "category": "management"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:milestone-summary",
+    "what": "Summary di milestone completato",
+    "when": "Quando necessario milestone-summary",
+    "href": "gsd/index.html",
+    "category": "management"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:progress",
+    "what": "Mostra progresso corrente",
+    "when": "Quando necessario progress",
+    "href": "gsd/index.html",
+    "category": "management"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:session-report",
+    "what": "Report della sessione",
+    "when": "Quando necessario session-report",
+    "href": "gsd/index.html",
+    "category": "management"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:stats",
+    "what": "Mostra statistiche",
+    "when": "Quando necessario stats",
+    "href": "gsd/index.html",
+    "category": "management"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:import",
+    "what": "Importa contexti da file",
+    "when": "Quando necessario import",
+    "href": "gsd/index.html",
+    "category": "context"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:ingest-docs",
+    "what": "Ingesta documentazione esterna",
+    "when": "Quando necessario ingest-docs",
+    "href": "gsd/index.html",
+    "category": "context"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:sync-skills",
+    "what": "Sync GSD skill aggiornate",
+    "when": "Quando necessario sync-skills",
+    "href": "gsd/index.html",
+    "category": "context"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:help",
+    "what": "Help e documentazione GSD",
+    "when": "Quando necessario help",
+    "href": "gsd/index.html",
+    "category": "meta"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:settings",
+    "what": "Configura GSD settings",
+    "when": "Quando necessario settings",
+    "href": "gsd/index.html",
+    "category": "meta"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:settings-advanced",
+    "what": "Advanced settings",
+    "when": "Quando necessario settings-advanced",
+    "href": "gsd/index.html",
+    "category": "meta"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:settings-integrations",
+    "what": "Configura integrazioni",
+    "when": "Quando necessario settings-integrations",
+    "href": "gsd/index.html",
+    "category": "meta"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:update",
+    "what": "Update GSD version",
+    "when": "Quando necessario update",
+    "href": "gsd/index.html",
+    "category": "meta"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:add-backlog",
+    "what": "Aggiungi item al backlog senza creare phase",
+    "when": "Quando necessario add-backlog",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:add-tests",
+    "what": "Aggiungi test coverage per un modulo",
+    "when": "Quando necessario add-tests",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:add-todo",
+    "what": "Aggiungi task alla lista TODO",
+    "when": "Quando necessario add-todo",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:analyze-dependencies",
+    "what": "Analizza dipendenze di progetto",
+    "when": "Quando necessario analyze-dependencies",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:check-todos",
+    "what": "Verifica stato dei TODO",
+    "when": "Quando necessario check-todos",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:cleanup",
+    "what": "Pulizia codebase e artifacts",
+    "when": "Quando necessario cleanup",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:complete-milestone",
+    "what": "Marca milestone come completo",
+    "when": "Quando necessario complete-milestone",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:diagnose-issues",
+    "what": "Diagnostica problemi di progetto",
+    "when": "Quando necessario diagnose-issues",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:discuss-phase",
+    "what": "Discussion profonda per decisions",
+    "when": "Quando necessario discuss-phase",
+    "href": "gsd/index.html",
+    "category": "core-loop"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:docs-update",
+    "what": "Aggiorna documentazione",
+    "when": "Quando necessario docs-update",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:execute-phase",
+    "what": "Esegui tutti i plan di una phase",
+    "when": "Quando necessario execute-phase",
+    "href": "gsd/index.html",
+    "category": "core-loop"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:explore",
+    "what": "Esplorazione codebase",
+    "when": "Quando necessario explore",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:forensics",
+    "what": "Forensics investigazione debug",
+    "when": "Quando necessario forensics",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:inbox",
+    "what": "Gestione inbox GSD",
+    "when": "Quando necessario inbox",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:list-phase-assumptions",
+    "what": "Elenca assumptions di phase",
+    "when": "Quando necessario list-phase-assumptions",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:map-codebase",
+    "what": "Mappa struttura codebase",
+    "when": "Quando necessario map-codebase",
+    "href": "gsd/index.html",
+    "category": "core-loop"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:new-milestone",
+    "what": "Crea nuovo milestone",
+    "when": "Quando necessario new-milestone",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:new-project",
+    "what": "Inizializza progetto nuovo",
+    "when": "Quando necessario new-project",
+    "href": "gsd/index.html",
+    "category": "core-loop"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:next",
+    "what": "Auto-advance fase successiva",
+    "when": "Quando necessario next",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:node-repair",
+    "what": "Riparazione node specifico",
+    "when": "Quando necessario node-repair",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:note",
+    "what": "Aggiungi note al progetto",
+    "when": "Quando necessario note",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:pause-work",
+    "what": "Pausa lavoro current",
+    "when": "Quando necessario pause-work",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:plan-phase",
+    "what": "Crea PLAN.md dettagliato",
+    "when": "Quando necessario plan-phase",
+    "href": "gsd/index.html",
+    "category": "core-loop"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:profile-user",
+    "what": "Profile user behavior",
+    "when": "Quando necessario profile-user",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:reapply-patches",
+    "what": "Riapplica patches salvate",
+    "when": "Quando necessario reapply-patches",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:resume-project",
+    "what": "Riprendi progetto pausato",
+    "when": "Quando necessario resume-project",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:review",
+    "what": "Review generale di work",
+    "when": "Quando necessario review",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:scan",
+    "what": "Scan progetto per issues",
+    "when": "Quando necessario scan",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:ship",
+    "what": "Crea PR e mergia work",
+    "when": "Quando necessario ship",
+    "href": "gsd/index.html",
+    "category": "core-loop"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:thread",
+    "what": "Gestione thread conversazione",
+    "when": "Quando necessario thread",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:transition",
+    "what": "Transizione tra fasi",
+    "when": "Quando necessario transition",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:undo",
+    "what": "Undo ultima operazione",
+    "when": "Quando necessario undo",
+    "href": "gsd/index.html",
+    "category": "other"
+  },
+  {
+    "tool": "gsd",
+    "name": "/gsd:verify-work",
+    "what": "UAT conversazionale",
+    "when": "Quando necessario verify-work",
+    "href": "gsd/index.html",
+    "category": "core-loop"
+  },
+  {
+    "tool": "gstack",
+    "name": "/gstack:plan",
+    "what": "Crea piano dettagliato per progetto, analizza baseline, prepara strategie",
+    "when": "Inizio progetto o fase nuova",
+    "href": "gstack/index.html",
+    "category": "plan"
+  },
+  {
+    "tool": "gstack",
+    "name": "/gstack:pair-agent",
+    "what": "Coppia LLM+verifier per execution con peer review continuo",
+    "when": "Dopo /gstack:plan. Execution rapido con quality gate integrato",
+    "href": "gstack/index.html",
+    "category": "execute"
+  },
+  {
+    "tool": "gstack",
+    "name": "/gstack:ship",
+    "what": "Rilevamento ramo base, test, review diff, bump VERSION, CHANGELOG, commit, push, PR",
+    "when": "Codice pronto per deployment",
+    "href": "gstack/index.html",
+    "category": "ship"
+  },
+  {
+    "tool": "gstack",
+    "name": "/gstack:retro",
+    "what": "Retrospettiva settimanale. Analizza git history, work patterns, metriche qualità",
+    "when": "Fine settimana/sprint",
+    "href": "gstack/index.html",
+    "category": "retro"
+  },
+  {
+    "tool": "gstack",
+    "name": "/gstack:pair-agent (core)",
+    "what": "Connessione remota: setup key per agenti OpenClaw/Hermes/Codex/Cursor",
+    "when": "Condivisione browser con altro agente",
+    "href": "gstack/index.html",
+    "category": "execute"
+  },
+  {
+    "tool": "superpowers",
+    "name": "brainstorming",
+    "what": "Esplorazione idee design multi-angle. Domande chiarificatrici → 2-3 approcci → spec design → documento salvato → transizione a writing-plans",
+    "when": "Feature complessa. UI design. Architettura non-banale. SEMPRE prima di scrivere codice, anche per task 'semplici'",
+    "href": "superpowers/index.html",
+    "category": "discovery"
+  },
+  {
+    "tool": "superpowers",
+    "name": "writing-plans",
+    "what": "Crea comprehensive implementation plan con bite-sized task TDD-first. Specifica file da toccare, codice, test, come verificare",
+    "when": "Dopo brainstorming approved. Design doc finalized. Prima di execute-phase",
+    "href": "superpowers/index.html",
+    "category": "planning"
+  },
+  {
+    "tool": "superpowers",
+    "name": "tdd-workflows-tdd-red",
+    "what": "Genera failing test che definiscono expected behavior PRIMA di implementazione. Red phase TDD",
+    "when": "Starting TDD red phase. Edge case coverage needed. Test-first discipline",
+    "href": "superpowers/index.html",
+    "category": "tdd"
+  },
+  {
+    "tool": "superpowers",
+    "name": "tdd-workflows-tdd-green",
+    "what": "Implementa minimal code per far passare failing test. Green phase TDD",
+    "when": "Dopo tdd-red. Tests exist and failing. Need to make them pass",
+    "href": "superpowers/index.html",
+    "category": "tdd"
+  },
+  {
+    "tool": "superpowers",
+    "name": "tdd-workflows-tdd-refactor",
+    "what": "Refactor codice con safety net test completo. Refactor phase TDD. Usa tdd-orchestrator agent (Opus)",
+    "when": "Dopo green PASSED. Tests stable. Code smell detectato. Confidence needed da test coverage",
+    "href": "superpowers/index.html",
+    "category": "tdd"
+  },
+  {
+    "tool": "superpowers",
+    "name": "tdd-workflows-tdd-cycle",
+    "what": "Esegui comprehensive TDD workflow red-green-refactor con strict discipline. Full cycle orchestration",
+    "when": "Intera feature implementation. Coverage 80%+ richiesto. Clean code non-negotiable",
+    "href": "superpowers/index.html",
+    "category": "tdd"
+  },
+  {
+    "tool": "superpowers",
+    "name": "multi-agent-brainstorming",
+    "what": "Design review strutturato con multiple specialized agent roles. NOT parallel brainstorm → SEQUENTIAL design review with enforced mandate",
+    "when": "Architettura complessa. Critical design decisions. Team review simulation. Assumption validation needed",
+    "href": "superpowers/index.html",
+    "category": "discovery"
+  },
+  {
+    "tool": "superpowers",
+    "name": "code-review-excellence",
+    "what": "Transform code review da gatekeeping a knowledge sharing. Constructive feedback + systematic analysis. Focus correctness/security/perf/maintainability",
+    "when": "PR review. Code changes exist. Mentoring developer via feedback. Security/perf audit",
+    "href": "superpowers/index.html",
+    "category": "review"
+  },
+  {
+    "tool": "superpowers",
+    "name": "executing-plans",
+    "what": "Load implementation plan. Execute task-by-task in separate session. TodoWrite tracking. Checkpoint reviews",
+    "when": "Plan already written (da writing-plans). New session. Tasks need execution step-by-step. Subagent access limited",
+    "href": "superpowers/index.html",
+    "category": "execute"
+  },
+  {
+    "tool": "superpowers",
+    "name": "skill-router",
+    "what": "Interview user con targeted questions. Raccomanda best skill from library per loro goal. When unsure which skill to use",
+    "when": "User says 'I don't know where to start' or 'which skill should I use'. Vague goal without clear method",
+    "href": "superpowers/index.html",
+    "category": "meta"
+  },
+  {
+    "tool": "superpowers",
+    "name": "context-guardian",
+    "what": "Proteggi contexto critico prima compattazione automatica. Snapshot + integrità verifica. Zero information loss",
+    "when": "Progetto tecnico complesso (21+ skills, security audit, big refactor). Quando context proche del limite",
+    "href": "superpowers/index.html",
+    "category": "meta"
+  },
+  {
+    "tool": "ruflo",
+    "name": "",
+    "what": "",
+    "when": "",
+    "href": "ruflo/index.html",
+    "category": "PRIMARY"
+  },
+  {
+    "tool": "ruflo",
+    "name": "",
+    "what": "",
+    "when": "",
+    "href": "ruflo/index.html",
+    "category": "ADVANCED"
+  },
+  {
+    "tool": "ruflo",
+    "name": "",
+    "what": "",
+    "when": "",
+    "href": "ruflo/index.html",
+    "category": "ANALYSIS"
+  },
+  {
+    "tool": "ruflo",
+    "name": "",
+    "what": "",
+    "when": "",
+    "href": "ruflo/index.html",
+    "category": "UTILITY"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Multi-persona code review. Spawns 26 specialized reviewer agents (syntax, security, testing, perf, maintainability, domain). Returns structured verdict + learnings.",
+    "when": "After writing code, before commit. Mandatory pre-PR.",
+    "href": "compound-engineering/index.html",
+    "category": "review"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Plan feature/phase with learnings from prior cycles. Scans COMPOUND.md for related decisions + gotchas.",
+    "when": "Start of feature planning phase.",
+    "href": "compound-engineering/index.html",
+    "category": "planning"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Harvest learnings from code review verdicts. Upsert COMPOUND.md registry (decisions, anti-patterns, proven patterns).",
+    "when": "After ce-code-review. Consolidates knowledge.",
+    "href": "compound-engineering/index.html",
+    "category": "learning"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Init git worktree + .ce-audit directory for feature branch. Auto-stages audit files.",
+    "when": "Start feature work after plan.",
+    "href": "compound-engineering/index.html",
+    "category": "git"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Full PR audit: code review + changelog scan + dependency check + test coverage.",
+    "when": "Before pushing PR. Batch audit on multiple features.",
+    "href": "compound-engineering/index.html",
+    "category": "review"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Audit single codebase for agent-readiness. Can agents understand + modify this code safely?",
+    "when": "Legacy repos. Before integrating into /costruiamo orchestration.",
+    "href": "compound-engineering/index.html",
+    "category": "specialization"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Enforce CE git conventions: commit msg format, branch naming, worktree hygiene, audit commit structure.",
+    "when": "Per commit or pre-push hook.",
+    "href": "compound-engineering/index.html",
+    "category": "git"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "7-persona review of docs: clarity, completeness, grammar, structure, SEO, localization, accessibility.",
+    "when": "PRs with docs changes. README rewrites.",
+    "href": "compound-engineering/index.html",
+    "category": "review"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Validate research quality: sources cited, bias check, reproducibility, scope boundaries.",
+    "when": "Before publishing research, internal whitepapers.",
+    "href": "compound-engineering/index.html",
+    "category": "research"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "2-persona design review: feasibility + UX coherence. Scans Figma tokens + design system.",
+    "when": "Design specs before handoff to frontend.",
+    "href": "compound-engineering/index.html",
+    "category": "design"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "OWASP deep-dive on auth, crypto, data handling, injection, CORS, rate-limiting.",
+    "when": "Pre-release security gate. Auth/payment code mandatory.",
+    "href": "compound-engineering/index.html",
+    "category": "security"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Identify perf bottlenecks: N+1 queries, unbounded loops, memory leaks, bundle bloat.",
+    "when": "Before production deployment. Optimization cycles.",
+    "href": "compound-engineering/index.html",
+    "category": "performance"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Audit test suite: unit/integration/E2E balance, coverage >=80%, mutation test readiness.",
+    "when": "Feature merge gate. Regression suite maintenance.",
+    "href": "compound-engineering/index.html",
+    "category": "testing"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "TypeScript-specific: type inference, generics correctness, tsconfig validation, strict mode compliance.",
+    "when": "TypeScript repos before ce-code-review.",
+    "href": "compound-engineering/index.html",
+    "category": "specialist"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Export COMPOUND.md learnings as markdown, JSON, or HTML. Filter by date/category/tag.",
+    "when": "Onboard new team member. Share learnings across teams.",
+    "href": "compound-engineering/index.html",
+    "category": "learning"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Generate refactoring roadmap from code review verdicts + COMPOUND.md anti-patterns.",
+    "when": "Legacy codebase cleanup. Planned tech debt paydown.",
+    "href": "compound-engineering/index.html",
+    "category": "refactoring"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Teach CE system to new custom agent. Ingest COMPOUND.md learnings + code review patterns.",
+    "when": "Adding new domain expert agent to ce-code-review roster.",
+    "href": "compound-engineering/index.html",
+    "category": "specialization"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Audit CIRA custom skill for CE compliance: naming, audit-readiness, COMPOUND.md integration.",
+    "when": "After /costruiamo skill generation. Before merging to master-index.",
+    "href": "compound-engineering/index.html",
+    "category": "integration"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Auto-detect developer workflow from git history. Suggest CE touch-points for cycle improvement.",
+    "when": "Team process optimization. Identify workflow anti-patterns.",
+    "href": "compound-engineering/index.html",
+    "category": "analysis"
+  },
+  {
+    "tool": "compound-engineering",
+    "name": "",
+    "what": "Run any ce-* command in headless mode (no user prompts). Pipe output to scripts/CI.",
+    "when": "CI/CD pipelines. Automated compliance gates.",
+    "href": "compound-engineering/index.html",
+    "category": "integration"
+  },
+  {
+    "tool": "agent-teams",
+    "name": "Task({subagent_type, prompt, description, ...})",
+    "what": "Spawn agente isolato, esegui prompt self-contained, ritorna risultato finale",
+    "when": "Ricerca indipendente, audit parallelo, code-review isolato, source-specific investigation",
+    "href": "agent-teams/index.html",
+    "category": "subagents"
+  },
+  {
+    "tool": "agent-teams",
+    "name": "TeamCreate({name, members, model, ...})",
+    "what": "Crea persistent team di N agent che collaborano via shared task list + direct messaging",
+    "when": "Board debate, PR multi-reviewer, complex refactor, hypothesis testing",
+    "href": "agent-teams/index.html",
+    "category": "teams"
+  },
+  {
+    "tool": "agent-teams",
+    "name": "Lead prompts team (natural language)",
+    "what": "Main agent (lead) invia messaggio al team. Team discute, coordina, ritorna consensus.",
+    "when": "Ogni turno della conversazione team",
+    "href": "agent-teams/index.html",
+    "category": "teams"
+  },
+  {
+    "tool": "cira-custom",
+    "name": "/costruiamo X",
+    "what": "Flow CIRA per costruire qualcosa di nuovo — sito, app, agente Telegram, MVP, sistema. v2.5.0 INTERVIEW-FIRST: nessun framework default, routing emerge da intervista lunga (10-15 domande) → 1-3 path proposti con razionale → utente sceglie → annuncio step+comandi → execute con checkpoint.",
+    "when": "Inizio progetto nuovo. Trigger: 'costruiamo X', 'facciamo l app', 'lets build'",
+    "href": "cira-custom/index.html",
+    "category": "build"
+  },
+  {
+    "tool": "cira-custom",
+    "name": "orchestra",
+    "what": "Rituale di apertura OBBLIGATORIO su ogni task complesso — scansiona risorse candidate, mostra longlist + shortlist + scartato con motivi, annuncia sequenza operativa, e ATTENDE CONFERMA prima di muovere.",
+    "when": "Query multi-aspetto, coaching personale, routing skill",
+    "href": "cira-custom/index.html",
+    "category": "router"
+  },
+  {
+    "tool": "cira-custom",
+    "name": "skill-creator-cira",
+    "what": "Crea, modifica e fa evolvere skill per il sistema CIRA Management. Fonde il core Anthropic skill-creator con i 3 moduli del neural network CIRA (wikilinks, anti-conflitto, auto-aggiornamento) in una checklist canonica di 8 moduli — M1-M8.",
+    "when": "Creare/modificare skill CIRA-ready (M1-M8 checklist)",
+    "href": "cira-custom/index.html",
+    "category": "router"
+  },
+  {
+    "tool": "cira-custom",
+    "name": "rete-neurale-da-fonte",
+    "what": "Meta-skill che trasforma una fonte (libro, canale YouTube, corpus multi-script) in skill CIRA-ready M1-M8 integrate nella rete neurale. Framework a 7 sessioni A-G con orchestrazione agenti.",
+    "when": "Estrarre rete neurale skill da corpus testuale, pipeline automatica",
+    "href": "cira-custom/index.html",
+    "category": "router"
+  },
+  {
+    "tool": "cira-custom",
+    "name": "cira-diagnosis-protocol",
+    "what": "Protocollo di diagnosi strategico CIRA Management — analizza ogni nuovo prospect/cliente con 11 framework (McKinsey, Porter, Aristotele, Greene, Kahneman, Aurelio, Finance, Stochastic) in sequenza rigida e genera un Diagnosis Document PRIMA di ogni offerta.",
+    "when": "Pre-diagnosi cliente: recap → competitor → market → synthesis",
+    "href": "cira-custom/index.html",
+    "category": "diagnostics"
+  },
+  {
+    "tool": "cira-custom",
+    "name": "orchestratore-siti",
+    "what": "Layer specializzato PRE-/costruiamo. Si attiva quando il task riguarda un sito (landing, ecommerce, dashboard pubblico, redesign). Carica la knowledge base canonica CIRA per siti, impone Phase 1 PRE-BUILD QUESTIONS, sceglie la combo design in COMPATIBILITY-MATRIX, POI delega a /costruiamo.",
+    "when": "Build sito multipagina, design+content, landing page",
+    "href": "cira-custom/index.html",
+    "category": "build"
+  },
+  {
+    "tool": "cira-custom",
+    "name": "app-builder",
+    "what": "Orchestratore che da una richiesta in linguaggio naturale porta a una app full-stack: classifica il tipo di progetto (SaaS, landing, mobile, CLI, API...), sceglie lo stack, scaffolda la directory, coordina agenti specializzati.",
+    "when": "Costruire applicazione web/mobile end-to-end, full-stack da zero",
+    "href": "cira-custom/index.html",
+    "category": "build"
+  },
+  {
+    "tool": "cira-custom",
+    "name": "saas-mvp-launcher",
+    "what": "Roadmap operativa per portare un'idea SaaS a MVP in produzione in 4-6 settimane. Copre il cantiere intero — validazione, scelta stack moderno 2026, schema DB multi-tenant, auth via provider, pagamenti Stripe, deploy, checklist pre-launch.",
+    "when": "Lanciare MVP SaaS con stack predefinito, roadmap operativa",
+    "href": "cira-custom/index.html",
+    "category": "build"
+  },
+  {
+    "tool": "cira-custom",
+    "name": "founders-randolph-test-driven",
+    "what": "Skill-autore su Marc Randolph (That Will Never Work, Netflix 1997-2002) — founder che sostituisce l'epifania con il test disciplinato, lo scrappy MVP e la persistenza verso il no.",
+    "when": "Mentore Marc Randolph — scrappy MVP, test-driven, nobody knows anything",
+    "href": "cira-custom/index.html",
+    "category": "mentori"
+  },
+  {
+    "tool": "cira-custom",
+    "name": "founders-culture-design",
+    "what": "Hub cross-atoms su CULTURA AZIENDALE COME SISTEMA DI FILTRI / ACCOUNTABILITY / HIRING — sei founder (Bezos, Jobs, Randolph, Branson, Marchionne, Musk) sul tema cultura come meccanismo di selezione radicale.",
+    "when": "Cultura aziendale come filtro — Bezos/Jobs/Randolph/Branson/Marchionne/Musk",
+    "href": "cira-custom/index.html",
+    "category": "mentori"
+  },
+  {
+    "tool": "cira-custom",
+    "name": "founders-first-principles",
+    "what": "Hub cross-atoms su first principles applicato dai founder (Musk, Bezos, Jobs, Marchionne, Randolph, Branson). Gemello operativo di aristotle-first-principles — qui smontaggio quantitativo applicato al business.",
+    "when": "Decomposizione first-principles da founder mindset, working backwards",
+    "href": "cira-custom/index.html",
+    "category": "mentori"
+  },
+  {
+    "tool": "cira-custom",
+    "name": "aristotle-first-principles",
+    "what": "First principles strategic deconstruction for when you're stuck and don't know why. Strips away inherited assumptions, finds irreducible truths, and rebuilds solutions from zero.",
+    "when": "Decostruzione strategica bloccato + perché, quando il convenzionale gira a vuoto",
+    "href": "cira-custom/index.html",
+    "category": "pensiero"
+  },
+  {
+    "tool": "cira-custom",
+    "name": "sinek-golden-circle",
+    "what": "Framework Simon Sinek per la comunicazione WHY-first e la leadership ispirante. Comunica dall'interno verso l'esterno, partendo dal WHY.",
+    "when": "Why-How-What positioning brand/offer, leadership ispirante",
+    "href": "cira-custom/index.html",
+    "category": "pensiero"
+  },
+  {
+    "tool": "cira-custom",
+    "name": "network-functional-probe",
+    "what": "Probe funzionale settimanale della rete neurale CIRA. Lancia 10 query realistiche del lavoro Gabriele e verifica che le skill attese si attivino davvero via match deterministico sui trigger frontmatter. Output verde/giallo/rosso.",
+    "when": "Probe settimanale per verificare routing skill e activation della rete neurale",
+    "href": "cira-custom/index.html",
+    "category": "diagnostics"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "claude",
+    "what": "Avvia Claude Code",
+    "when": "Development",
+    "href": "claude-code-basics/index.html",
+    "category": "basics"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "claude --version",
+    "what": "Mostra versione",
+    "when": "Diagnostica",
+    "href": "claude-code-basics/index.html",
+    "category": "basics"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "claude --help",
+    "what": "Mostra help completo",
+    "when": "Scoperta comandi",
+    "href": "claude-code-basics/index.html",
+    "category": "basics"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "claude project new",
+    "what": "Crea nuovo progetto",
+    "when": "Nuovo workflow",
+    "href": "claude-code-basics/index.html",
+    "category": "basics"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "claude project list",
+    "what": "Lista tutti i progetti",
+    "when": "Gestione progetti",
+    "href": "claude-code-basics/index.html",
+    "category": "basics"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "claude project delete",
+    "what": "Cancella progetto",
+    "when": "Pulizia",
+    "href": "claude-code-basics/index.html",
+    "category": "basics"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "claude config",
+    "what": "Mostra configurazione",
+    "when": "Diagnostica config",
+    "href": "claude-code-basics/index.html",
+    "category": "basics"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "claude auth",
+    "what": "Gestisci autenticazione",
+    "when": "Setup API key",
+    "href": "claude-code-basics/index.html",
+    "category": "basics"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "/gsd",
+    "what": "Get Shit Done workflow",
+    "when": "Spec-driven development",
+    "href": "claude-code-basics/index.html",
+    "category": "slash_commands"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "/plan",
+    "what": "Planning agent",
+    "when": "Architecting features",
+    "href": "claude-code-basics/index.html",
+    "category": "slash_commands"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "/tdd",
+    "what": "Test-driven development guide",
+    "when": "Escribiendo tests primero",
+    "href": "claude-code-basics/index.html",
+    "category": "slash_commands"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "/code-review",
+    "what": "Code review agent",
+    "when": "Quality check post-implement",
+    "href": "claude-code-basics/index.html",
+    "category": "slash_commands"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "/build-fix",
+    "what": "Build error resolver",
+    "when": "Debug failed builds",
+    "href": "claude-code-basics/index.html",
+    "category": "slash_commands"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "/clear",
+    "what": "Pulisce contesto sessione",
+    "when": "Fresh start",
+    "href": "claude-code-basics/index.html",
+    "category": "slash_commands"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "/compact",
+    "what": "Compatta contesto",
+    "when": "Ridurre token usage",
+    "href": "claude-code-basics/index.html",
+    "category": "slash_commands"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "/evolve",
+    "what": "Learn from patterns",
+    "when": "Sessione 10+ su stesso progetto",
+    "href": "claude-code-basics/index.html",
+    "category": "slash_commands"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "/learn",
+    "what": "Memorizza decisione",
+    "when": "Record importante insegnamento",
+    "href": "claude-code-basics/index.html",
+    "category": "slash_commands"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "/e2e",
+    "what": "E2E test runner",
+    "when": "Critical user flows",
+    "href": "claude-code-basics/index.html",
+    "category": "slash_commands"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "/security",
+    "what": "Security review",
+    "when": "Auth/payment/data code",
+    "href": "claude-code-basics/index.html",
+    "category": "slash_commands"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Option+T (macOS) / Alt+T (Win/Linux)",
+    "what": "Toggle extended thinking",
+    "when": "Complex reasoning",
+    "href": "claude-code-basics/index.html",
+    "category": "keyboard_shortcuts"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Ctrl+G",
+    "what": "Plan Mode",
+    "when": "Structured multi-step workflow",
+    "href": "claude-code-basics/index.html",
+    "category": "keyboard_shortcuts"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Ctrl+O",
+    "what": "Verbose thinking output",
+    "when": "Debug reasoning",
+    "href": "claude-code-basics/index.html",
+    "category": "keyboard_shortcuts"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Cmd+Shift+M",
+    "what": "Switch model",
+    "when": "Scegli Haiku/Sonnet/Opus",
+    "href": "claude-code-basics/index.html",
+    "category": "keyboard_shortcuts"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Left arrow (sidebar)",
+    "what": "Agent View dashboard",
+    "when": "Monitor paralleli agents",
+    "href": "claude-code-basics/index.html",
+    "category": "keyboard_shortcuts"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Cmd+Shift+W",
+    "what": "Git worktree create",
+    "when": "Parallel branch work",
+    "href": "claude-code-basics/index.html",
+    "category": "keyboard_shortcuts"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Cmd+,",
+    "what": "Settings menu",
+    "when": "Config model/hooks/permissions",
+    "href": "claude-code-basics/index.html",
+    "category": "keyboard_shortcuts"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Cmd+/",
+    "what": "Comandi help",
+    "when": "In-app reference",
+    "href": "claude-code-basics/index.html",
+    "category": "keyboard_shortcuts"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "SessionStart",
+    "what": "Trigger all'inizio sessione",
+    "when": "Load context, init cron, arm monitors",
+    "href": "claude-code-basics/index.html",
+    "category": "hooks"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "PreToolUse",
+    "what": "Before tool execution",
+    "when": "Validate params, log call",
+    "href": "claude-code-basics/index.html",
+    "category": "hooks"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "PostToolUse",
+    "what": "After tool execution",
+    "when": "Auto-format, verify, alert",
+    "href": "claude-code-basics/index.html",
+    "category": "hooks"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Stop",
+    "what": "When session ends",
+    "when": "Final checks, save state",
+    "href": "claude-code-basics/index.html",
+    "category": "hooks"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "UserPromptSubmit",
+    "what": "Before user prompt processed",
+    "when": "PII filter, routing, priority detection",
+    "href": "claude-code-basics/index.html",
+    "category": "hooks"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Custom hook",
+    "what": "User-defined triggers",
+    "when": "Project-specific automation",
+    "href": "claude-code-basics/index.html",
+    "category": "hooks"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Create skill",
+    "what": "Definisci custom command",
+    "when": "Repeated workflow",
+    "href": "claude-code-basics/index.html",
+    "category": "skills"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Skill SKILL.md structure",
+    "what": "Standard skill definition",
+    "when": "Document skill properly",
+    "href": "claude-code-basics/index.html",
+    "category": "skills"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Skill trigger",
+    "what": "Invoke custom skill",
+    "when": "Use installed skill",
+    "href": "claude-code-basics/index.html",
+    "category": "skills"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Install local skill",
+    "what": "Add skill da file",
+    "when": "Non-published skill",
+    "href": "claude-code-basics/index.html",
+    "category": "skills"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Install remote skill",
+    "what": "Clone from repo",
+    "when": "Community skills",
+    "href": "claude-code-basics/index.html",
+    "category": "skills"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "List skills",
+    "what": "View installed skills",
+    "when": "Discovery",
+    "href": "claude-code-basics/index.html",
+    "category": "skills"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Update skill",
+    "what": "Refresh definition",
+    "when": "Versioning",
+    "href": "claude-code-basics/index.html",
+    "category": "skills"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "MCP server",
+    "what": "External tool integration",
+    "when": "API/service access",
+    "href": "claude-code-basics/index.html",
+    "category": "mcp"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "MCP config",
+    "what": "mcpServers in settings.json",
+    "when": "Register MCP tools",
+    "href": "claude-code-basics/index.html",
+    "category": "mcp"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "MCP auth",
+    "what": "OAuth/credentials",
+    "when": "Authenticated endpoints",
+    "href": "claude-code-basics/index.html",
+    "category": "mcp"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "List MCP servers",
+    "what": "See available servers",
+    "when": "Discovery",
+    "href": "claude-code-basics/index.html",
+    "category": "mcp"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Test MCP connection",
+    "what": "Verify server availability",
+    "when": "Diagnostica",
+    "href": "claude-code-basics/index.html",
+    "category": "mcp"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "MCP fallback",
+    "what": "Graceful degradation",
+    "when": "Server down/auth fail",
+    "href": "claude-code-basics/index.html",
+    "category": "mcp"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Task()",
+    "what": "Spawn isolated agent",
+    "when": "Parallel work",
+    "href": "claude-code-basics/index.html",
+    "category": "subagents"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "TaskCreate + monitor",
+    "what": "Track background agent",
+    "when": "Long-running task",
+    "href": "claude-code-basics/index.html",
+    "category": "subagents"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "TeamCreate()",
+    "what": "Create debate team",
+    "when": "Multi-perspective decision",
+    "href": "claude-code-basics/index.html",
+    "category": "subagents"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Agent Teams discussion",
+    "what": "Agents debate topic",
+    "when": "Strategic planning",
+    "href": "claude-code-basics/index.html",
+    "category": "subagents"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Role definition",
+    "what": "Define agent persona",
+    "when": "Specialized agent",
+    "href": "claude-code-basics/index.html",
+    "category": "subagents"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Context window",
+    "what": "~200k token limit",
+    "when": "Plan work in batches",
+    "href": "claude-code-basics/index.html",
+    "category": "context"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Auto-compact at 80%",
+    "what": "Automatic compression",
+    "when": "Always active",
+    "href": "claude-code-basics/index.html",
+    "category": "context"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Knowledge base preserve",
+    "what": "/compact preserves indexed content",
+    "when": "After /compact",
+    "href": "claude-code-basics/index.html",
+    "category": "context"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Context restore",
+    "what": "Reload prior session context",
+    "when": "New session, same project",
+    "href": "claude-code-basics/index.html",
+    "category": "context"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Knowledge tree search",
+    "what": "FTS5 indexed search",
+    "when": "Find data across sessions",
+    "href": "claude-code-basics/index.html",
+    "category": "context"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Extended thinking budget",
+    "what": "Up to 31,999 token reasoning",
+    "when": "Complex problems",
+    "href": "claude-code-basics/index.html",
+    "category": "advanced"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Plan Mode (Ctrl+G)",
+    "what": "Structured step planning",
+    "when": "Multi-phase work",
+    "href": "claude-code-basics/index.html",
+    "category": "advanced"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Git worktree",
+    "what": "Parallel branches isolated",
+    "when": "Complex refactoring",
+    "href": "claude-code-basics/index.html",
+    "category": "advanced"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Self-Evolving pattern",
+    "what": "Learn from project history",
+    "when": "10+ sessions same project",
+    "href": "claude-code-basics/index.html",
+    "category": "advanced"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "CLAUDE.md local config",
+    "what": "Project-specific system prompt",
+    "when": "Override global defaults",
+    "href": "claude-code-basics/index.html",
+    "category": "advanced"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Skill evolution",
+    "what": "learned-rules.md generation",
+    "when": "Auto-generate skills from errors",
+    "href": "claude-code-basics/index.html",
+    "category": "advanced"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Parallel agents",
+    "what": "Run N agents concurrently",
+    "when": "4-8 independent tasks",
+    "href": "claude-code-basics/index.html",
+    "category": "advanced"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "claude-mem worker",
+    "what": "Persistent SQL memory",
+    "when": "Cross-session recall",
+    "href": "claude-code-basics/index.html",
+    "category": "hidden"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Caveman mode",
+    "what": "Terse response format",
+    "when": "Max efficiency",
+    "href": "claude-code-basics/index.html",
+    "category": "hidden"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Context-mode MCP",
+    "what": "Data processing in sandbox",
+    "when": "Large log analysis",
+    "href": "claude-code-basics/index.html",
+    "category": "hidden"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Model routing",
+    "what": "Dynamic Haiku/Sonnet/Opus",
+    "when": "Cost optimization",
+    "href": "claude-code-basics/index.html",
+    "category": "hidden"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Hook telemetry",
+    "what": "Auto-log all tool usage",
+    "when": "Performance analysis",
+    "href": "claude-code-basics/index.html",
+    "category": "hidden"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Multi-session routing",
+    "what": "Parallel CC instances track",
+    "when": "Load distribution",
+    "href": "claude-code-basics/index.html",
+    "category": "hidden"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Claude Fetch URL resolution",
+    "what": "Canva shortlinks → full URL",
+    "when": "Design access",
+    "href": "claude-code-basics/index.html",
+    "category": "hidden"
+  },
+  {
+    "tool": "claude-code-basics",
+    "name": "Telegram standalone bot",
+    "what": "Launchd bot bypass MCP",
+    "when": "Fallback if MCP fails",
+    "href": "claude-code-basics/index.html",
+    "category": "hidden"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "pwd",
+    "what": "Stampa working directory corrente",
+    "when": "Verificare dove sei in filesystem. Essential per debugging path",
+    "href": "bash-macos/index.html",
+    "category": "navigation"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "cd",
+    "what": "Cambia directory corrente",
+    "when": "Spostarsi tra cartelle. cd ~ per home. cd - per torna a precedente. cd /abs/path è più veloce di cd ../../..",
+    "href": "bash-macos/index.html",
+    "category": "navigation"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "ls",
+    "what": "Lista file directory",
+    "when": "Sempre. -la per dettagli + hidden. -lh per dimensioni leggibili. -t per ordinamento data",
+    "href": "bash-macos/index.html",
+    "category": "navigation"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "mkdir",
+    "what": "Crea directory",
+    "when": "Sempre. -p crea parent directories se non esistono",
+    "href": "bash-macos/index.html",
+    "category": "file-ops"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "cp",
+    "what": "Copia file o directory",
+    "when": "Backup file. -r ricorsivo. -v verbose",
+    "href": "bash-macos/index.html",
+    "category": "file-ops"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "mv",
+    "what": "Sposta o rinomina file",
+    "when": "Sempre. Funziona anche tra filesystem (a differenza di `mv` su Linux)",
+    "href": "bash-macos/index.html",
+    "category": "file-ops"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "rm",
+    "what": "Cancella file",
+    "when": "Cancellare file. -r ricorsivo per cartelle. -i chiede conferma. NO -f senza -i",
+    "href": "bash-macos/index.html",
+    "category": "file-ops"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "touch",
+    "what": "Crea file vuoto o aggiorna timestamp",
+    "when": "Creare file marker. Aggiornare mtime senza editare",
+    "href": "bash-macos/index.html",
+    "category": "file-ops"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "find",
+    "what": "Cerca file ricorsivamente per nome/tipo/data/dimensione",
+    "when": "Trovare file. -name pattern. -type f/d. -mtime -N giorni. -size +10M. -perm 755 eseguibili",
+    "href": "bash-macos/index.html",
+    "category": "file-ops"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "fd",
+    "what": "Alternativa moderna e veloce a find (se brew install fd)",
+    "when": "PREFERISCI A FIND. 10× più veloce. Regex di default",
+    "href": "bash-macos/index.html",
+    "category": "file-ops"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "cat",
+    "what": "Stampa contenuto file",
+    "when": "File piccoli. Per editor: nano/vim. Per leggere in script: $(cat file)",
+    "href": "bash-macos/index.html",
+    "category": "text"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "head / tail",
+    "what": "Prime/ultime N righe file",
+    "when": "Anteprima. -n N righe. tail -f segue log in real-time",
+    "href": "bash-macos/index.html",
+    "category": "text"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "grep",
+    "what": "Cerca testo in file",
+    "when": "Trovare pattern. -i case-insensitive. -v inverti (NOT). -n numeri riga",
+    "href": "bash-macos/index.html",
+    "category": "text"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "grep -rE",
+    "what": "Cerca regex ricorsivo nei file",
+    "when": "Trovare codice/testo. -r ricorsivo. -E regex extended. -i case-insensitive. -l solo nomi file. --include='*.py'",
+    "href": "bash-macos/index.html",
+    "category": "text"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "rg",
+    "what": "ripgrep — search ricorsivo ultra-veloce con regex",
+    "when": "PREFERISCI A GREP. 10× più veloce. -i case-insensitive. -w word boundary. -A 3 (context dopo)",
+    "href": "bash-macos/index.html",
+    "category": "text"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "sed",
+    "what": "Stream editor — modifica testo da CLI",
+    "when": "Find/replace. -i per in-place. s/old/new/g replace all. d cancella righe. p stampa",
+    "href": "bash-macos/index.html",
+    "category": "text"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "awk",
+    "what": "Data processing — split righe, stampa colonne",
+    "when": "Estrarre colonne da output. '{print $1,$3}' columna 1 e 3. -F delimiter",
+    "href": "bash-macos/index.html",
+    "category": "text"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "cut",
+    "what": "Estrai colonne fisse da righe",
+    "when": "Semplice. -d delim. -f 1,3 campi 1 e 3",
+    "href": "bash-macos/index.html",
+    "category": "text"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "sort / uniq",
+    "what": "Ordina righe / rimuove duplicati",
+    "when": "sort -n numerico. sort -r reverse. uniq -c conta occorrenze",
+    "href": "bash-macos/index.html",
+    "category": "text"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "wc",
+    "what": "Word/line/byte count",
+    "when": "Contare righe -l. -w parole. -c byte",
+    "href": "bash-macos/index.html",
+    "category": "text"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "diff",
+    "what": "Confronta due file",
+    "when": "Debug cambios. -u unified format. -r directory ricorsivo",
+    "href": "bash-macos/index.html",
+    "category": "text"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "curl",
+    "what": "HTTP client per request da terminale",
+    "when": "Test API, download file, healthcheck endpoint. -s silent. -S show errors. -m timeout. -o file. -w format",
+    "href": "bash-macos/index.html",
+    "category": "network"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "curl POST/JSON",
+    "what": "HTTP POST con JSON payload",
+    "when": "API POST, PUT, DELETE",
+    "href": "bash-macos/index.html",
+    "category": "network"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "wget",
+    "what": "Download file da URL",
+    "when": "Scaricare file. -O salva con nome. -q quiet. -t 3 retry",
+    "href": "bash-macos/index.html",
+    "category": "network"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "ssh",
+    "what": "Secure shell — accesso remoto",
+    "when": "Server remoto. -p 2222 port custom. -i ~/.ssh/key.pem chiave privata",
+    "href": "bash-macos/index.html",
+    "category": "network"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "scp",
+    "what": "Secure copy — trasferisci file su SSH",
+    "when": "Copia file verso/da server remoto. -r ricorsivo",
+    "href": "bash-macos/index.html",
+    "category": "network"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "lsof",
+    "what": "Lista file/socket aperti da processi",
+    "when": "Vedere chi usa una porta. Debug lock file. -i TCP porta",
+    "href": "bash-macos/index.html",
+    "category": "network"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "ps",
+    "what": "Lista processi in esecuzione",
+    "when": "Trovare PID di un processo. aux full listing",
+    "href": "bash-macos/index.html",
+    "category": "processes"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "kill",
+    "what": "Termina processo per PID",
+    "when": "Uccidere processo. -9 force (SIGKILL). -15 graceful (SIGTERM, default)",
+    "href": "bash-macos/index.html",
+    "category": "processes"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "launchctl",
+    "what": "Gestione servizi launchd macOS (daemon, agent)",
+    "when": "Avviare/fermare servizio permanente. Verificare stato com.cira.* coach-bot, Aurelio, ecc.",
+    "href": "bash-macos/index.html",
+    "category": "processes"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "launchctl print",
+    "what": "Stampa dettagli servizio launchd",
+    "when": "Vedere config, env vars, status di un servizio",
+    "href": "bash-macos/index.html",
+    "category": "processes"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "brew",
+    "what": "Homebrew package manager macOS",
+    "when": "Installare tool CLI. Sempre brew update && brew upgrade",
+    "href": "bash-macos/index.html",
+    "category": "packages"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "npm",
+    "what": "Node package manager",
+    "when": "Installare pacchetti JavaScript globali o locali. npm install -g per globale. npm i per locale (cwd)",
+    "href": "bash-macos/index.html",
+    "category": "packages"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "npx",
+    "what": "Esegui pacchetto npm senza installare",
+    "when": "Run CLI tools temporaneamente. Utile per test",
+    "href": "bash-macos/index.html",
+    "category": "packages"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "pip / pip3",
+    "what": "Python package manager",
+    "when": "Installare pacchetti Python. pip3 per Python 3 (preferisci)",
+    "href": "bash-macos/index.html",
+    "category": "packages"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "git status",
+    "what": "Stato repo Git",
+    "when": "Sempre prima di commit. Vedere file modificati, staged, untracked",
+    "href": "bash-macos/index.html",
+    "category": "git"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "git add / git commit",
+    "what": "Stage file e crea commit",
+    "when": "Sempre. git add file.py. git commit -m 'msg'",
+    "href": "bash-macos/index.html",
+    "category": "git"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "git log",
+    "what": "Cronologia commit",
+    "when": "Capire history. -n 5 ultime 5. --oneline conciso. --graph albero rami",
+    "href": "bash-macos/index.html",
+    "category": "git"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "git diff",
+    "what": "Differenze tra versioni",
+    "when": "Preview prima commit. git diff HEAD~1 confronta con commit precedente. git diff branch1...branch2",
+    "href": "bash-macos/index.html",
+    "category": "git"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "git push / git pull",
+    "what": "Push commit remoto / Pull da remoto",
+    "when": "Sincronizzare repo. git push -u origin branch_nuova prima volta",
+    "href": "bash-macos/index.html",
+    "category": "git"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "git clone",
+    "what": "Clona repository",
+    "when": "Copiare repo remoto localmente. Per .tar.gz: fallback se git bloccato da proxy",
+    "href": "bash-macos/index.html",
+    "category": "git"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "git branch",
+    "what": "Gestisci rami",
+    "when": "git branch lista locale. git branch -a remoti. git checkout -b nuova_branch crea e switcha",
+    "href": "bash-macos/index.html",
+    "category": "git"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "Redirect: >",
+    "what": "Redirect stdout in file (OVERWRITE)",
+    "when": "Salvare output. Attenzione: sovrascrive file",
+    "href": "bash-macos/index.html",
+    "category": "redirect"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "Redirect: >>",
+    "what": "Redirect stdout in file (APPEND)",
+    "when": "Aggiungere a file. Non sovrascrive",
+    "href": "bash-macos/index.html",
+    "category": "redirect"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "Redirect: 2>&1",
+    "what": "Redirect stderr (file descriptor 2) a stdout (1)",
+    "when": "Catturare errori insieme a output normale",
+    "href": "bash-macos/index.html",
+    "category": "redirect"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "Pipe: |",
+    "what": "Pipe stdout di cmd1 in stdin di cmd2",
+    "when": "Encatenare comandi. La base di Unix",
+    "href": "bash-macos/index.html",
+    "category": "redirect"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "tee",
+    "what": "Tee — stdout sia a terminale che file",
+    "when": "Salvare output E vederlo sullo schermo",
+    "href": "bash-macos/index.html",
+    "category": "redirect"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "xargs",
+    "what": "Passa input come argomenti a comando",
+    "when": "Costruire comandi dinamici. -n1 esegui per ogni riga. -0 null-delimited",
+    "href": "bash-macos/index.html",
+    "category": "redirect"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "Here-string: <<<",
+    "what": "Passa string come stdin",
+    "when": "Passare variabili a comandi che vogliono stdin",
+    "href": "bash-macos/index.html",
+    "category": "redirect"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "Here-doc: <<EOF",
+    "what": "Multiline input fino a EOF",
+    "when": "Creare file multi-riga, script inline",
+    "href": "bash-macos/index.html",
+    "category": "redirect"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "crontab",
+    "what": "Pianificazione cron job ricorrenti",
+    "when": "Task schedulati. crontab -e edit. crontab -l list",
+    "href": "bash-macos/index.html",
+    "category": "automation"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "launchd plist (automazione macOS)",
+    "what": "Configura servizio persistente macOS (alternativa cron)",
+    "when": "Servizi che devono sempre girare. com.cira.* nome pattern",
+    "href": "bash-macos/index.html",
+    "category": "automation"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "alias (zshrc)",
+    "what": "Crea scorciatoia di comando",
+    "when": "Alias frequenti in ~/.zshrc. Reload: source ~/.zshrc",
+    "href": "bash-macos/index.html",
+    "category": "automation"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "export (env var)",
+    "what": "Imposta variabile ambiente",
+    "when": "API key, PATH, editor default. In ~/.zshrc per persistenza",
+    "href": "bash-macos/index.html",
+    "category": "automation"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "source / .",
+    "what": "Esegui shell script nel contesto corrente (non subshell)",
+    "when": "Reload .zshrc. Carica env vars in sessione corrente",
+    "href": "bash-macos/index.html",
+    "category": "automation"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "jq",
+    "what": "Query JSON da CLI — il vangelo",
+    "when": "SEMPRE con JSON. Parsare output API, settings.json, ecc.",
+    "href": "bash-macos/index.html",
+    "category": "json-csv"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "open",
+    "what": "Apri file/URL nel default app macOS",
+    "when": "Aprire HTML in browser, file in Finder, URL",
+    "href": "bash-macos/index.html",
+    "category": "macos-specific"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "pbcopy / pbpaste",
+    "what": "Copia/incolla clipboard da terminale",
+    "when": "Pipe output a clipboard. Paste da clipboard",
+    "href": "bash-macos/index.html",
+    "category": "macos-specific"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "defaults",
+    "what": "Leggi/scrivi preferenze macOS (.plist)",
+    "when": "Configurare app macOS da terminale",
+    "href": "bash-macos/index.html",
+    "category": "macos-specific"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "open -a 'Quick Look'",
+    "what": "Preview veloce file senza aprire app",
+    "when": "Anteprima PDF, immagine senza aprire preview",
+    "href": "bash-macos/index.html",
+    "category": "macos-specific"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "plutil",
+    "what": "Utility file .plist (XML config macOS)",
+    "when": "Editare plist file. -p pretty-print. -convert xml/json",
+    "href": "bash-macos/index.html",
+    "category": "macos-specific"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "du",
+    "what": "Disk usage — quanto spazio occupano cartelle",
+    "when": "Trovare file/cartelle grosse. -h human readable. -d 1 profondità",
+    "href": "bash-macos/index.html",
+    "category": "macos-specific"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "gws",
+    "what": "Google Workspace CLI — leggi Gmail, Drive, Calendar",
+    "when": "Aurelio coach: gws mail list, gws drive files create (upload), gws calendar events list",
+    "href": "bash-macos/index.html",
+    "category": "cira-workflow"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "launchctl Aurelio healthcheck",
+    "what": "Verificare stato bot Telegram Aurelio",
+    "when": "Debug 'bot non risponde'. Verificare che processo gira",
+    "href": "bash-macos/index.html",
+    "category": "cira-workflow"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "Telegram tg-reply script",
+    "what": "Invia risposta veloce Telegram da CLI",
+    "when": "Script bot Telegram, automation, debug",
+    "href": "bash-macos/index.html",
+    "category": "cira-workflow"
+  },
+  {
+    "tool": "bash-macos",
+    "name": "Monitor claude-mem worker",
+    "what": "Verifica healthcheck worker :37777",
+    "when": "Claude Code SessionStart attiva monitor. Se degraded indagare",
+    "href": "bash-macos/index.html",
+    "category": "cira-workflow"
+  }
+]

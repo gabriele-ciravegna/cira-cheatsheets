@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GSD — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/print.css">
+</head>
+<body>
+  <div class="stale-banner hidden" id="stale-banner">⚠ Versione cheatsheet può essere obsoleta. Verifica VERSION file.</div>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="logo">⌘ CHEATSHEETS</div>
+      <input type="search" class="search-box" id="global-search" data-root=".." placeholder="Cerca tra 282 comandi…">
+      <div id="search-results"></div>
+
+      <div class="nav-section">
+        <h3>Cheatsheet</h3>
+        <a href="../index.html">← Index</a>
+        <a href="../gsd/index.html" class="active">GSD</a>
+        <a href="../gstack/index.html">Gstack</a>
+        <a href="../superpowers/index.html">Superpowers</a>
+        <a href="../ruflo/index.html">Ruflo</a>
+        <a href="../compound-engineering/index.html">Compound Eng</a>
+        <a href="../agent-teams/index.html">Agent Teams</a>
+        <a href="../cira-custom/index.html">CIRA Custom</a>
+        <a href="../claude-code-basics/index.html">Claude Code</a>
+        <a href="../bash-macos/index.html">Bash + macOS</a>
+      </div>
+
+      <div class="nav-section">
+        <h3>Sezioni</h3>
+        <a href="#quick-start">Quick Start</a>
+        <a href="#core-loop">Core Loop</a>
+        <a href="#micro-flow">Micro Flows</a>
+        <a href="#phases">Phase Management</a>
+        <a href="#planning">Planning</a>
+        <a href="#execution">Execution</a>
+        <a href="#review-quality">Review &amp; Quality</a>
+        <a href="#verify-test">Test &amp; Verify</a>
+        <a href="#output-shipping">Output &amp; Shipping</a>
+        <a href="#workspace">Workspace</a>
+        <a href="#management">Progress &amp; Mgmt</a>
+        <a href="#context">Context Engineering</a>
+        <a href="#meta">Meta &amp; Settings</a>
+        <a href="#other">Altri Comandi</a>
+        <a href="#agents">Agenti GSD</a>
+        <a href="#workflows">Workflow E2E</a>
+        <a href="#cira-examples">Esempi CIRA</a>
+        <a href="#stack-integration">Stack Integration</a>
+        <a href="#gotchas">Gotchas</a>
+      </div>
+
+      <div class="nav-section">
+        <h3>Quick</h3>
+        <a href="../daily-10.html" class="cross-link">Daily 10 ↗</a>
+        <a href="../workflows-cira.html" class="cross-link">Workflows CIRA ↗</a>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="tool-header">
+        <h1>GSD <span class="version-badge">v1.42.2</span></h1>
+        <p class="tagline">Spec-driven development + context engineering. Anti-context-rot. Fase → discussion → planning → execution → verification → shipping.</p>
+        <div class="when-card"><strong>Quando usarlo:</strong> Progetto non-banale (≥3 file), multi-fase, audit trail richiesto, team collaboration</div>
+        <div class="skip-card"><strong>NON usarlo se:</strong> Bug isolato (→ /gsd:debug standalone), task triviale (→ /gsd:quick), refactor file singolo (→ /refactor-clean)</div>
+      </header>
+
+      <section id="quick-start">
+        <h2>Quick Start</h2>
+        <h3>Install</h3>
+        <pre><code>npx -y --package=get-shit-done-cc@latest -- get-shit-done-cc --claude --global</code></pre>
+        <h3>Update esistente</h3>
+        <pre><code>/gsd:update</code></pre>
+        <h3>Uninstall</h3>
+        <pre><code>rm -rf ~/.claude/get-shit-done ~/.claude/commands/gsd* ~/.claude/agents/gsd-* ~/.claude/skills/gsd-*</code></pre>
+        <h3>Default workflow</h3>
+        <pre><code>/gsd:new-project → /gsd:discuss-phase 1 → /gsd:plan-phase 1 → /gsd:execute-phase 1 → /gsd:verify-work 1 → /gsd:ship</code></pre>
+        <h3>Artefatti su disco</h3>
+        <pre><code>.planning/
+├── config.json
+├── ROADMAP.md
+├── intel/
+├── phases/01-foundation/
+│   ├── DISCUSS.md
+│   ├── PLAN.md
+│   ├── RESEARCH.md
+│   ├── VERIFICATION.md
+│   ├── REVIEW.md
+│   └── ...
+└── solutions/</code></pre>
+      </section>
+
+      <!-- CORE LOOP -->
+      <section id="core-loop">
+        <h2>Core Loop</h2>
+        <p>Lifecycle completo: new → discuss → plan → execute → verify → ship</p>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:new-project</div>
+          <div class="cmd-meta"><span>category: core-loop</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Inizializza progetto nuovo</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario new-project</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:new-project</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/new-project/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:discuss-phase</div>
+          <div class="cmd-meta"><span>category: core-loop</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Discussion profonda per decisions</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario discuss-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:discuss-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/discuss-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:plan-phase</div>
+          <div class="cmd-meta"><span>category: core-loop</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Crea PLAN.md dettagliato</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario plan-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:plan-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/plan-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:execute-phase</div>
+          <div class="cmd-meta"><span>category: core-loop</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Esegui tutti i plan di una phase</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario execute-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:execute-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/execute-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:verify-work</div>
+          <div class="cmd-meta"><span>category: core-loop</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">UAT conversazionale</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario verify-work</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:verify-work</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/verify-work/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:ship</div>
+          <div class="cmd-meta"><span>category: core-loop</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Crea PR e mergia work</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario ship</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:ship</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/ship/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:map-codebase</div>
+          <div class="cmd-meta"><span>category: core-loop</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Mappa struttura codebase</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario map-codebase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:map-codebase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/map-codebase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+      </section>
+
+      <!-- MICRO FLOWS -->
+      <section id="micro-flow">
+        <h2>Micro Flows</h2>
+        <p>Percorsi alternativi: quick, fast, debug, spike, sketch</p>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:quick</div>
+          <div class="cmd-meta"><span>category: micro-flow</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Quick task ad-hoc</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario quick</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:quick</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/quick/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:fast</div>
+          <div class="cmd-meta"><span>category: micro-flow</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Fast-path execution minimal</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario fast</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:fast</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/fast/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:debug</div>
+          <div class="cmd-meta"><span>category: micro-flow</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Debug session per issue</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario debug</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:debug</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/debug/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:do</div>
+          <div class="cmd-meta"><span>category: micro-flow</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Esecuzione task diretto</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario do</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:do</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/do/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:spike</div>
+          <div class="cmd-meta"><span>category: micro-flow</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Technical spike investigation</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario spike</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:spike</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/spike/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:spike-wrap-up</div>
+          <div class="cmd-meta"><span>category: micro-flow</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Wrap-up spike</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario spike-wrap-up</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:spike-wrap-up</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/spike-wrap-up/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:sketch</div>
+          <div class="cmd-meta"><span>category: micro-flow</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Sketch initiale di idea</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario sketch</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:sketch</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/sketch/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:sketch-wrap-up</div>
+          <div class="cmd-meta"><span>category: micro-flow</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Wrap-up sketch</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario sketch-wrap-up</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:sketch-wrap-up</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/sketch-wrap-up/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:plant-seed</div>
+          <div class="cmd-meta"><span>category: micro-flow</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Pianta seed idea di progetto</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario plant-seed</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:plant-seed</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/plant-seed/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+      </section>
+
+      <!-- PHASE MANAGEMENT -->
+      <section id="phases">
+        <h2>Phase Management</h2>
+        <p>Creazione, modifica, rimozione, transizione fasi</p>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:add-phase</div>
+          <div class="cmd-meta"><span>category: phases</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Crea una nuova phase nel progetto</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario add-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:add-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/add-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:edit-phase</div>
+          <div class="cmd-meta"><span>category: phases</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Modifica configurazione phase</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario edit-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:edit-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/edit-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:insert-phase</div>
+          <div class="cmd-meta"><span>category: phases</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Inserisci phase in mezzo</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario insert-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:insert-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/insert-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:remove-phase</div>
+          <div class="cmd-meta"><span>category: phases</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Rimuovi phase dal progetto</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario remove-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:remove-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/remove-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:discovery-phase</div>
+          <div class="cmd-meta"><span>category: phases</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Discovery iniziale per phase</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario discovery-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:discovery-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/discovery-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:ai-integration-phase</div>
+          <div class="cmd-meta"><span>category: phases</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Phase specializzata per integrazioni IA</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario ai-integration-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:ai-integration-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/ai-integration-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:mvp-phase</div>
+          <div class="cmd-meta"><span>category: phases</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">MVP-specific phase</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario mvp-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:mvp-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/mvp-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:secure-phase</div>
+          <div class="cmd-meta"><span>category: phases</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Phase per security hardening</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario secure-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:secure-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/secure-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:spec-phase</div>
+          <div class="cmd-meta"><span>category: phases</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Spec fase in dettaglio</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario spec-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:spec-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/spec-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:ui-phase</div>
+          <div class="cmd-meta"><span>category: phases</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">UI-specific phase</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario ui-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:ui-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/ui-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:ultraplan-phase</div>
+          <div class="cmd-meta"><span>category: phases</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Ultra-detailed planning</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario ultraplan-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:ultraplan-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/ultraplan-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+      </section>
+
+      <!-- PLANNING -->
+      <section id="planning">
+        <h2>Planning</h2>
+        <p>Discussion e creazione piani dettagliati</p>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:discuss-phase-assumptions</div>
+          <div class="cmd-meta"><span>category: planning</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Discuti assumptions specifiche</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario discuss-phase-assumptions</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:discuss-phase-assumptions</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/discuss-phase-assumptions/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:discuss-phase-power</div>
+          <div class="cmd-meta"><span>category: planning</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Modalità power per discussion intensiva</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario discuss-phase-power</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:discuss-phase-power</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/discuss-phase-power/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:plan-milestone-gaps</div>
+          <div class="cmd-meta"><span>category: planning</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Piano per gaps di milestone</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario plan-milestone-gaps</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:plan-milestone-gaps</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/plan-milestone-gaps/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:plan-review-convergence</div>
+          <div class="cmd-meta"><span>category: planning</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Review convergenza di plan</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario plan-review-convergence</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:plan-review-convergence</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/plan-review-convergence/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+      </section>
+
+      <!-- EXECUTION -->
+      <section id="execution">
+        <h2>Execution</h2>
+        <p>Esecuzione piani con wave-based parallelism</p>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:autonomous</div>
+          <div class="cmd-meta"><span>category: execution</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Esecuzione autonoma senza intervento</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario autonomous</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:autonomous</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/autonomous/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:execute-plan</div>
+          <div class="cmd-meta"><span>category: execution</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Esegui singolo PLAN.md</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario execute-plan</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:execute-plan</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/execute-plan/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+      </section>
+
+      <!-- REVIEW & QUALITY -->
+      <section id="review-quality">
+        <h2>Review &amp; Quality</h2>
+        <p>Code review, audit, quality gates</p>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:audit-fix</div>
+          <div class="cmd-meta"><span>category: review-quality</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Audit e fix di issues trovati</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario audit-fix</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:audit-fix</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/audit-fix/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:audit-milestone</div>
+          <div class="cmd-meta"><span>category: review-quality</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Audit completo di uno milestone</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario audit-milestone</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:audit-milestone</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/audit-milestone/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:audit-uat</div>
+          <div class="cmd-meta"><span>category: review-quality</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">User acceptance test audit</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario audit-uat</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:audit-uat</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/audit-uat/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:code-review</div>
+          <div class="cmd-meta"><span>category: review-quality</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Code review completo</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario code-review</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:code-review</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/code-review/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:code-review-fix</div>
+          <div class="cmd-meta"><span>category: review-quality</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Fix issues da code review</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario code-review-fix</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:code-review-fix</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/code-review-fix/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:eval-review</div>
+          <div class="cmd-meta"><span>category: review-quality</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Evaluation review di work</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario eval-review</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:eval-review</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/eval-review/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:ui-review</div>
+          <div class="cmd-meta"><span>category: review-quality</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Review UI implementation</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario ui-review</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:ui-review</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/ui-review/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+      </section>
+
+      <!-- TEST & VERIFY -->
+      <section id="verify-test">
+        <h2>Test &amp; Verify</h2>
+        <p>UAT conversazionale, verification, validation</p>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:validate-phase</div>
+          <div class="cmd-meta"><span>category: verify-test</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Valida phase completion</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario validate-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:validate-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/validate-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:verify-phase</div>
+          <div class="cmd-meta"><span>category: verify-test</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Verifica phase results</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario verify-phase</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:verify-phase</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/verify-phase/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+      </section>
+
+      <!-- OUTPUT & SHIPPING -->
+      <section id="output-shipping">
+        <h2>Output &amp; Shipping</h2>
+        <p>PR creation, merge, graduation</p>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:graduation</div>
+          <div class="cmd-meta"><span>category: output-shipping</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Graduation da beta a production</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario graduation</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:graduation</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/graduation/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:pr-branch</div>
+          <div class="cmd-meta"><span>category: output-shipping</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Crea branch da PR</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario pr-branch</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:pr-branch</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/pr-branch/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+      </section>
+
+      <!-- WORKSPACE -->
+      <section id="workspace">
+        <h2>Workspace</h2>
+        <p>Multi-progetto workspace management</p>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:new-workspace</div>
+          <div class="cmd-meta"><span>category: workspace</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Crea workspace nuovo</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario new-workspace</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:new-workspace</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/new-workspace/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:list-workspaces</div>
+          <div class="cmd-meta"><span>category: workspace</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Elenca workspace disponibili</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario list-workspaces</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:list-workspaces</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/list-workspaces/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:remove-workspace</div>
+          <div class="cmd-meta"><span>category: workspace</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Rimuovi workspace</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario remove-workspace</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:remove-workspace</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/remove-workspace/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+      </section>
+
+      <!-- PROGRESS & MANAGEMENT -->
+      <section id="management">
+        <h2>Progress &amp; Management</h2>
+        <p>Health, stats, reports, learnings</p>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:health</div>
+          <div class="cmd-meta"><span>category: management</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Health check del progetto</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario health</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:health</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/health/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:progress</div>
+          <div class="cmd-meta"><span>category: management</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Mostra progresso corrente</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario progress</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:progress</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/progress/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:stats</div>
+          <div class="cmd-meta"><span>category: management</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Mostra statistiche</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario stats</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:stats</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/stats/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:manager</div>
+          <div class="cmd-meta"><span>category: management</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Manager view di progetto</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario manager</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:manager</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/manager/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:milestone-summary</div>
+          <div class="cmd-meta"><span>category: management</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Summary di milestone completato</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario milestone-summary</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:milestone-summary</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/milestone-summary/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:session-report</div>
+          <div class="cmd-meta"><span>category: management</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Report della sessione</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario session-report</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:session-report</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/session-report/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:extract-learnings</div>
+          <div class="cmd-meta"><span>category: management</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Estrai learnings da phase</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario extract-learnings</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:extract-learnings</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/extract-learnings/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+      </section>
+
+      <!-- CONTEXT ENGINEERING -->
+      <section id="context">
+        <h2>Context Engineering</h2>
+        <p>Ingest docs, import context, skill sync</p>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:ingest-docs</div>
+          <div class="cmd-meta"><span>category: context</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Ingesta documentazione esterna</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario ingest-docs</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:ingest-docs</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/ingest-docs/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:import</div>
+          <div class="cmd-meta"><span>category: context</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Importa contexti da file</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario import</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:import</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/import/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:sync-skills</div>
+          <div class="cmd-meta"><span>category: context</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Sync GSD skill aggiornate</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario sync-skills</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:sync-skills</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/sync-skills/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+      </section>
+
+      <!-- META & SETTINGS -->
+      <section id="meta">
+        <h2>Meta &amp; Settings</h2>
+        <p>Help, configuration, updates</p>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:help</div>
+          <div class="cmd-meta"><span>category: meta</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Help e documentazione GSD</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario help</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:help</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/help/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:update</div>
+          <div class="cmd-meta"><span>category: meta</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Update GSD version</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario update</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:update</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/update/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:settings</div>
+          <div class="cmd-meta"><span>category: meta</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Configura GSD settings</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario settings</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:settings</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/settings/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:settings-advanced</div>
+          <div class="cmd-meta"><span>category: meta</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Advanced settings</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario settings-advanced</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:settings-advanced</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/settings-advanced/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:settings-integrations</div>
+          <div class="cmd-meta"><span>category: meta</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Configura integrazioni</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario settings-integrations</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:settings-integrations</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/settings-integrations/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+      </section>
+
+      <!-- OTHER COMMANDS -->
+      <section id="other">
+        <h2>Altri Comandi</h2>
+        <p>Utility, backlog, todo, cleanup e gestione avanzata</p>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:next</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Auto-advance fase successiva</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario next</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:next</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/next/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:add-backlog</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Aggiungi item al backlog senza creare phase</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario add-backlog</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:add-backlog</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/add-backlog/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:add-tests</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Aggiungi test coverage per un modulo</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario add-tests</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:add-tests</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/add-tests/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:add-todo</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Aggiungi task alla lista TODO</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario add-todo</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:add-todo</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/add-todo/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:analyze-dependencies</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Analizza dipendenze di progetto</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario analyze-dependencies</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:analyze-dependencies</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/analyze-dependencies/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:check-todos</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Verifica stato dei TODO</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario check-todos</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:check-todos</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/check-todos/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:cleanup</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Pulizia codebase e artifacts</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario cleanup</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:cleanup</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/cleanup/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:complete-milestone</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Marca milestone come completo</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario complete-milestone</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:complete-milestone</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/complete-milestone/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:diagnose-issues</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Diagnostica problemi di progetto</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario diagnose-issues</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:diagnose-issues</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/diagnose-issues/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:docs-update</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Aggiorna documentazione</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario docs-update</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:docs-update</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/docs-update/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:explore</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Esplorazione codebase</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario explore</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:explore</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/explore/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:forensics</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Forensics investigazione debug</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario forensics</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:forensics</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/forensics/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:inbox</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Gestione inbox GSD</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario inbox</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:inbox</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/inbox/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:list-phase-assumptions</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Elenca assumptions di phase</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario list-phase-assumptions</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:list-phase-assumptions</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/list-phase-assumptions/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:new-milestone</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Crea nuovo milestone</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario new-milestone</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:new-milestone</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/new-milestone/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:node-repair</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Riparazione node specifico</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario node-repair</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:node-repair</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/node-repair/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:note</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Aggiungi note al progetto</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario note</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:note</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/note/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:pause-work</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Pausa lavoro current</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario pause-work</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:pause-work</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/pause-work/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:profile-user</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Profile user behavior</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario profile-user</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:profile-user</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/profile-user/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:reapply-patches</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Riapplica patches salvate</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario reapply-patches</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:reapply-patches</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/reapply-patches/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:resume-project</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Riprendi progetto pausato</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario resume-project</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:resume-project</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/resume-project/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:review</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Review generale di work</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario review</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:review</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/review/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:scan</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Scan progetto per issues</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario scan</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:scan</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/scan/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:thread</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Gestione thread conversazione</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario thread</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:thread</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/thread/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:transition</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Transizione tra fasi</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario transition</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:transition</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/transition/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+
+        <div class="cmd-card">
+          <div class="cmd-name">/gsd:undo</div>
+          <div class="cmd-meta"><span>category: other</span></div>
+          <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Undo ultima operazione</span></div>
+          <div class="cmd-row"><span class="label">Quando</span><span class="value">Quando necessario undo</span></div>
+          <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:undo</code></span></div>
+          <div class="cmd-row"><span class="label">Output</span><span class="value">.planning/undo/</span></div>
+          <div class="cmd-row"><span class="label">See also</span><span class="value">docs · help</span></div>
+        </div>
+      </section>
+
+      <!-- AGENTS -->
+      <section id="agents">
+        <h2>Agenti GSD (sub-agent specialisti)</h2>
+        <p>33 agenti specializzati disponibili — invocati automaticamente dai comandi GSD</p>
+        <table>
+          <thead>
+            <tr><th>Agent</th><th>Uso</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>gsd-advisor-researcher</code></td><td>Utilizzo specializzato per advisor-researcher</td></tr>
+            <tr><td><code>gsd-ai-researcher</code></td><td>Utilizzo specializzato per ai-researcher</td></tr>
+            <tr><td><code>gsd-assumptions-analyzer</code></td><td>Utilizzo specializzato per assumptions-analyzer</td></tr>
+            <tr><td><code>gsd-code-fixer</code></td><td>Utilizzo specializzato per code-fixer</td></tr>
+            <tr><td><code>gsd-code-reviewer</code></td><td>Utilizzo specializzato per code-reviewer</td></tr>
+            <tr><td><code>gsd-codebase-mapper</code></td><td>Utilizzo specializzato per codebase-mapper</td></tr>
+            <tr><td><code>gsd-debug-session-manager</code></td><td>Utilizzo specializzato per debug-session-manager</td></tr>
+            <tr><td><code>gsd-debugger</code></td><td>Utilizzo specializzato per debugger</td></tr>
+            <tr><td><code>gsd-doc-classifier</code></td><td>Utilizzo specializzato per doc-classifier</td></tr>
+            <tr><td><code>gsd-doc-synthesizer</code></td><td>Utilizzo specializzato per doc-synthesizer</td></tr>
+            <tr><td><code>gsd-doc-verifier</code></td><td>Utilizzo specializzato per doc-verifier</td></tr>
+            <tr><td><code>gsd-doc-writer</code></td><td>Utilizzo specializzato per doc-writer</td></tr>
+            <tr><td><code>gsd-domain-researcher</code></td><td>Utilizzo specializzato per domain-researcher</td></tr>
+            <tr><td><code>gsd-eval-auditor</code></td><td>Utilizzo specializzato per eval-auditor</td></tr>
+            <tr><td><code>gsd-eval-planner</code></td><td>Utilizzo specializzato per eval-planner</td></tr>
+            <tr><td><code>gsd-executor</code></td><td>Utilizzo specializzato per executor</td></tr>
+            <tr><td><code>gsd-framework-selector</code></td><td>Utilizzo specializzato per framework-selector</td></tr>
+            <tr><td><code>gsd-integration-checker</code></td><td>Utilizzo specializzato per integration-checker</td></tr>
+            <tr><td><code>gsd-intel-updater</code></td><td>Utilizzo specializzato per intel-updater</td></tr>
+            <tr><td><code>gsd-nyquist-auditor</code></td><td>Utilizzo specializzato per nyquist-auditor</td></tr>
+            <tr><td><code>gsd-pattern-mapper</code></td><td>Utilizzo specializzato per pattern-mapper</td></tr>
+            <tr><td><code>gsd-phase-researcher</code></td><td>Utilizzo specializzato per phase-researcher</td></tr>
+            <tr><td><code>gsd-plan-checker</code></td><td>Utilizzo specializzato per plan-checker</td></tr>
+            <tr><td><code>gsd-planner</code></td><td>Utilizzo specializzato per planner</td></tr>
+            <tr><td><code>gsd-project-researcher</code></td><td>Utilizzo specializzato per project-researcher</td></tr>
+            <tr><td><code>gsd-research-synthesizer</code></td><td>Utilizzo specializzato per research-synthesizer</td></tr>
+            <tr><td><code>gsd-roadmapper</code></td><td>Utilizzo specializzato per roadmapper</td></tr>
+            <tr><td><code>gsd-security-auditor</code></td><td>Utilizzo specializzato per security-auditor</td></tr>
+            <tr><td><code>gsd-ui-auditor</code></td><td>Utilizzo specializzato per ui-auditor</td></tr>
+            <tr><td><code>gsd-ui-checker</code></td><td>Utilizzo specializzato per ui-checker</td></tr>
+            <tr><td><code>gsd-ui-researcher</code></td><td>Utilizzo specializzato per ui-researcher</td></tr>
+            <tr><td><code>gsd-user-profiler</code></td><td>Utilizzo specializzato per user-profiler</td></tr>
+            <tr><td><code>gsd-verifier</code></td><td>Utilizzo specializzato per verifier</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- WORKFLOWS E2E -->
+      <section id="workflows">
+        <h2>Workflow End-to-End</h2>
+
+        <div class="callout tip">
+          <strong>Greenfield project completo</strong><br>
+          <code>/gsd:new-project → /gsd:discuss-phase → /gsd:plan-phase → /gsd:execute-phase → /gsd:verify-work → /gsd:ship</code><br>
+          <small>Tempo stimato: 3-8h per phase, 1-2h per workflow — Esempio CIRA: Aurelio Telegram Coach M1-M4: Foundation 26 file Python via full loop</small>
+        </div>
+
+        <div class="callout tip">
+          <strong>Existing codebase (brownfield)</strong><br>
+          <code>/gsd:map-codebase → /gsd:new-project --auto → phases → execute → verify → ship</code><br>
+          <small>Tempo stimato: 2-4h mapping, poi standard loop — Esempio CIRA: Mercurio MVP: /gsd:quick execute-phase deadline 7/5</small>
+        </div>
+
+        <div class="callout tip">
+          <strong>Quick ad-hoc task</strong><br>
+          <code>/gsd:quick [--discuss] [--research] [--validate] [--full]</code><br>
+          <small>Tempo stimato: 15min-2h dipendente da flags — Esempio CIRA: Minor fixes, utility functions, docs updates</small>
+        </div>
+
+        <div class="callout tip">
+          <strong>Debug session</strong><br>
+          <code>/gsd:debug → gsd-debugger investigates → gsd-code-fixer patches → verify</code><br>
+          <small>Tempo stimato: 30min-2h — Esempio CIRA: Issue isolation e root cause analysis</small>
+        </div>
+      </section>
+
+      <!-- CIRA EXAMPLES -->
+      <section id="cira-examples">
+        <h2>Esempi CIRA reali</h2>
+
+        <div class="cira-example">
+          <span class="cira-tag">CIRA</span>
+          <h4>Mercurio MVP mail demo (Valerio)</h4>
+          <p>/gsd:quick execute-phase, deadline 7/5/2026 — Path: <code>~/WORK/SOFTWARE/VALERIO/MAIL/demo_03_claude/</code> — Status: 3 fix priority pending</p>
+        </div>
+
+        <div class="cira-example">
+          <span class="cira-tag">CIRA</span>
+          <h4>Aurelio Coach Telegram M1-M4</h4>
+          <p>Full loop: /gsd:discuss-phase → /gsd:plan-phase → /gsd:execute-phase → /gsd:verify-work → /gsd:ship — Path: <code>~/WORK/BUSINESS-OS/AURELIO/</code> — Status: M1 Foundation DONE (26 file Python), M2-M4 chiusi, bot vivo</p>
+        </div>
+
+        <div class="cira-example">
+          <span class="cira-tag">CIRA</span>
+          <h4>CIRA Dashboard update</h4>
+          <p>/gsd:verify-work → verify output → /gsd:ship for deploy — Path: <code>~/WORK/SITI/CIRA-DASHBOARD/</code> — Status: Deploy pending 5x fallback Vercel</p>
+        </div>
+      </section>
+
+      <!-- STACK INTEGRATION -->
+      <section id="stack-integration">
+        <h2>Integrazione stack</h2>
+        <p><strong>gstack</strong>: Alternativa execution layer: /gstack:pair-agent instead of execute-phase per paired programming</p>
+        <p><strong>superpowers</strong>: TDD plug-in (/tdd-red/green/refactor) available inside execute-phase</p>
+        <p><strong>ruflo</strong>: Per phase con scelte UX critiche: sandbox parallel iterations prima di commit</p>
+        <p><strong>construiamo</strong>: /costruiamo v2.5.0 composes GSD phases as specification input</p>
+      </section>
+
+      <!-- GOTCHAS -->
+      <section id="gotchas">
+        <h2>Gotchas globali</h2>
+        <ul>
+          <li>Non eseguire /gsd:plan-phase e /gstack:plan in parallelo (entrambi scrivono planning artifacts)</li>
+          <li>project_code in .planning/config.json deve essere coerente (fix 1.42.1)</li>
+          <li>Wave-based execution (execute-phase) requires state.load() per dependency ordering</li>
+          <li>gsd-executor spawns committed to repo — verify git.base_branch è corretto prima di ship</li>
+          <li>Context budget: max 50KB per phase CONTEXT.md (split se &gt;50KB in multiple phases)</li>
+          <li>/gsd:next assume completion markers (## PLANNING COMPLETE, ## Verification Complete, etc.)</li>
+        </ul>
+      </section>
+
+      <footer>
+        Generato 2026-05-15 · Source: <a href="https://github.com/gsd-build/get-shit-done">github.com/gsd-build/get-shit-done</a> · <a href="javascript:window.print()">Stampa / PDF</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/copy.js" defer></script>
+  <script src="../assets/search.js" defer></script>
+  <script src="../assets/glossary.js" defer></script>
+</body>
+</html>

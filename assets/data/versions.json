@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-05-15T11:30:00+02:00",
+  "tools": {
+    "gsd": "1.42.2",
+    "gstack": "auto",
+    "superpowers": "auto",
+    "ruflo": "auto",
+    "compound-engineering": "3.8.2",
+    "agent-teams": "claude-code-2.1.131+",
+    "cira-custom": "rolling",
+    "claude-code-basics": "claude-code-2.x",
+    "bash-macos": "darwin-25.3.0"
+  }
+}

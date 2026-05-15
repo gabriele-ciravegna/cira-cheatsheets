@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Teams + Subagents — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    body { overflow: auto; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: 100vh;
+    }
+
+    aside.sidebar {
+      background: var(--bg-panel);
+      border-right: 1px solid var(--border);
+      padding: 24px 16px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar .logo {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar .nav-section { margin-bottom: 20px; }
+
+    .sidebar .nav-section h3 {
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0 0 6px;
+      font-weight: 700;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 5px 10px;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 13px;
+      margin: 2px 0;
+      border-left: 2px solid transparent;
+      border-bottom: none;
+    }
+
+    .sidebar a:hover {
+      background: var(--bg-elevated);
+      color: var(--text);
+    }
+
+    .sidebar a.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-left-color: var(--accent);
+      font-weight: 600;
+    }
+
+    main.content {
+      padding: 40px 52px 80px;
+      max-width: 960px;
+    }
+
+    .tool-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 40px;
+    }
+
+    .tool-header h1 {
+      font-size: 28px;
+      margin: 0 0 6px;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .version-badge {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      margin-left: 8px;
+      border: 1px solid var(--accent-2);
+    }
+
+    .tool-header .tagline {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin: 10px 0 0;
+    }
+
+    .status-badge {
+      display: inline-block;
+      background: rgba(127, 165, 99, 0.15);
+      color: var(--success);
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid rgba(127, 165, 99, 0.3);
+      margin-top: 8px;
+    }
+
+    .env-notice {
+      margin-top: 12px;
+      padding: 8px 14px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .env-notice strong { color: var(--accent); }
+
+    section { margin-bottom: 56px; }
+
+    section > h2 {
+      font-size: 22px;
+      color: var(--accent);
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+    }
+
+    section h3 {
+      font-size: 16px;
+      margin: 24px 0 10px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    p { margin: 0 0 12px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      background: var(--bg-panel);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      font-size: 13.5px;
+    }
+
+    th {
+      background: var(--bg-elevated);
+      color: var(--accent);
+      text-align: left;
+      padding: 10px 14px;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border-strong);
+    }
+
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 13.5px;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    tr:hover { background: var(--bg-elevated); }
+
+    .params-table td:first-child {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: 12.5px;
+      white-space: nowrap;
+      font-weight: 600;
+    }
+
+    .compare-table td:first-child {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .lifecycle-steps {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .lifecycle-steps li {
+      display: flex;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text);
+      align-items: flex-start;
+    }
+
+    .lifecycle-steps li:last-child { border-bottom: none; }
+
+    .step-n {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      background: var(--accent);
+      color: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    .callout {
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin: 14px 0;
+      border-left: 3px solid var(--info);
+      background: rgba(122, 153, 200, 0.06);
+      font-size: 14px;
+    }
+
+    .callout strong { color: var(--info); }
+    .callout.tip { border-left-color: var(--success); background: rgba(127, 165, 99, 0.06); }
+    .callout.tip strong { color: var(--success); }
+    .callout.warn { border-left-color: var(--warning); background: var(--accent-soft); }
+    .callout.warn strong { color: var(--warning); }
+
+    .cira-example {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .cira-tag {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .pattern-tag {
+      display: inline-block;
+      background: rgba(122, 153, 200, 0.12);
+      color: var(--info);
+      border: 1px solid rgba(122, 153, 200, 0.25);
+      font-size: 11px;
+      padding: 1px 8px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      margin-left: 6px;
+    }
+
+    .cira-example h4 {
+      margin: 4px 0 6px;
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .cira-example p { font-size: 13px; color: var(--text-muted); margin: 0; }
+
+    .anti-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .anti-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 10px 14px;
+      background: rgba(200, 117, 96, 0.05);
+      border: 1px solid rgba(200, 117, 96, 0.15);
+      border-left: 3px solid var(--danger);
+      border-radius: var(--radius);
+      margin: 8px 0;
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    .anti-list li::before {
+      content: "⚠";
+      color: var(--danger);
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .cmd-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 14px 0;
+    }
+
+    .cmd-card .cmd-name {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .cmd-card .cmd-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 10px;
+      margin: 5px 0;
+    }
+
+    .cmd-card .cmd-row .label {
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+      padding-top: 2px;
+    }
+
+    .cmd-card .cmd-row .value { color: var(--text); font-size: 13.5px; }
+
+    .cmd-gotcha {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: rgba(200, 117, 96, 0.07);
+      border-left: 2px solid var(--danger);
+      border-radius: 4px;
+      color: var(--danger);
+      font-size: 12.5px;
+    }
+
+    .cmd-gotcha::before { content: "⚠ "; font-weight: bold; }
+
+    .gotcha-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .gotcha-list li {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13.5px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .gotcha-list li:last-child { border-bottom: none; }
+
+    .g-icon { flex-shrink: 0; font-size: 16px; margin-top: 1px; }
+
+    .limit-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .limit-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13.5px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 10px;
+    }
+
+    .limit-list li::before { content: "—"; color: var(--text-dim); flex-shrink: 0; }
+    .limit-list li:last-child { border-bottom: none; }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .stack-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+
+    .stack-name {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .stack-card p { font-size: 13px; color: var(--text-muted); margin: 0; }
+
+    .cost-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 10px 0;
+    }
+
+    .cost-label {
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .cost-card p { margin: 0; color: var(--text-muted); font-size: 13.5px; }
+
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      overflow-x: auto;
+      margin: 14px 0;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      border: 0;
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.65;
+      font-family: var(--font-mono);
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      background: var(--bg-code);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+
+    a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent-2); }
+    a:hover { color: var(--text); border-bottom-style: solid; }
+    .sidebar a { border-bottom: none; }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ======= SIDEBAR ======= -->
+  <aside class="sidebar">
+    <div class="logo">Cheatsheet</div>
+
+    <div class="nav-section">
+      <h3>Library</h3>
+      <a href="../index.html">&#8592; Home Library</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>Cheatsheets</h3>
+      <a href="../gsd/index.html">GSD</a>
+      <a href="../gstack/index.html">gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo (PAI)</a>
+      <a href="../agent-teams/index.html" class="active">Agent Teams</a>
+      <a href="../compound-engineering/index.html">Compound Engineering</a>
+      <a href="../cira-custom/index.html">CIRA Custom Stack</a>
+      <a href="../claude-code-basics/index.html">Claude Code Basics</a>
+      <a href="../inventory/index.html">Master Inventory</a>
+      <a href="../bash-macos/index.html">Bash macOS</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>On this page</h3>
+      <a href="#quick-start">Quick Start</a>
+      <a href="#subagents">Subagents</a>
+      <a href="#teams">Agent Teams</a>
+      <a href="#lifecycle">Lifecycle</a>
+      <a href="#patterns">Patterns</a>
+      <a href="#workflows">Workflows</a>
+      <a href="#cira-examples">CIRA Examples</a>
+      <a href="#stack-integration">Stack Integration</a>
+      <a href="#anti-patterns">Anti-patterns</a>
+      <a href="#gotchas">Gotchas</a>
+    </div>
+  </aside>
+
+  <!-- ======= MAIN ======= -->
+  <main class="content">
+
+    <!-- HEADER -->
+    <div class="tool-header">
+      <h1>Agent Teams + Subagents <span class="version-badge">Claude Code 2.1.131+</span></h1>
+      <p class="tagline">Multi-agent orchestration: Teams (debate/collaboration) + Subagents (parallel, result-only)</p>
+      <div class="status-badge">OPERATIVO &#8212; bug v2.1.128 fixato marzo 2026</div>
+      <div class="env-notice">
+        <strong>Env richiesto:</strong> <code>CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1</code> in <code>~/.claude/settings.json</code>
+        &#183; Restart CC dopo enable
+      </div>
+    </div>
+
+    <!-- QUICK START -->
+    <section id="quick-start">
+      <h2>Quick Start &#8212; Distinzione chiave</h2>
+
+      <p><strong>Teams</strong>: agent <em>si parlano</em>. Pattern debate/discuss.<br>
+      <strong>Subagents</strong>: agent <em>isolati</em>. Pattern Task()-tool, ritornano risultato.</p>
+
+      <table>
+        <thead>
+          <tr><th>Vuoi&#8230;</th><th>Usa</th><th>Perch&#233;</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Task paralleli indipendenti, result-only</td>
+            <td><code>Task()</code> (Subagent)</td>
+            <td>Pi&#249; veloce, meno costoso, isolamento context</td>
+          </tr>
+          <tr>
+            <td>Debate, consensus, multi-prospettiva</td>
+            <td><code>TeamCreate()</code> (Teams)</td>
+            <td>I teammate si parlano direttamente, convergono</td>
+          </tr>
+          <tr>
+            <td>Task semplice &lt;10 min single-view</td>
+            <td>Main thread diretto</td>
+            <td>Overhead Teams non vale la pena</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Subagent isolato (Task tool)</h3>
+      <pre><code>Task({
+  subagent_type: 'general-purpose',
+  model: 'haiku',
+  prompt: '...self-contained instruction, zero external context...',
+  description: 'Email parser security audit',
+  run_in_background: true
+})</code></pre>
+
+      <h3>Team creation</h3>
+      <pre><code>TeamCreate({name: 'board', members: ['ceo', 'cto', 'cfo']})</code></pre>
+      <p>Oppure via natural language: <em>"crea team con N teammates per X"</em></p>
+
+      <div class="callout tip">
+        <strong>Regola d'oro:</strong> Subagents per width (molti task indipendenti in parallelo) &#8212;
+        Teams per depth (pochi agent, discussione complessa e convergenza).
+      </div>
+    </section>
+
+    <!-- SUBAGENTS -->
+    <section id="subagents">
+      <h2>Subagents (Task tool, result-only)</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Task({subagent_type, prompt, description, &#8230;})</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Spawn agente isolato, esegui prompt self-contained, ritorna risultato finale</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Ricerca indipendente, audit parallelo, code-review isolato, source-specific investigation</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Return</span>
+          <span class="value">agent result summary (lossy per task &gt;10KB)</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value">TeamCreate per debate</span>
+        </div>
+        <div class="cmd-gotcha">Subagent NON ha memoria. Output lossy &#8212; usa per result-only.</div>
+      </div>
+
+      <h3>Parametri Task()</h3>
+      <table class="params-table">
+        <thead>
+          <tr><th>Parametro</th><th>Tipo</th><th>Descrizione</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>subagent_type</td><td>str</td>
+            <td><code>general-purpose</code> | <code>researcher</code> | <code>code-reviewer</code> | <code>security-expert</code></td>
+          </tr>
+          <tr>
+            <td>prompt</td><td>str</td>
+            <td>Instruction self-contained &#8212; ZERO context da main thread</td>
+          </tr>
+          <tr>
+            <td>description</td><td>str</td>
+            <td>Human-readable task title (Agent View lo mostra)</td>
+          </tr>
+          <tr>
+            <td>model</td><td>str</td>
+            <td><code>haiku</code> | <code>sonnet</code> | <code>opus</code> (default: auto-route)</td>
+          </tr>
+          <tr>
+            <td>run_in_background</td><td>bool</td>
+            <td><code>true</code> per non bloccare main (default: false)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Esempio: audit parallelo su 4 componenti</h3>
+      <pre><code>// Tutti in background, main thread non blocca
+Task({
+  subagent_type: 'researcher',
+  model: 'haiku',
+  description: 'Email parser security audit',
+  prompt: 'Audit security vulnerabilities in email parsing. Focus: injection, header spoofing, MIME abuse. Return JSON: [{finding, severity, recommendation}]',
+  run_in_background: true
+})
+
+Task({
+  subagent_type: 'code-reviewer',
+  model: 'haiku',
+  description: 'Auth module review',
+  prompt: 'Review auth module for session fixation, CSRF, token expiry. Return prioritized issues list.',
+  run_in_background: true
+})</code></pre>
+
+      <div class="callout">
+        <strong>Max 8&#8211;10 Task in 1 batch</strong> &#8212; oltre rischi rate limit e context burn.
+      </div>
+    </section>
+
+    <!-- AGENT TEAMS -->
+    <section id="teams">
+      <h2>Agent Teams (debate, collaborative)</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">TeamCreate({name, members, model, &#8230;})</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Crea persistent team di N agent che collaborano via shared task list + direct messaging</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Quando</span>
+          <span class="value">Board debate, PR multi-reviewer, complex refactor, hypothesis testing, go/no-go decisions</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Lifecycle</span>
+          <span class="value">Lead &#8594; crea team &#8594; approval &#8594; teammates discuss &#8594; converge &#8594; result</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">See also</span>
+          <span class="value">Task() per non-debate work</span>
+        </div>
+        <div class="cmd-gotcha">Agent SI PARLANO. Cost linear con N members. Max ~8 members.</div>
+      </div>
+
+      <h3>Parametri TeamCreate()</h3>
+      <table class="params-table">
+        <thead>
+          <tr><th>Parametro</th><th>Tipo</th><th>Descrizione</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>name</td><td>str</td>
+            <td>Team identifier (es. <code>board</code>, <code>pr-reviewers</code>, <code>hypothesis-test</code>)</td>
+          </tr>
+          <tr>
+            <td>members</td><td>list[str]</td>
+            <td>Teammate persona (es. <code>cto</code>, <code>cfo</code>, <code>cmo</code>, <code>product-manager</code>)</td>
+          </tr>
+          <tr>
+            <td>model</td><td>str</td>
+            <td>Model per teammates (default: auto-route)</td>
+          </tr>
+          <tr>
+            <td>lead_model</td><td>str</td>
+            <td>Model per lead (default: sonnet)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Esempio: PR review board</h3>
+      <pre><code>TeamCreate({
+  name: 'pr-review-board',
+  members: [
+    'backend-specialist',
+    'frontend-expert',
+    'security-reviewer',
+    'performance-auditor'
+  ],
+  model: 'sonnet'
+})</code></pre>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Lead prompts team (natural language)</div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Main agent (lead) invia messaggio al team. Team discute, coordina, ritorna consensus.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Pattern</span>
+          <span class="value">
+            Lead: "Crea team per investigare bug X con 3 hypothesis" &#8594;
+            Team: ogni teammate testa (parallel) &#8594;
+            Team: discutono, convergono &#8594;
+            Lead: riceve consensus
+          </span>
+        </div>
+      </div>
+
+      <h3>Tabella comparativa</h3>
+      <table class="compare-table">
+        <thead>
+          <tr><th>Aspetto</th><th>Subagents (Task tool)</th><th>Agent Teams</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Context window</td><td>Own isolated context</td><td>Own isolated context</td></tr>
+          <tr><td>Communication</td><td>Report SOLO al main</td><td>Direct teammate-to-teammate messaging</td></tr>
+          <tr><td>Coordination</td><td>Main agent manage</td><td>Self-coord via shared task list</td></tr>
+          <tr><td>Best per</td><td>Result-only execution</td><td>Debate, collaboration, approval gates</td></tr>
+          <tr><td>Token cost</td><td>Lower (result summary lossy)</td><td>Higher (each agent = full session)</td></tr>
+          <tr><td>Lifecycle</td><td>Spawn &#8594; execute &#8594; return</td><td>Persistent, multi-turn, approval gates</td></tr>
+          <tr><td>Plan approval</td><td>No</td><td>Yes (lead approva teammate plan)</td></tr>
+          <tr><td>Max parallel</td><td>8&#8211;10 Task in 1 batch</td><td>~8 teammates per team</td></tr>
+          <tr><td>Inter-agent chat</td><td>NO</td><td>YES (full)</td></tr>
+          <tr><td>Speed</td><td>Fast (parallel)</td><td>Slower (debate rounds)</td></tr>
+          <tr><td>Best for complexity</td><td>&lt;10 min task per agent</td><td>&gt;20 min complex work</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- LIFECYCLE -->
+    <section id="lifecycle">
+      <h2>Lifecycle &amp; Control</h2>
+
+      <h3>Subagent lifecycle</h3>
+      <ul class="lifecycle-steps">
+        <li><span class="step-n">1</span>Main agent spawns <code>Task({prompt, &#8230;})</code></li>
+        <li><span class="step-n">2</span>Subagent isolated, execute prompt</li>
+        <li><span class="step-n">3</span>Subagent returns result</li>
+        <li><span class="step-n">4</span>Main agent receives summary, proceed</li>
+      </ul>
+
+      <h3>Team lifecycle</h3>
+      <ul class="lifecycle-steps">
+        <li><span class="step-n">1</span>Lead prompts <em>"create team with N members for X"</em></li>
+        <li><span class="step-n">2</span>TeamCreate spawns persistent team + lead</li>
+        <li><span class="step-n">3</span>Lead proposes plan</li>
+        <li><span class="step-n">4</span>Team discute, converge on approach</li>
+        <li><span class="step-n">5</span>Lead approves or redirect</li>
+        <li><span class="step-n">6</span>Teammates execute, self-coord</li>
+        <li><span class="step-n">7</span>Team returns consensus result</li>
+        <li><span class="step-n">8</span>Lead can continue or close team</li>
+      </ul>
+
+      <h3>Setup &amp; verifica</h3>
+      <pre><code># 1. Abilita in ~/.claude/settings.json
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  }
+}
+
+# 2. Verifica versione
+claude --version   # deve essere v2.1.131+
+
+# 3. Verifica in UI
+# Freccia sinistra in CC UI -&gt; Agent View -&gt; Teams option visibile
+
+# 4. Test quick
+# "crea team con 2 teammates per valutare questo codice"</code></pre>
+
+      <h3>Limitazioni experimental (v2.1.131)</h3>
+      <ul class="limit-list">
+        <li>No pause/resume mid-team</li>
+        <li>Max ~8 teammates per team (rate limit)</li>
+        <li>Team lifecycle is linear (no branching logic)</li>
+        <li>Inter-agent messaging visible to lead only</li>
+        <li>Voting/consensus NOT automatic &#8212; lead must interpret results</li>
+      </ul>
+    </section>
+
+    <!-- PATTERNS -->
+    <section id="patterns">
+      <h2>Multi-agent Patterns</h2>
+
+      <div class="callout">
+        <strong>Parallel research (Subagents)</strong><br>
+        9&#215; Task() in parallel, ognuno ricerca source indipendente.<br>
+        <em>Quando:</em> Multi-source competitive analysis, audit 10 files, generate 4 variants.<br>
+        <em>Model strategy:</em> Haiku (cost) &#215;9 &#8594; Sonnet &#215;1 (synthesis)
+      </div>
+
+      <div class="callout">
+        <strong>C-suite board (Teams)</strong><br>
+        5&#8211;7 agent debate, converge on decision.<br>
+        <em>Quando:</em> Architectural decision, pricing strategy, go/no-go call.<br>
+        <em>Model strategy:</em> Sonnet lead, Haiku/Sonnet teammates
+      </div>
+
+      <div class="callout">
+        <strong>Specialist chain (Subagents sequenziali)</strong><br>
+        Task A &#8594; output &#8594; Task B (include A output) &#8594; output &#8594; Task C synthesis.<br>
+        <em>Quando:</em> Multi-stage, specialist each stage.<br>
+        <em>Model strategy:</em> Haiku chain, Sonnet final synthesis
+      </div>
+
+      <div class="callout">
+        <strong>Hypothesis testing (Teams debate)</strong><br>
+        Team testa 3+ hypothesis in parallelo, debate convergence.<br>
+        <em>Quando:</em> Bug root-cause, feature feasibility study.<br>
+        <em>Model strategy:</em> Sonnet per debate quality
+      </div>
+
+      <div class="callout tip">
+        <strong>CIRA Tavolo Consiglieri (Teams scale)</strong><br>
+        67 mentori in 3 mode: <code>consiglio</code> (serial, 1 answer) | <code>parallel</code> (N task contemporanei) | <code>concistoro</code> (vote/consensus).<br>
+        <em>Quando:</em> CIRA coaching decisions, multi-perspective life planning.<br>
+        <em>Model strategy:</em> Opus lead (reasoning depth), Sonnet teammates
+      </div>
+
+      <h3>Cost model</h3>
+      <div class="cost-card">
+        <div class="cost-label">Subagents 9&#215; parallel</div>
+        <p>9&#215; Haiku (research) &#8594; 1&#215; Sonnet (synthesis)</p>
+      </div>
+      <div class="cost-card">
+        <div class="cost-label">Team 5 members</div>
+        <p>5&#215; Sonnet (debate, 3&#8211;5 rounds) &#8212; costo significativamente pi&#249; alto</p>
+      </div>
+
+      <div class="callout warn">
+        <strong>CIRA model routing:</strong> Opus solo registry/canonical &#8212; Sonnet per debate Teams &#8212;
+        Haiku per Subagents execution. Mai Agent parallel (68% burn rilevato).
+      </div>
+    </section>
+
+    <!-- WORKFLOWS END-TO-END -->
+    <section id="workflows">
+      <h2>Workflows End-to-End</h2>
+
+      <h3>Multi-source research (Subagents)</h3>
+      <div class="callout tip">
+        <strong>Pattern:</strong> Parallel research &#8594; Sonnet synthesis<br>
+        <strong>Trigger tipico:</strong> "Analizza 5 competitor su pricing, feature, positioning"
+      </div>
+      <pre><code>// Step 1: spawn N subagents in background
+const sources = ['competitor-A', 'competitor-B', 'competitor-C', 'competitor-D', 'competitor-E']
+
+sources.forEach(s =&gt;
+  Task({
+    subagent_type: 'researcher',
+    model: 'haiku',
+    description: `Research ${s}`,
+    prompt: `Analizza ${s}: pricing page, feature list, positioning statement. Return structured JSON {pricing, features[], positioning}.`,
+    run_in_background: true
+  })
+)
+
+// Step 2: Sonnet synthesis dopo raccolta risultati
+Task({
+  subagent_type: 'general-purpose',
+  model: 'sonnet',
+  prompt: 'Sintetizza i 5 competitor analysis in white space opportunities per CIRA.'
+})</code></pre>
+
+      <h3>PR review board (Teams)</h3>
+      <div class="callout tip">
+        <strong>Pattern:</strong> Team debate multi-reviewer<br>
+        <strong>Trigger:</strong> "Review PR con focus security + perf + tests"
+      </div>
+      <pre><code>// Natural language trigger al lead
+"Crea team pr-review-board con:
+  - backend-specialist (API + DB layer)
+  - security-reviewer (OWASP Top 10)
+  - performance-auditor (N+1, caching, bundle size)
+  - test-coverage-checker (80% threshold)
+Rivedi questa PR: [incolla diff]"
+
+// Il team:
+// 1. Lead propone piano review
+// 2. Ogni teammate analizza il proprio scope in parallelo
+// 3. Teammate si scambiano finding (cross-review)
+// 4. Convergono su lista prioritized issues
+// 5. Lead ritorna consensus report al main thread</code></pre>
+
+      <h3>Bug root-cause (Teams hypothesis)</h3>
+      <div class="callout tip">
+        <strong>Pattern:</strong> 3 hypothesis in parallelo, debate convergence
+      </div>
+      <pre><code>"Crea team bug-investigators con:
+  - db-specialist (hypothesis: slow query o N+1)
+  - network-specialist (hypothesis: timeout o DNS)
+  - auth-specialist (hypothesis: session expiry o token race)
+Investigano questo bug: [incolla symptom + logs]"
+
+// Team esegue in parallelo -&gt; debate -&gt; root cause + fix recommendation</code></pre>
+    </section>
+
+    <!-- CIRA EXAMPLES -->
+    <section id="cira-examples">
+      <h2>CIRA Use Cases</h2>
+
+      <div class="cira-example">
+        <span class="cira-tag">CIRA</span><span class="pattern-tag">Teams scale &#8212; 67 mentori</span>
+        <h4>Aurelio Tavolo dei Consiglieri (M3)</h4>
+        <p>67 mentori auto-discovered, 3 mode operative: <strong>consiglio</strong> (serial, 1 answer) | <strong>parallel</strong> (N task contemporanei) | <strong>concistoro</strong> (vote/consensus). Smoke test 3-mode PASSED 2026-05-07. Bot launchd vivo. Source: <code>project_aurelio_tavolo_consiglieri</code>.</p>
+      </div>
+
+      <div class="cira-example">
+        <span class="cira-tag">CIRA</span><span class="pattern-tag">Subagents parallel &#8212; 4 agent A B C D</span>
+        <h4>x-repos pipeline</h4>
+        <p>4 verdetti indipendenti (keep/refactor/deprecate/archive) su ogni repo clonato. Step 6 del pipeline = 4 sub-agent A/B/C/D in parallelo. Script: <code>WORK/SCRIPTS/x-repos-pipeline/run.sh</code>. Source: <code>feedback_x_repos_pipeline_method</code>.</p>
+      </div>
+
+      <div class="cira-example">
+        <span class="cira-tag">CIRA</span><span class="pattern-tag">Hybrid: Subagents + Teams</span>
+        <h4>Coach Telegram M3 Orchestra (Aurelio)</h4>
+        <p>Telegram bot routing via Subagents parallel (gmail, drive, logic) + Teams per coaching decision. M4 chiuso, aiogram bot live, 5 skill ali-* integrate. Stack: Python + claude_agent_sdk + aiogram. Source: <code>project_coach_telegram_state_2026_05_08</code>.</p>
+      </div>
+
+      <div class="cira-example">
+        <span class="cira-tag">CIRA</span><span class="pattern-tag">Hybrid: Teams (plan) + Subagents (exec)</span>
+        <h4>Costruiamo v2.5.0 (Skill meta + Ruflo)</h4>
+        <p>Meta-orchestrator usa Teams per planning phase, Subagents per parallel execution phase. Fasi: orchestra v3 &#8594; superpowers &#8594; template-check &#8594; brainstorm &#8594; pang-harness &#8594; framework-picker &#8594; mcp-scan &#8594; GSD &#8594; Gstack. Source: <code>project_costruiamo_v2_5_ruflo_agentic_flow</code>.</p>
+      </div>
+    </section>
+
+    <!-- STACK INTEGRATION -->
+    <section id="stack-integration">
+      <h2>Stack Integration</h2>
+
+      <div class="stack-grid">
+        <div class="stack-card">
+          <div class="stack-name">GSD (gsd-*)</div>
+          <p>Agent GSD usano Subagents pattern via Task tool per execution phase</p>
+        </div>
+        <div class="stack-card">
+          <div class="stack-name">Compound Engineering (ce-*)</div>
+          <p>ce-* reviewer agent = Subagents specialist + result-only. Debugging, planning, brainstorming isolati.</p>
+        </div>
+        <div class="stack-card">
+          <div class="stack-name">/costruiamo</div>
+          <p>Meta-orchestrator usa Teams per planning, Subagents per parallel execution</p>
+        </div>
+        <div class="stack-card">
+          <div class="stack-name">Ruflo (PAI)</div>
+          <p>PAI ruflo iterations usano Teams debate mode per consensus hive-mind su scoring</p>
+        </div>
+        <div class="stack-card">
+          <div class="stack-name">Aurelio Coach</div>
+          <p>Telegram bot routing: Subagents parallel (gmail/drive/logic), Teams per coaching decision</p>
+        </div>
+        <div class="stack-card">
+          <div class="stack-name">Agent View (CC UI)</div>
+          <p>Attiva con <code>claude agents</code> o freccia sinistra. Dashboard CLI per N sessioni parallele. Rilasciata 11 mag 2026.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Riferimenti locali:</strong><br>
+        <code>~/WORK/CLAUDE/agent-teams-guide.md</code> &#8212; quando, come, perch&#233;<br>
+        <code>~/.claude/projects/-Users-cira/memory/reference_agent_teams_status.md</code><br>
+        <code>~/.claude/projects/-Users-cira/memory/feedback_agent_teams_vs_subagents.md</code><br>
+        <br>
+        <a href="https://docs.anthropic.com/en/docs/claude-code/sub-agents" target="_blank">
+          docs.anthropic.com &#8212; Sub-agents (ufficiale)
+        </a>
+        &#8212; nota: Anthropic Teams docs non ancora pubblico; info da experimental feature + CIRA reverse-engineering.
+      </div>
+    </section>
+
+    <!-- ANTI-PATTERNS -->
+    <section id="anti-patterns">
+      <h2>Anti-patterns &#9888;</h2>
+      <ul class="anti-list">
+        <li>Mai mettere <code>team_name</code> su Task() &#8212; error (workaround v2.1.128, deprecated in v2.1.131)</li>
+        <li>Mai &gt;8 agent paralleli subagent in 1 batch &#8212; rate limit + context burn</li>
+        <li>Subagents ritornano summary lossy &#8212; MAI per task con stato condiviso tra agent</li>
+        <li>Teams debate senza approval gate = risk &#8212; sempre far approvare al lead il piano del teammate</li>
+        <li>Mescolare Team membership durante sessione = instabile &#8212; crea team statici, non mutarli mid-session</li>
+        <li>Subagent prompt context-dependent = fallimento &#8212; assicura prompt completamente self-contained, zero riferimenti a context del main thread</li>
+      </ul>
+    </section>
+
+    <!-- GOTCHAS -->
+    <section id="gotchas">
+      <h2>Gotchas</h2>
+
+      <ul class="gotcha-list">
+        <li>
+          <span class="g-icon">&#128263;</span>
+          <span><strong>Subagent NON ha memoria.</strong> Ogni Task parte da zero. Non passare contesto implicito &#8212; tutto deve stare nel <code>prompt</code>.</span>
+        </li>
+        <li>
+          <span class="g-icon">&#128201;</span>
+          <span><strong>Output lossy su task grandi.</strong> Se il task produce &gt;10KB di output, il summary &#232; compresso. Mai usare Subagents per stato condiviso.</span>
+        </li>
+        <li>
+          <span class="g-icon">&#128184;</span>
+          <span><strong>Teams &#232; costoso.</strong> Ogni teammate = full session. 5 teammate &#215; 3 round debate = costo significativo. Usa Haiku per teammate quando possibile.</span>
+        </li>
+        <li>
+          <span class="g-icon">&#128381;</span>
+          <span><strong>Voting non automatico.</strong> Il consensus nei Teams non &#232; auto-calcolato &#8212; il lead deve interpretare i risultati e sintetizzare.</span>
+        </li>
+        <li>
+          <span class="g-icon">&#9940;</span>
+          <span><strong>No pause/resume.</strong> Una volta avviato un Team, non puoi metterlo in pausa e riprendere in sessione diversa (experimental v2.1.131).</span>
+        </li>
+        <li>
+          <span class="g-icon">&#128065;</span>
+          <span><strong>Inter-agent chat visibile solo al lead.</strong> Il main thread vede solo il risultato finale del team, non i messaggi interni tra teammate.</span>
+        </li>
+        <li>
+          <span class="g-icon">&#128165;</span>
+          <span><strong>68% context burn con Agent parallel.</strong> Test CIRA: mai usare Agent parallel su task lunghi &#8212; usa Subagents <code>Task()</code> invece.</span>
+        </li>
+      </ul>
+
+      <div class="callout warn">
+        <strong>Model routing CIRA:</strong>
+        Opus solo registry/canonical &#8212; Sonnet per debate Teams &#8212; Haiku per Subagents execution.
+        Mai Agent parallel (68% burn). Sweet spot main thread: 3&#8211;5 skill max.
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="../assets/copy.js"></script>
+  <script src="../assets/glossary.js" defer></script>
+</body>
+</html>

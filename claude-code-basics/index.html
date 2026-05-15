@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Claude Code — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    /* Subcommand list inside cmd-card */
+    .cmd-subcmds {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .cmd-subcmds code {
+      font-size: 12px;
+      background: var(--bg-code);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .cmd-note {
+      margin-top: 8px;
+      padding: 6px 10px;
+      background: rgba(122, 153, 200, 0.07);
+      border-left: 2px solid var(--info);
+      border-radius: 4px;
+      color: var(--info);
+      font-size: 13px;
+    }
+    /* Quick ref grid */
+    .qref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .qref-item {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+    }
+    .qref-item .qref-key {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .qref-item code {
+      font-size: 13px;
+      white-space: normal;
+      word-break: break-all;
+    }
+    /* Workflow steps */
+    .workflow-steps {
+      counter-reset: wf;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .workflow-steps li {
+      counter-increment: wf;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .workflow-steps li:last-child { border-bottom: 0; }
+    .workflow-steps li::before {
+      content: counter(wf);
+      min-width: 22px;
+      height: 22px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--accent-2);
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    /* Keyboard key badge */
+    .kbd {
+      display: inline-block;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      border-bottom: 2px solid var(--border-strong);
+      border-radius: 4px;
+      padding: 1px 7px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    /* CIRA section extras */
+    .cira-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .resources-list {
+      list-style: none;
+      padding: 0;
+    }
+    .resources-list li {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .resources-list li:last-child { border-bottom: 0; }
+    .resources-list a { color: var(--accent); }
+    /* Badge for customizable keys */
+    .badge-cust {
+      display: inline-block;
+      background: rgba(127, 165, 99, 0.12);
+      color: var(--success);
+      border: 1px solid var(--success);
+      border-radius: 10px;
+      font-size: 11px;
+      padding: 1px 7px;
+      margin-left: 6px;
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">Ardea Cheatsheets</div>
+
+    <div class="nav-section">
+      <h3>Cheatsheet</h3>
+      <a href="../claude-code-basics/index.html" class="active">Claude Code — Basics</a>
+      <a href="../gsd/index.html">GSD Workflow</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../bash-macos/index.html">Bash macOS</a>
+      <a href="../compound-engineering/index.html">Compound Engineering</a>
+      <a href="../gstack/index.html">Gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../cira-custom/index.html">CIRA Custom</a>
+    </div>
+
+    <div class="nav-section">
+      <h3>Sezioni</h3>
+      <a href="#quick-start">Quick Start</a>
+      <a href="#basics">Basics</a>
+      <a href="#slash-commands">Slash Commands</a>
+      <a href="#keyboard-shortcuts">Keyboard Shortcuts</a>
+      <a href="#hooks">Hooks System</a>
+      <a href="#skills">Skills &amp; Custom Commands</a>
+      <a href="#mcp">MCP Integration</a>
+      <a href="#subagents">Subagents &amp; Teams</a>
+      <a href="#context">Context Management</a>
+      <a href="#advanced">Advanced Patterns</a>
+      <a href="#hidden">Hidden Features</a>
+      <a href="#settings-keys">Settings Keys</a>
+      <a href="#hooks-types">Hook Types (tabella)</a>
+      <a href="#advanced-patterns">Advanced Patterns (dettaglio)</a>
+      <a href="#cira-examples">CIRA Examples</a>
+    </div>
+
+    <div class="nav-section">
+      <a href="../index.html" class="cross-link">← Libreria completa</a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="content">
+
+    <!-- HEADER -->
+    <div class="tool-header">
+      <h1>Claude Code <span class="version-badge">v2.x · 2026-05-15</span></h1>
+      <p class="tagline">Anthropic CLI ufficiale per development in Claude Code</p>
+      <div class="when-card">
+        <strong>Quando usarlo:</strong> Development locale con Claude AI editor, debugging, testing, multi-file refactoring, multi-agent orchestration.
+      </div>
+    </div>
+
+    <!-- QUICK START -->
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+
+      <h3>Install</h3>
+      <pre><code>npm install -g @anthropic-ai/claude
+# o via brew (se disponibile)
+brew install anthropic/claude/claude</code></pre>
+
+      <h3>Verify &amp; Update</h3>
+      <pre><code>claude --version
+npm update -g @anthropic-ai/claude</code></pre>
+      <p style="color:var(--text-muted); font-size:13px;">Richiede: Node.js 18+, npm 8+</p>
+
+      <h3>First run</h3>
+      <pre><code>cd ~/WORK/SOFTWARE/myproject
+claude
+# REPL interattivo. Carica CLAUDE.md della dir corrente + .claude/settings.json</code></pre>
+
+      <h3>Headless one-shot</h3>
+      <pre><code>claude -p "fix bug in src/auth.ts" --output-format json</code></pre>
+
+      <h3>Riprendi ultima sessione</h3>
+      <pre><code>claude --resume</code></pre>
+
+      <h3>Quick Reference</h3>
+      <div class="qref-grid">
+        <div class="qref-item">
+          <div class="qref-key">Setup</div>
+          <code>npm install -g @anthropic-ai/claude &amp;&amp; claude auth login</code>
+        </div>
+        <div class="qref-item">
+          <div class="qref-key">New project</div>
+          <code>claude project new &lt;name&gt;</code>
+        </div>
+        <div class="qref-item">
+          <div class="qref-key">Slash commands</div>
+          <code>/gsd /plan /tdd /code-review /build-fix /clear /compact /evolve /learn</code>
+        </div>
+        <div class="qref-item">
+          <div class="qref-key">Keyboard</div>
+          <code>Option+T (thinking) | Ctrl+G (plan) | Ctrl+O (verbose) | Cmd+, (settings)</code>
+        </div>
+        <div class="qref-item">
+          <div class="qref-key">Skills path</div>
+          <code>~/.claude/skills/&lt;skill-name&gt;/SKILL.md</code>
+        </div>
+        <div class="qref-item">
+          <div class="qref-key">Hooks location</div>
+          <code>CLAUDE.md or ~/.claude/CLAUDE.md</code>
+        </div>
+        <div class="qref-item">
+          <div class="qref-key">Context search</div>
+          <code>ctx_search(queries: [...])</code>
+        </div>
+        <div class="qref-item">
+          <div class="qref-key">Emergency</div>
+          <code>/clear · /compact · /evolve</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- BASICS -->
+    <section id="basics">
+      <h2>Basics</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">claude</div>
+        <div class="cmd-meta">
+          <span>Development</span>
+          <span>Avvia Claude Code</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>claude</code></span></div>
+        <div class="cmd-row"><span class="label">Flag</span><span class="value"><code>--project &lt;name&gt;</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">claude --version</div>
+        <div class="cmd-meta">
+          <span>Diagnostica</span>
+          <span>Mostra versione</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>claude --version</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">claude --help</div>
+        <div class="cmd-meta">
+          <span>Scoperta comandi</span>
+          <span>Mostra help completo</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>claude --help</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">claude project new</div>
+        <div class="cmd-meta">
+          <span>Nuovo workflow</span>
+          <span>Crea nuovo progetto</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>claude project new my-app</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">claude project list</div>
+        <div class="cmd-meta">
+          <span>Gestione progetti</span>
+          <span>Lista tutti i progetti</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>claude project list</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">claude project delete</div>
+        <div class="cmd-meta">
+          <span>Pulizia</span>
+          <span>Cancella progetto</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>claude project delete my-app</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">claude config</div>
+        <div class="cmd-meta">
+          <span>Diagnostica config</span>
+          <span>Mostra configurazione</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>claude config</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">claude auth</div>
+        <div class="cmd-meta">
+          <span>Setup API key</span>
+          <span>Gestisci autenticazione</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>claude auth login</code></span></div>
+      </div>
+    </section>
+
+    <!-- SLASH COMMANDS -->
+    <section id="slash-commands">
+      <h2>Slash Commands</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/gsd</div>
+        <div class="cmd-meta">
+          <span>Spec-driven development</span>
+          <span>Get Shit Done workflow</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/gsd:new-project</code></span></div>
+        <div class="cmd-subcmds">
+          <code>new-project</code>
+          <code>discuss-phase N</code>
+          <code>plan-phase N</code>
+          <code>execute-phase N</code>
+          <code>verify-work N</code>
+          <code>quick</code>
+          <code>map-codebase</code>
+          <code>next</code>
+          <code>progress</code>
+        </div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/plan</div>
+        <div class="cmd-meta">
+          <span>Architecting features</span>
+          <span>Planning agent</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/plan &lt;feature description&gt;</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/tdd</div>
+        <div class="cmd-meta">
+          <span>Scrivere tests prima</span>
+          <span>Test-driven development guide</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/tdd &lt;feature&gt;</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/code-review</div>
+        <div class="cmd-meta">
+          <span>Quality check post-implement</span>
+          <span>Code review agent</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/code-review</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/build-fix</div>
+        <div class="cmd-meta">
+          <span>Debug failed builds</span>
+          <span>Build error resolver</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/build-fix</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/clear</div>
+        <div class="cmd-meta">
+          <span>Fresh start</span>
+          <span>Pulisce contesto sessione</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/clear</code></span></div>
+        <div class="cmd-gotcha">Cancella tutta la memoria conversazione locale</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compact</div>
+        <div class="cmd-meta">
+          <span>Ridurre token usage</span>
+          <span>Compatta contesto</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/compact</code></span></div>
+        <div class="cmd-note">Preserve knowledge base, compress raw data</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/evolve</div>
+        <div class="cmd-meta">
+          <span>Sessione 10+ su stesso progetto</span>
+          <span>Learn from patterns</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/evolve</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/learn</div>
+        <div class="cmd-meta">
+          <span>Record importante insegnamento</span>
+          <span>Memorizza decisione</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/learn &lt;decision&gt;</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/e2e</div>
+        <div class="cmd-meta">
+          <span>Critical user flows</span>
+          <span>E2E test runner</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/e2e</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/security</div>
+        <div class="cmd-meta">
+          <span>Auth/payment/data code</span>
+          <span>Security review</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/security</code></span></div>
+      </div>
+    </section>
+
+    <!-- KEYBOARD SHORTCUTS -->
+    <section id="keyboard-shortcuts">
+      <h2>Keyboard Shortcuts</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name"><span class="kbd">Option+T</span> / <span class="kbd">Alt+T</span></div>
+        <div class="cmd-meta">
+          <span>Complex reasoning</span>
+          <span>Toggle extended thinking</span>
+        </div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Attiva budget 31,999 token reasoning</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name"><span class="kbd">Ctrl+G</span></div>
+        <div class="cmd-meta">
+          <span>Structured multi-step workflow</span>
+          <span>Plan Mode</span>
+        </div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Activate quando planning complesso</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name"><span class="kbd">Ctrl+O</span></div>
+        <div class="cmd-meta">
+          <span>Debug reasoning</span>
+          <span>Verbose thinking output</span>
+        </div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Show internal model thought</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name"><span class="kbd">Cmd+Shift+M</span></div>
+        <div class="cmd-meta">
+          <span>Scegli Haiku/Sonnet/Opus</span>
+          <span>Switch model</span>
+        </div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Dinamico per task</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Left arrow (sidebar)</div>
+        <div class="cmd-meta">
+          <span>Monitor paralleli agents</span>
+          <span>Agent View dashboard</span>
+        </div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">CC Research Preview feature — rilasciata 11/5/2026</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name"><span class="kbd">Cmd+Shift+W</span></div>
+        <div class="cmd-meta">
+          <span>Parallel branch work</span>
+          <span>Git worktree create</span>
+        </div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Isolate feature branches</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name"><span class="kbd">Cmd+,</span></div>
+        <div class="cmd-meta">
+          <span>Config model/hooks/permissions</span>
+          <span>Settings menu</span>
+        </div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Global settings.json editor</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name"><span class="kbd">Cmd+/</span></div>
+        <div class="cmd-meta">
+          <span>In-app reference</span>
+          <span>Comandi help</span>
+        </div>
+        <div class="cmd-row"><span class="label">Cosa fa</span><span class="value">Quick help overlay</span></div>
+      </div>
+    </section>
+
+    <!-- HOOKS SYSTEM -->
+    <section id="hooks">
+      <h2>Hooks System</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">SessionStart</div>
+        <div class="cmd-meta">
+          <span>Load context, init cron, arm monitors</span>
+          <span>Trigger all'inizio sessione</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value">Fetch dashboard, reset heartbeat</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">PreToolUse</div>
+        <div class="cmd-meta">
+          <span>Validate params, log call</span>
+          <span>Before tool execution</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value">Check secrets NOT in context</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">PostToolUse</div>
+        <div class="cmd-meta">
+          <span>Auto-format, verify, alert</span>
+          <span>After tool execution</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value">Format JSON output, run linter</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Stop</div>
+        <div class="cmd-meta">
+          <span>Final checks, save state</span>
+          <span>When session ends</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value">Commit changes, push backup</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">UserPromptSubmit</div>
+        <div class="cmd-meta">
+          <span>PII filter, routing, priority detection</span>
+          <span>Before user prompt processed</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value">Downgrade non-urgent to Haiku</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Custom hook</div>
+        <div class="cmd-meta">
+          <span>Project-specific automation</span>
+          <span>User-defined triggers</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value">Deploy trigger, test gate</span></div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <h2>Skills &amp; Custom Commands</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Create skill</div>
+        <div class="cmd-meta">
+          <span>Repeated workflow</span>
+          <span>Definisci custom command</span>
+        </div>
+        <div class="cmd-row"><span class="label">Path</span><span class="value"><code>~/.claude/skills/my-skill/SKILL.md</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Skill SKILL.md structure</div>
+        <div class="cmd-meta">
+          <span>Document skill properly</span>
+          <span>Standard skill definition</span>
+        </div>
+        <div class="cmd-row"><span class="label">Campi</span><span class="value"><code>name</code>, <code>description</code>, <code>when_to_use</code>, <code>examples</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Skill trigger</div>
+        <div class="cmd-meta">
+          <span>Use installed skill</span>
+          <span>Invoke custom skill</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>/my-skill &lt;args&gt;</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Install local skill</div>
+        <div class="cmd-meta">
+          <span>Non-published skill</span>
+          <span>Add skill da file</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>cp -r skill ~/.claude/skills/</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Install remote skill</div>
+        <div class="cmd-meta">
+          <span>Community skills</span>
+          <span>Clone from repo</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>gh repo clone &lt;skill-repo&gt;</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">List skills</div>
+        <div class="cmd-meta">
+          <span>Discovery</span>
+          <span>View installed skills</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>grep -r 'name:' ~/.claude/skills/</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Update skill</div>
+        <div class="cmd-meta">
+          <span>Versioning</span>
+          <span>Refresh definition</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>git pull</code> inside skill dir</span></div>
+      </div>
+    </section>
+
+    <!-- MCP INTEGRATION -->
+    <section id="mcp">
+      <h2>MCP Integration</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">MCP server</div>
+        <div class="cmd-meta">
+          <span>API/service access</span>
+          <span>External tool integration</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value">firecrawl, aws-cli, gh</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">MCP config</div>
+        <div class="cmd-meta">
+          <span>Register MCP tools</span>
+          <span>mcpServers in settings.json</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>{"mcpServers": {"server_name": {...}}}</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">MCP auth</div>
+        <div class="cmd-meta">
+          <span>Authenticated endpoints</span>
+          <span>OAuth/credentials</span>
+        </div>
+        <div class="cmd-row"><span class="label">Pattern</span><span class="value">MCP tool authenticate pattern</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">List MCP servers</div>
+        <div class="cmd-meta">
+          <span>Discovery</span>
+          <span>See available servers</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>claude mcp list</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Test MCP connection</div>
+        <div class="cmd-meta">
+          <span>Diagnostica</span>
+          <span>Verify server availability</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value">Call any MCP tool to test</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">MCP fallback</div>
+        <div class="cmd-meta">
+          <span>Server down/auth fail</span>
+          <span>Graceful degradation</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value">Bash tool as fallback for failed MCP</span></div>
+      </div>
+    </section>
+
+    <!-- SUBAGENTS & TEAMS -->
+    <section id="subagents">
+      <h2>Subagents &amp; Teams</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Task()</div>
+        <div class="cmd-meta">
+          <span>Parallel work</span>
+          <span>Spawn isolated agent</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>Task({prompt: '...', run_in_background: true})</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">TaskCreate + monitor</div>
+        <div class="cmd-meta">
+          <span>Long-running task</span>
+          <span>Track background agent</span>
+        </div>
+        <div class="cmd-row"><span class="label">Nota</span><span class="value">Session state persists, async update</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">TeamCreate()</div>
+        <div class="cmd-meta">
+          <span>Multi-perspective decision</span>
+          <span>Create debate team</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>TeamCreate({name: 'c-suite', members: [...]})</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Agent Teams discussion</div>
+        <div class="cmd-meta">
+          <span>Strategic planning</span>
+          <span>Agents debate topic</span>
+        </div>
+        <div class="cmd-row"><span class="label">Pattern</span><span class="value">4+ agents vote/discuss</span></div>
+        <div class="cmd-note">Teams si parlano (DEBATE). Subagents Task-tool isolati. Non confondere.</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Role definition</div>
+        <div class="cmd-meta">
+          <span>Specialized agent</span>
+          <span>Define agent persona</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempi</span><span class="value"><code>security-reviewer</code>, <code>code-reviewer</code>, <code>architect</code></span></div>
+      </div>
+    </section>
+
+    <!-- CONTEXT MANAGEMENT -->
+    <section id="context">
+      <h2>Context Management</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Context window</div>
+        <div class="cmd-meta">
+          <span>Plan work in batches</span>
+          <span>~200k token limit</span>
+        </div>
+        <div class="cmd-row"><span class="label">Regola</span><span class="value">Avoid last 20% for risky edits</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Auto-compact at 80%</div>
+        <div class="cmd-meta">
+          <span>Always active</span>
+          <span>Automatic compression</span>
+        </div>
+        <div class="cmd-row"><span class="label">Trigger</span><span class="value">Post-tools/long-tasks</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Knowledge base preserve</div>
+        <div class="cmd-meta">
+          <span>After /compact</span>
+          <span>/compact preserves indexed content</span>
+        </div>
+        <div class="cmd-row"><span class="label">Nota</span><span class="value"><code>ctx_search</code> still works post-compact</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Context restore</div>
+        <div class="cmd-meta">
+          <span>New session, same project</span>
+          <span>Reload prior session context</span>
+        </div>
+        <div class="cmd-row"><span class="label">Come</span><span class="value">SessionStart hook auto-loads memory</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Knowledge tree search</div>
+        <div class="cmd-meta">
+          <span>Find data across sessions</span>
+          <span>FTS5 indexed search</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>ctx_search(queries: [...])</code></span></div>
+      </div>
+    </section>
+
+    <!-- ADVANCED -->
+    <section id="advanced">
+      <h2>Advanced Patterns</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Extended thinking budget</div>
+        <div class="cmd-meta">
+          <span>Complex problems</span>
+          <span>Up to 31,999 token reasoning</span>
+        </div>
+        <div class="cmd-row"><span class="label">Come</span><span class="value"><span class="kbd">Option+T</span> toggle — default ON</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Plan Mode (Ctrl+G)</div>
+        <div class="cmd-meta">
+          <span>Multi-phase work</span>
+          <span>Structured step planning</span>
+        </div>
+        <div class="cmd-row"><span class="label">Benefit</span><span class="value">Show plan before execute</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Git worktree</div>
+        <div class="cmd-meta">
+          <span>Complex refactoring</span>
+          <span>Parallel branches isolated</span>
+        </div>
+        <div class="cmd-row"><span class="label">Come</span><span class="value"><code>EnterWorktree</code> tool creates isolated branch</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Self-Evolving pattern</div>
+        <div class="cmd-meta">
+          <span>10+ sessions same project</span>
+          <span>Learn from project history</span>
+        </div>
+        <div class="cmd-row"><span class="label">Come</span><span class="value"><code>/evolve</code> promotes decisions to permanent rules</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">CLAUDE.md local config</div>
+        <div class="cmd-meta">
+          <span>Override global defaults</span>
+          <span>Project-specific system prompt</span>
+        </div>
+        <div class="cmd-row"><span class="label">Path</span><span class="value"><code>.claude/CLAUDE.md</code> in project root</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Skill evolution</div>
+        <div class="cmd-meta">
+          <span>Auto-generate skills from errors</span>
+          <span>learned-rules.md generation</span>
+        </div>
+        <div class="cmd-row"><span class="label">Come</span><span class="value"><code>/evolve</code> creates new skill from correction</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Parallel agents</div>
+        <div class="cmd-meta">
+          <span>4-8 independent tasks</span>
+          <span>Run N agents concurrently</span>
+        </div>
+        <div class="cmd-row"><span class="label">Esempio</span><span class="value"><code>Task({...}), Task({...}), Task({...})</code></span></div>
+        <div class="cmd-gotcha">Sweet spot 3-5 skill in main thread. Sub-agent isolano context (max 3×). Avoid 68% token burn con Agent parallel.</div>
+      </div>
+    </section>
+
+    <!-- HIDDEN FEATURES -->
+    <section id="hidden">
+      <h2>Hidden Features</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">claude-mem worker</div>
+        <div class="cmd-meta">
+          <span>Cross-session recall</span>
+          <span>Persistent SQL memory</span>
+        </div>
+        <div class="cmd-row"><span class="label">Access</span><span class="value"><code>HTTP :37777</code> — auto-inject on SessionStart</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Caveman mode</div>
+        <div class="cmd-meta">
+          <span>Max efficiency</span>
+          <span>Terse response format</span>
+        </div>
+        <div class="cmd-row"><span class="label">Trigger</span><span class="value">SessionStart hook: <code>/caveman full</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Context-mode MCP</div>
+        <div class="cmd-meta">
+          <span>Large log analysis</span>
+          <span>Data processing in sandbox</span>
+        </div>
+        <div class="cmd-row"><span class="label">Tools</span><span class="value"><code>ctx_batch_execute</code>, <code>ctx_execute_file</code></span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Model routing</div>
+        <div class="cmd-meta">
+          <span>Cost optimization</span>
+          <span>Dynamic Haiku/Sonnet/Opus</span>
+        </div>
+        <div class="cmd-row"><span class="label">Regola</span><span class="value">Haiku 90% tasks, Sonnet complex, Opus reasoning</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Hook telemetry</div>
+        <div class="cmd-meta">
+          <span>Performance analysis</span>
+          <span>Auto-log all tool usage</span>
+        </div>
+        <div class="cmd-row"><span class="label">Come</span><span class="value">SessionStart hook emits metrics</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Multi-session routing</div>
+        <div class="cmd-meta">
+          <span>Load distribution</span>
+          <span>Parallel CC instances track</span>
+        </div>
+        <div class="cmd-row"><span class="label">Come</span><span class="value"><code>.in_use/</code> PID registry</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Claude Fetch URL resolution</div>
+        <div class="cmd-meta">
+          <span>Design access</span>
+          <span>Canva shortlinks → full URL</span>
+        </div>
+        <div class="cmd-row"><span class="label">Come</span><span class="value"><code>resolve-shortlink</code> tool auto-invoked</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">Telegram standalone bot</div>
+        <div class="cmd-meta">
+          <span>Fallback if MCP fails</span>
+          <span>Launchd bot bypass MCP</span>
+        </div>
+        <div class="cmd-row"><span class="label">Come</span><span class="value"><code>com.cira.telegram-bot</code> plist + <code>tg-reply</code></span></div>
+      </div>
+    </section>
+
+    <!-- SETTINGS KEYS -->
+    <section id="settings-keys">
+      <h2>Settings Keys Principali</h2>
+      <p>File <code>~/.claude/settings.json</code> (globale) o <code>./.claude/settings.json</code> (progetto).</p>
+      <table>
+        <thead>
+          <tr><th>Key</th><th>Default</th><th>Cosa fa</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>alwaysThinkingEnabled</code></td>
+            <td><code>true</code></td>
+            <td>Extended thinking always on</td>
+          </tr>
+          <tr>
+            <td><code>preferredModel</code></td>
+            <td><code>"sonnet"</code></td>
+            <td>Default model choice. Opzioni: <code>haiku</code>, <code>sonnet</code>, <code>opus</code></td>
+          </tr>
+          <tr>
+            <td><code>modelRouting</code></td>
+            <td>—</td>
+            <td>Per-task model selection rules</td>
+          </tr>
+          <tr>
+            <td><code>mcpServers</code></td>
+            <td>—</td>
+            <td>External MCP server configurations</td>
+          </tr>
+          <tr>
+            <td><code>hooks</code></td>
+            <td>—</td>
+            <td>SessionStart, PreToolUse, PostToolUse, Stop definitions</td>
+          </tr>
+          <tr>
+            <td><code>contextWindowProtection</code></td>
+            <td><code>true</code></td>
+            <td>Auto-compact at 80%</td>
+          </tr>
+          <tr>
+            <td><code>allowedTools</code></td>
+            <td>—</td>
+            <td>Whitelist tools for auto-accept</td>
+          </tr>
+          <tr>
+            <td><code>permissions</code></td>
+            <td>—</td>
+            <td>Per-tool auto-confirm settings</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- HOOKS TYPES TABLE -->
+    <section id="hooks-types">
+      <h2>Hook Types</h2>
+      <table>
+        <thead>
+          <tr><th>Hook</th><th>Quando scatta</th><th>Uso tipico</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>SessionStart</code></td>
+            <td>All'inizio di ogni sessione Claude Code</td>
+            <td>Fetch dashboard, arm monitors, init cron, inject memory</td>
+          </tr>
+          <tr>
+            <td><code>PreToolUse</code></td>
+            <td>Prima dell'esecuzione di un tool</td>
+            <td>Validare params, loggare call, bloccare tool non autorizzati</td>
+          </tr>
+          <tr>
+            <td><code>PostToolUse</code></td>
+            <td>Dopo l'esecuzione di un tool</td>
+            <td>Auto-format output, run linter, trigger alert, verify result</td>
+          </tr>
+          <tr>
+            <td><code>Stop</code></td>
+            <td>Quando la sessione termina</td>
+            <td>Commit changes, push backup, save state, final checks</td>
+          </tr>
+          <tr>
+            <td><code>UserPromptSubmit</code></td>
+            <td>Prima che un prompt utente venga processato</td>
+            <td>PII filter, routing priorità, downgrade a Haiku</td>
+          </tr>
+          <tr>
+            <td>Custom hook</td>
+            <td>User-defined (project-specific)</td>
+            <td>Deploy trigger, test gate, automazioni dominio specifico</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Hook config schema (settings.json)</h3>
+      <pre><code>{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "bash ~/.claude/hooks/session-start.sh"
+      }
+    ],
+    "PreToolUse": [...],
+    "PostToolUse": [...],
+    "Stop": [...]
+  }
+}</code></pre>
+    </section>
+
+    <!-- ADVANCED PATTERNS DETAIL -->
+    <section id="advanced-patterns">
+      <h2>Advanced Patterns — Dettaglio</h2>
+
+      <div class="callout tip">
+        <strong>Extended thinking:</strong> Default ON — usa <span class="kbd">Option+T</span> per toggle. Budget fino a 31,999 token di ragionamento interno. Abilita per task complessi; disabilita per edit singoli file.
+      </div>
+
+      <div class="callout">
+        <strong>Plan Mode:</strong> <span class="kbd">Ctrl+G</span> attiva un workflow strutturato multi-step. Claude mostra il piano completo prima di eseguire. Ideale per implementazioni multi-fase.
+      </div>
+
+      <div class="callout">
+        <strong>Git worktree isolation:</strong> <code>EnterWorktree</code> tool crea branch isolato. Permette refactoring complesso senza rischiare il main. Usa <code>ExitWorktree</code> per tornare.
+      </div>
+
+      <div class="callout tip">
+        <strong>Self-Evolving pattern:</strong> dopo 10+ sessioni sullo stesso progetto, usa <code>/evolve</code>. Analizza <code>corrections.jsonl</code> + <code>observations.jsonl</code> e promuove pattern ricorrenti a regole permanenti in <code>learned-rules.md</code>.
+      </div>
+
+      <div class="callout warn">
+        <strong>CLAUDE.md locale:</strong> file in <code>.claude/CLAUDE.md</code> nella root del progetto agisce come system prompt locale. Override delle impostazioni globali. Metti qui: stack tech, regole naming, agenti predefiniti.
+      </div>
+
+      <div class="callout">
+        <strong>Skill evolution:</strong> <code>/evolve</code> può creare nuove skill da pattern di correzione. Output in <code>~/.claude/skills/</code>. Ciclo: errore → correzione → jsonl → /evolve → skill permanente.
+      </div>
+
+      <div class="callout warn">
+        <strong>Parallel agents — sweet spot:</strong> 3-5 agenti in parallelo ottimale. Oltre 8 si degrada la qualità. Sub-agents via <code>Task()</code> isolano il contesto ma il summary è lossy. Hybrid pattern: main thin + sub-agent specialist.
+      </div>
+
+      <h3>Common Workflows</h3>
+
+      <h4 style="color:var(--text); margin-top:20px;">Feature implementation</h4>
+      <ol class="workflow-steps">
+        <li>Research GitHub/docs</li>
+        <li>Plan con <code>/plan</code> agent</li>
+        <li>TDD con <code>/tdd</code></li>
+        <li>Code review <code>/code-review</code></li>
+        <li>Commit + push</li>
+      </ol>
+
+      <h4 style="color:var(--text); margin-top:20px;">Bug fix rapid iteration</h4>
+      <ol class="workflow-steps">
+        <li><code>/clear</code> context</li>
+        <li>Isolate con test</li>
+        <li><code>/tdd</code> RED → GREEN → IMPROVE</li>
+        <li>Verify coverage ≥ 80%</li>
+        <li>Commit</li>
+      </ol>
+
+      <h4 style="color:var(--text); margin-top:20px;">Refactoring large codebase</h4>
+      <ol class="workflow-steps">
+        <li><code>EnterWorktree</code> for isolation</li>
+        <li>Map codebase <code>/gsd:map-codebase</code></li>
+        <li>Plan phases <code>/plan</code></li>
+        <li>Execute by phase <code>/gsd:execute-phase N</code></li>
+        <li>Review <code>/code-review</code></li>
+        <li>Merge</li>
+      </ol>
+
+      <h4 style="color:var(--text); margin-top:20px;">Multi-agent decision (C-suite)</h4>
+      <ol class="workflow-steps">
+        <li>TeamCreate con 4-5 agents</li>
+        <li>Assegna ruoli: security, perf, cost, UX, architect</li>
+        <li>Moderator prompts decision</li>
+        <li>Agents debate + vote</li>
+        <li>Record decision in CLAUDE.md</li>
+      </ol>
+
+      <h4 style="color:var(--text); margin-top:20px;">Long research + parallel tasks</h4>
+      <ol class="workflow-steps">
+        <li>Task 1 con <code>run_in_background</code></li>
+        <li>Task 2 parallel</li>
+        <li>Task 3 parallel</li>
+        <li>Monitor via TaskCreate tracking</li>
+        <li>Synthesis quando tutti completati</li>
+      </ol>
+
+      <h4 style="color:var(--text); margin-top:20px;">Project initialization</h4>
+      <ol class="workflow-steps">
+        <li><code>claude project new &lt;name&gt;</code></li>
+        <li>Install rules + hooks (<code>claude-init</code>)</li>
+        <li>Set CLAUDE.md defaults</li>
+        <li>Create <code>.claude/skills/</code> structure</li>
+        <li>Push git init commit</li>
+      </ol>
+    </section>
+
+    <!-- CIRA EXAMPLES -->
+    <section id="cira-examples">
+      <h2>CIRA Examples</h2>
+
+      <div class="cira-example">
+        <span class="cira-tag">Pattern</span>
+        <h4>GSD workflow</h4>
+        <p>Trigger: <code>/gsd:new-project</code></p>
+        <p style="color:var(--text-muted); font-size:14px;">Spec-driven development — prevents context rot. Flow standard: new-project → discuss-phase N → plan-phase N → execute-phase N → verify-work N</p>
+      </div>
+
+      <div class="cira-example">
+        <span class="cira-tag">Pattern</span>
+        <h4>Constructed Teams decision</h4>
+        <p>Trigger: decisione strategica multi-aspect</p>
+        <p style="color:var(--text-muted); font-size:14px;">Agenti: security · performance · cost · UX · architect. Outcome: record in CLAUDE.md.</p>
+      </div>
+
+      <div class="cira-example">
+        <span class="cira-tag">Pattern</span>
+        <h4>Model routing per task</h4>
+        <table style="margin-top:8px;">
+          <thead><tr><th>Modello</th><th>Quando</th></tr></thead>
+          <tbody>
+            <tr><td><code>haiku</code></td><td>90% quick tasks: verify, execute, formatting</td></tr>
+            <tr><td><code>sonnet</code></td><td>Main development work, orchestrazione</td></tr>
+            <tr><td><code>opus</code></td><td>Complex architecture, deep reasoning, registry/canonical</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="cira-example">
+        <span class="cira-tag">Pattern</span>
+        <h4>Context preservation</h4>
+        <ul style="color:var(--text-muted); font-size:14px; margin:8px 0; padding-left:18px;">
+          <li><code>ctx_index</code> — indicizza docs in sandbox FTS5</li>
+          <li><code>ctx_search</code> — recall cross-session</li>
+          <li><code>ctx_purge</code> — reset sandbox</li>
+          <li><code>ctx_batch_execute</code> — multi-command in sandbox (no context flood)</li>
+        </ul>
+        <p style="color:var(--text-muted); font-size:14px;">Sopravvive a <code>/compact</code> + <code>/clear</code>.</p>
+      </div>
+
+      <div class="cira-example">
+        <span class="cira-tag">Pattern</span>
+        <h4>Telegram polling + fallback</h4>
+        <ul style="color:var(--text-muted); font-size:14px; margin:8px 0; padding-left:18px;">
+          <li><strong>Primary:</strong> Telegram plugin MCP (CC v2.1.131+)</li>
+          <li><strong>Fallback:</strong> Standalone launchd bot via <code>tg-reply</code></li>
+          <li><strong>Heartbeat:</strong> SessionStart hook arms Monitor</li>
+          <li><strong>Debug:</strong> Check <code>.in_use/</code> PID registry prima di restartare</li>
+        </ul>
+        <div class="cmd-gotcha" style="margin-top:8px;">REGOLA: fix minimo sul file/registry. MAI killare processi vivi per rinfrescare.</div>
+      </div>
+
+      <h3 style="margin-top:32px;">Risorse</h3>
+      <h4 style="color:var(--text);">Docs ufficiali</h4>
+      <ul class="resources-list">
+        <li><a href="https://docs.anthropic.com/en/docs/claude-code/" target="_blank">docs.anthropic.com — Claude Code</a></li>
+        <li><a href="https://docs.anthropic.com/en/docs/claude-code/sub-agents" target="_blank">docs.anthropic.com — Sub-agents</a></li>
+        <li><a href="https://docs.anthropic.com/en/docs/build-plugin-system" target="_blank">docs.anthropic.com — Plugin System</a></li>
+      </ul>
+
+      <h4 style="color:var(--text);">Local docs</h4>
+      <ul class="resources-list">
+        <li><code>~/.claude/CLAUDE.md</code></li>
+        <li><code>~/.claude/rules/common/</code></li>
+        <li><code>~/.claude/agents/</code></li>
+        <li><code>~/.claude/skills/</code></li>
+      </ul>
+
+      <h4 style="color:var(--text);">YouTube tutorials</h4>
+      <ul class="resources-list">
+        <li>Ali Abdaal — Claude Code Ultimate Beginners Guide (<code>qLMYOhaKcZs</code>)</li>
+        <li>Nick Saraev — Free Claude Code Complete Tutorial (<code>U6gg_bi1I70</code>)</li>
+        <li>Nick Saraev — Claude Code 10 Hacks Masterclass (<code>zbCxi7CjiF0</code>)</li>
+        <li>Nick Saraev — Claude Code Advanced Course 3h (<code>UPtmKh1vMN8</code>)</li>
+        <li>Nick Saraev — Agentic Workflows Beginner-to-Pro (<code>MxyRjL7NG18</code>)</li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>Claude Code — Cheatsheet Ardea &middot; v2.x (2026-05-15) &middot; 71 comandi &middot; 10 categorie</p>
+      <p><a href="../index.html">← Libreria Cheatsheets</a></p>
+    </footer>
+
+  </main>
+</div>
+  <script src="../assets/glossary.js" defer></script>
+</body>
+</html>

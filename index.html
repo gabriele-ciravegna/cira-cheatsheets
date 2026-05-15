@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIRA Cheatsheet Library — Ardea</title>
+  <link rel="stylesheet" href="./assets/style.css">
+  <link rel="stylesheet" href="./assets/print.css">
+</head>
+<body>
+  <div class="stale-banner hidden" id="stale-banner">⚠ Versione cheatsheet può essere obsoleta — verifica VERSION file</div>
+
+  <div class="layout">
+
+    <!-- ╭─── SIDEBAR SX — Nav ───╮ -->
+    <aside class="sidebar">
+      <div class="logo">Cheatsheets</div>
+      <input type="search" class="search-box" id="global-search" data-root="." placeholder="Cerca tra 282 comandi…" autofocus>
+      <div id="search-results"></div>
+
+      <div class="nav-section">
+        <h3>Le 9 Cheatsheet</h3>
+        <a href="./index.html" class="active">⌂ Index</a>
+        <a href="./gsd/index.html">GSD <span style="color:var(--text-faint);font-size:11px">· 88 cmd</span></a>
+        <a href="./gstack/index.html">Gstack <span style="color:var(--text-faint);font-size:11px">· 51 skill</span></a>
+        <a href="./superpowers/index.html">Superpowers <span style="color:var(--text-faint);font-size:11px">· 11</span></a>
+        <a href="./ruflo/index.html">Ruflo <span style="color:var(--text-faint);font-size:11px">· 20+</span></a>
+        <a href="./compound-engineering/index.html">Compound Eng <span style="color:var(--text-faint);font-size:11px">· 20 + 48ag</span></a>
+        <a href="./agent-teams/index.html">Agent Teams <span style="color:var(--text-faint);font-size:11px">· 3</span></a>
+        <a href="./cira-custom/index.html">CIRA Custom <span style="color:var(--text-faint);font-size:11px">· 14</span></a>
+        <a href="./claude-code-basics/index.html">Claude Code <span style="color:var(--text-faint);font-size:11px">· 71</span></a>
+        <a href="./bash-macos/index.html">Bash + macOS <span style="color:var(--text-faint);font-size:11px">· 66</span></a>
+      </div>
+
+      <div class="nav-section">
+        <h3>Quick reference</h3>
+        <a href="./daily-10.html">Daily 10 ↗</a>
+        <a href="./workflows-cira.html">Workflows CIRA ↗</a>
+      </div>
+
+      <div class="nav-section">
+        <h3>Sezioni pagina</h3>
+        <a href="#what-is">Che cos'è</a>
+        <a href="#tools">Le 9 librerie</a>
+        <a href="#decision">Quando uso cosa</a>
+        <a href="#stack">/costruiamo paths</a>
+        <a href="#glossary-bottom">Glossario</a>
+      </div>
+    </aside>
+
+    <!-- ╭─── MAIN CENTER ───╮ -->
+    <main class="content">
+
+      <header class="tool-header">
+        <h1>CIRA <em>Cheatsheet Library</em></h1>
+        <p class="tagline">Nove cheatsheet HTML, duecento­ottantadue comandi, una bussola per decidere cosa usare e quando.</p>
+        <div class="when-card">
+          <strong>A cosa serve questa biblioteca:</strong> quando costruisci qualcosa di nuovo — un sito, un agente Telegram, un MVP — hai a disposizione tanti strumenti diversi (GSD, gstack, superpowers, ruflo, ecc.). Ognuno fa qualcosa di diverso. Qui c'è la <em>cartina</em> per non perdersi.
+        </div>
+      </header>
+
+      <section id="what-is">
+        <h2>Che <em>cos'è</em>, in due righe</h2>
+        <p>Ogni cheatsheet copre <strong>un tool</strong> dello stack di lavoro. Apri quello che ti serve, leggi solo la sezione che ti interessa. Ogni comando ha 5 cose: <strong>cosa fa</strong>, <strong>quando usarlo</strong>, <strong>esempio reale</strong>, <strong>vedi anche</strong>, <strong>trappola da evitare</strong>.</p>
+        <p>I 9 strumenti non si escludono a vicenda — si combinano. La pagina <a href="./workflows-cira.html">Workflows CIRA</a> mostra le sequenze già usate (Mercurio, Aurelio, dashboard, MVP clienti).</p>
+        <p>Se non sai da dove partire, leggi la sezione <a href="#decision">Quando uso cosa</a> qui sotto.</p>
+      </section>
+
+      <section id="tools">
+        <h2>Le <em>9</em> librerie</h2>
+        <p style="color:var(--text-muted);margin-bottom:24px">Tocca una card per aprire la cheatsheet. Tutte hanno la stessa struttura: cosa fa, quando, esempio, gotcha.</p>
+
+        <div class="tool-grid">
+
+          <a class="tool-card" href="./gsd/index.html">
+            <h3>GSD <span class="version-badge">1.42.2</span></h3>
+            <p class="tool-card-tagline"><strong>Get Shit Done.</strong> Sistema spec-driven: spezzi il progetto in milestone → fasi → task atomici. Ogni fase ha audit trail, plan, verify, ship. <strong>88 comandi · 33 agent specialist · 12 categorie.</strong></p>
+            <div class="when">Quando: progetto vero (≥3 file), serve audit trail, voglio sapere cosa è stato fatto e perché</div>
+          </a>
+
+          <a class="tool-card" href="./gstack/index.html">
+            <h3>Gstack</h3>
+            <p class="tool-card-tagline"><strong>Ship-first toolkit.</strong> Stessa idea di GSD ma più rapida: <code>plan → pair-agent → ship → retro → tune</code>. Meno audit, più "facciamo e vediamo". <strong>51 skill installate.</strong></p>
+            <div class="when">Quando: MVP da consegnare in 1-2 sessioni, velocità > documentazione</div>
+          </a>
+
+          <a class="tool-card" href="./superpowers/index.html">
+            <h3>Superpowers</h3>
+            <p class="tool-card-tagline"><strong>TDD + brainstorming.</strong> Approccio di Obra: prima brainstormi, poi scrivi i test (red), poi il codice che li fa passare (green), poi pulisci (refactor). <strong>11 skill.</strong></p>
+            <div class="when">Quando: codice critico che deve essere testato bene</div>
+          </a>
+
+          <a class="tool-card" href="./ruflo/index.html">
+            <h3>Ruflo</h3>
+            <p class="tool-card-tagline"><strong>Sandbox A/B.</strong> Crea N varianti parallele dello stesso pezzo, le valuta, sceglie la migliore. Utile per scelte di UX/design ambigue. <strong>20+ comandi.</strong></p>
+            <div class="when">Quando: non sai quale approccio funziona meglio, vuoi vedere alternative</div>
+          </a>
+
+          <a class="tool-card" href="./compound-engineering/index.html">
+            <h3>Compound Engineering <span class="version-badge">3.8.2</span></h3>
+            <p class="tool-card-tagline"><strong>Plugin Claude Code <code>ce-*</code>.</strong> Filosofia: ogni cycle migliora i prossimi (review continuo, learnings salvati). Ha 48 reviewer specialisti (correctness, security, performance, ecc.). <strong>20 cmd + 48 agent.</strong></p>
+            <div class="when">Quando: lavoro in team, PR review continuo, multi-perspective</div>
+          </a>
+
+          <a class="tool-card" href="./agent-teams/index.html">
+            <h3>Agent Teams + Subagents</h3>
+            <p class="tool-card-tagline"><strong>Multi-agent built-in di Claude Code.</strong> Due modalità: <em>Teams</em> (gli agent si parlano, debate) e <em>Subagents</em> (agent isolati, ritornano risultato). <strong>3 pattern principali.</strong></p>
+            <div class="when">Quando: decisioni multi-prospettiva, task indipendenti paralleli</div>
+          </a>
+
+          <a class="tool-card" href="./cira-custom/index.html">
+            <h3>CIRA Custom Stack</h3>
+            <p class="tool-card-tagline"><strong>Skill custom tue.</strong> <code>orchestra</code> (router), <code>/costruiamo</code> (build trigger), <code>skill-creator-cira</code>, mentori (Randolph, Bezos, Jobs…), pensiero strategico (Aristotle, Sinek). <strong>14 skill core.</strong></p>
+            <div class="when">Quando: ogni giorno. È il tuo sistema nervoso</div>
+          </a>
+
+          <a class="tool-card" href="./claude-code-basics/index.html">
+            <h3>Claude Code <span class="version-badge">2.x</span></h3>
+            <p class="tool-card-tagline"><strong>CLI ufficiale Anthropic.</strong> Come si avvia, slash command, hooks, skill, MCP, sub-agent, settings, modalità avanzate. <strong>71 comandi · estratto da docs ufficiali + 6 tutorial YT (Saraev 6h, Ali Abdaal, productive-dude).</strong></p>
+            <div class="when">Quando: setup nuova macchina, "come si fa X?", scoprire feature nascoste</div>
+          </a>
+
+          <a class="tool-card" href="./bash-macos/index.html">
+            <h3>Bash + macOS</h3>
+            <p class="tool-card-tagline"><strong>Sostrato di tutto.</strong> 66 comandi shell quotidiani: <code>cd</code>, <code>find</code>, <code>grep</code>, <code>curl</code>, <code>lsof</code>, <code>launchctl</code>, <code>brew</code>, <code>jq</code>, <code>open</code>, <code>pbcopy</code>, ecc. Più 15 shortcut zsh + automazione cron/launchd.</p>
+            <div class="when">Quando: terminale aperto = sempre. Healthcheck post-blackout, debug servizi</div>
+          </a>
+
+        </div>
+      </section>
+
+      <section id="decision">
+        <h2>Quando <em>uso cosa</em></h2>
+        <p style="color:var(--text-muted)">Tabella decision matrix: stai facendo <em>X</em> → usa <em>Y</em>. Tutti gli scenari ricorrenti del workflow CIRA.</p>
+
+        <div class="matrix-row">
+          <div class="condition">Avvio progetto nuovo greenfield (≥3 fasi)</div>
+          <div class="action">/costruiamo X → path A1 GSD → /gsd-new-project</div>
+        </div>
+        <div class="matrix-row">
+          <div class="condition">Task piccolo, fix singolo file</div>
+          <div class="action">/gsd-quick oppure /gsd-debug</div>
+        </div>
+        <div class="matrix-row">
+          <div class="condition">MVP ship rapido, no audit trail</div>
+          <div class="action">/costruiamo → path A2 gstack → /gstack:plan</div>
+        </div>
+        <div class="matrix-row">
+          <div class="condition">Feature critica con TDD obbligatorio</div>
+          <div class="action">/costruiamo → path A3 superpowers → brainstorming + tdd-red</div>
+        </div>
+        <div class="matrix-row">
+          <div class="condition">UX ambigua, serve A/B varianti</div>
+          <div class="action">/costruiamo → path A5 ruflo sandbox</div>
+        </div>
+        <div class="matrix-row">
+          <div class="condition">PR review team, multi-perspective</div>
+          <div class="action">/compound-engineering:ce-work → ce-correctness + ce-security</div>
+        </div>
+        <div class="matrix-row">
+          <div class="condition">Decisione strategica multi-prospettiva</div>
+          <div class="action">TeamCreate({members:[...]}) → debate mode</div>
+        </div>
+        <div class="matrix-row">
+          <div class="condition">Ricerca codebase ampia (>3 query)</div>
+          <div class="action">Task({subagent_type:'Explore'}) o 9× Haiku parallel</div>
+        </div>
+        <div class="matrix-row">
+          <div class="condition">Coaching personale / bloccato / pricing</div>
+          <div class="action">orchestra → aristotle-first-principles + mentori</div>
+        </div>
+        <div class="matrix-row">
+          <div class="condition">Riprendi sessione post /clear</div>
+          <div class="action">claude --resume oppure leggi memoria + handoff</div>
+        </div>
+        <div class="matrix-row">
+          <div class="condition">Debug Telegram bot / launchd</div>
+          <div class="action">launchctl list | grep cira + lsof -iTCP:port</div>
+        </div>
+        <div class="matrix-row">
+          <div class="condition">Deploy dashboard / sito Vercel</div>
+          <div class="action">git push origin main (auto-trigger Vercel)</div>
+        </div>
+      </section>
+
+      <section id="stack">
+        <h2>/costruiamo <em>paths</em></h2>
+        <p style="color:var(--text-muted)">Quando lanci <code>/costruiamo X</code>, la skill ti propone 5 path possibili. Questa è la cartina.</p>
+
+        <table>
+          <thead><tr><th>Path</th><th>Tool</th><th>Quando</th><th>Pipeline tipica</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>A1</code></td>
+              <td><a href="./gsd/index.html">GSD</a></td>
+              <td>Spec-driven heavy, audit trail</td>
+              <td>new-project → discuss → plan → execute → verify → ship</td>
+            </tr>
+            <tr>
+              <td><code>A2</code></td>
+              <td><a href="./gstack/index.html">Gstack</a></td>
+              <td>Ship-first, MVP veloce</td>
+              <td>plan → pair-agent → ship → retro → tune</td>
+            </tr>
+            <tr>
+              <td><code>A3</code></td>
+              <td><a href="./superpowers/index.html">Superpowers</a></td>
+              <td>TDD-first, codice critico</td>
+              <td>brainstorm → plan → tdd-red → green → refactor → review</td>
+            </tr>
+            <tr>
+              <td><code>A4</code></td>
+              <td><a href="./compound-engineering/index.html">Compound Eng</a></td>
+              <td>Team PR review continuo</td>
+              <td>ce-work → ce-plan → ce-commit-push-pr → ce-resolve-pr-feedback</td>
+            </tr>
+            <tr>
+              <td><code>A5</code></td>
+              <td><a href="./ruflo/index.html">Ruflo</a></td>
+              <td>Sandbox A/B iterazioni</td>
+              <td>init → iterations parallele → scoring → promote</td>
+            </tr>
+            <tr>
+              <td><code>MIX</code></td>
+              <td><a href="./cira-custom/index.html">CIRA Custom</a></td>
+              <td>Custom routing /costruiamo</td>
+              <td>orchestra + brandkit + template-check + path mix</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="glossary-bottom">
+        <h2><em>Glossario</em> per chi non è tecnico</h2>
+        <div class="non-tech-intro">
+          <h3>I termini ricorrenti</h3>
+          <p><strong>CLI</strong> = "Command Line Interface", il terminale dove digiti comandi. <code>claude</code> è una CLI. <code>git</code> è una CLI.</p>
+          <p><strong>Skill</strong> = un pezzo di istruzioni riusabile che Claude carica quando serve. Es: <code>brainstorming</code> è una skill.</p>
+          <p><strong>Slash command</strong> = comando che inizia con <code>/</code> dentro Claude Code. Es: <code>/gsd-new-project</code>.</p>
+          <p><strong>Hook</strong> = script che parte automaticamente in certi momenti (es: a inizio sessione, prima di salvare un file).</p>
+          <p><strong>Agent / sub-agent</strong> = un "Claude più piccolo" che fai lavorare in parallelo su un task specifico, isolato dalla tua sessione principale.</p>
+          <p><strong>Repo / repository</strong> = una cartella di codice tracciata con Git. Può essere su GitHub.</p>
+          <p><strong>Deploy</strong> = mettere online. Es: deploy su Vercel = pubblica il sito su <code>cira-dashboard.vercel.app</code>.</p>
+          <p><strong>MCP</strong> = "Model Context Protocol", il modo standard con cui Claude si collega ad altri servizi (Google Drive, Telegram, ecc.).</p>
+          <p><strong>TDD</strong> = "Test-Driven Development". Prima scrivi il test (che fallisce), poi il codice che lo fa passare.</p>
+          <p><strong>launchd</strong> = il sistema di macOS che fa partire programmi all'avvio. Il bot Telegram gira così.</p>
+          <p><strong>cron</strong> = il modo classico unix per programmare task ricorrenti (es: ogni 5 min).</p>
+        </div>
+      </section>
+
+      <footer>
+        Generato <strong>2026-05-15 12:30</strong> · Tipografia Instrument Serif + DM Sans · Tema Ardea dark Mercurio variant · Fonti: skill locali, GitHub repos, Anthropic docs, YT scripts (Saraev / Ottley / Ali Abdaal / productive-dude) ·
+        <a href="./assets/data/all-commands.json">all-commands.json (282)</a> ·
+        <a href="javascript:window.print()">Stampa</a>
+      </footer>
+    </main>
+
+    <!-- ╭─── ASIDE DX — Spiegazioni non-tech ───╮ -->
+    <aside class="glossary">
+      <h3>Per <em>chi non sa</em></h3>
+
+      <div class="gloss-item">
+        <h4>Che cosa è "Claude Code"?</h4>
+        <p>È un'app da terminale che ti permette di parlare con Claude come se fosse un collega che apre i tuoi file, modifica codice, gira comandi. Non è il sito chat. È un'altra cosa: lavora <em>nei tuoi progetti reali</em>.</p>
+      </div>
+
+      <div class="gloss-item">
+        <h4>Perché tutti questi tool?</h4>
+        <p>Ognuno è bravo in una cosa diversa. <strong>GSD</strong> è metodico (audit trail). <strong>gstack</strong> è veloce (ship-first). <strong>superpowers</strong> spinge i test. <strong>ruflo</strong> prova alternative. <strong>compound-engineering</strong> fa review di squadra. <strong>cira-custom</strong> sei tu.</p>
+      </div>
+
+      <div class="gloss-item">
+        <h4>Da dove parto?</h4>
+        <p>Apri <a href="#decision">Quando uso cosa</a> qui sopra. Trova la riga che descrive cosa stai facendo. Segui l'azione a destra.</p>
+        <p>Oppure: lancia <code>/costruiamo X</code> e Claude ti fa 10-15 domande per scegliere il path giusto.</p>
+      </div>
+
+      <div class="gloss-item">
+        <h4>Cosa è <em>/costruiamo</em>?</h4>
+        <p>È una skill CIRA. Quando dici "facciamo X", Claude ti fa un'intervista lunga (chi è il cliente? cosa vuole? quanto tempo? quale brand?) e poi propone 1-3 path possibili tra GSD, gstack, superpowers, ruflo. Tu scegli. Lui esegue.</p>
+      </div>
+
+      <div class="gloss-item">
+        <h4>Search box (a sinistra)</h4>
+        <p>Cerca tra <strong>282 comandi</strong> da tutte le 9 cheatsheet. Digita "telegram", "deploy", "skill" — vedi cosa esiste.</p>
+      </div>
+
+      <div class="gloss-item">
+        <h4>Stampa / PDF</h4>
+        <p>Ogni cheatsheet ha un link "Stampa" in fondo. Apre dialog del browser → puoi salvare PDF (utile per leggere offline, in giro, su iPad).</p>
+      </div>
+
+      <div class="gloss-item">
+        <h4>Online?</h4>
+        <p>Questa library può essere deployata su Vercel — accessibile da telefono ovunque. Il deploy è separato (vedi sezione dedicata).</p>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <script src="./assets/copy.js" defer></script>
+  <script src="./assets/search.js" defer></script>
+</body>
+</html>

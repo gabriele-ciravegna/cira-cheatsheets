@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compound Engineering — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    /* Category badge colors */
+    .badge-review    { background: rgba(122, 153, 200, 0.15); color: var(--info); border-color: rgba(122,153,200,0.3); }
+    .badge-planning  { background: rgba(127, 165, 99, 0.12); color: var(--success); border-color: rgba(127,165,99,0.3); }
+    .badge-learning  { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-2); }
+    .badge-git       { background: rgba(200,117,96,0.1); color: var(--danger); border-color: rgba(200,117,96,0.3); }
+    .badge-security  { background: rgba(200,117,96,0.15); color: var(--danger); border-color: rgba(200,117,96,0.4); }
+    .badge-performance { background: rgba(127,165,99,0.1); color: var(--success); border-color: rgba(127,165,99,0.3); }
+    .badge-testing   { background: rgba(122,153,200,0.1); color: var(--info); border-color: rgba(122,153,200,0.3); }
+    .badge-specialist { background: rgba(212,165,116,0.1); color: var(--warning); border-color: rgba(212,165,116,0.3); }
+    .badge-refactoring { background: rgba(122,153,200,0.12); color: var(--info); border-color: rgba(122,153,200,0.3); }
+    .badge-design    { background: rgba(127,165,99,0.1); color: var(--success); border-color: rgba(127,165,99,0.3); }
+    .badge-research  { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-2); }
+    .badge-specialization { background: rgba(200,117,96,0.1); color: var(--danger); border-color: rgba(200,117,96,0.3); }
+    .badge-analysis  { background: rgba(122,153,200,0.1); color: var(--info); border-color: rgba(122,153,200,0.3); }
+    .badge-integration { background: rgba(127,165,99,0.12); color: var(--success); border-color: rgba(127,165,99,0.3); }
+
+    /* Phase step list */
+    .phase-list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0;
+      counter-reset: phase;
+    }
+    .phase-list li {
+      counter-increment: phase;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text);
+    }
+    .phase-list li:last-child { border-bottom: none; }
+    .phase-list li::before {
+      content: counter(phase);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      min-width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--accent-2);
+      flex-shrink: 0;
+    }
+    .phase-list li .phase-cmd {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .phase-list li .phase-out {
+      color: var(--text-muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    /* Gate list */
+    .gate-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .gate-item {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--warning);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      font-size: 13px;
+    }
+    .gate-item .gate-cmd {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .gate-item .gate-blocker {
+      color: var(--danger);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    /* Agents table */
+    .agents-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .agents-table th {
+      text-align: left;
+      padding: 8px 12px;
+      background: var(--bg-elevated);
+      color: var(--accent);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border-strong);
+    }
+    .agents-table td {
+      padding: 7px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: top;
+    }
+    .agents-table td:first-child {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      white-space: nowrap;
+      font-size: 12px;
+    }
+    .agents-table tr:hover td { background: var(--bg-elevated); }
+    .agents-table .group-header td {
+      background: var(--bg-panel);
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-bottom: 1px solid var(--border-strong);
+    }
+
+    /* Integration grid */
+    .integration-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .integration-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-2);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+    }
+    .integration-card .int-name {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .integration-card p { font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.5; }
+
+    /* Role grid */
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .role-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+    .role-card h4 {
+      font-size: 12px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 8px;
+      font-weight: 600;
+    }
+    .role-card code {
+      display: block;
+      font-size: 11px;
+      padding: 2px 6px;
+      margin: 2px 0;
+    }
+
+    /* FAQ */
+    .faq-item {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 10px 0;
+    }
+    .faq-item .faq-q {
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+    .faq-item .faq-a {
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* Version history */
+    .version-list { list-style: none; padding: 0; margin: 0; }
+    .version-list li {
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .version-list li:last-child { border-bottom: none; }
+    .version-list .ver-tag {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 12px;
+      min-width: 52px;
+    }
+    .version-list .ver-desc { color: var(--text-muted); }
+
+    /* cmd-card io rows */
+    .io-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 4px 0;
+      font-size: 12px;
+    }
+    .io-row .io-label {
+      color: var(--text-dim);
+      min-width: 50px;
+      font-weight: 600;
+    }
+    .io-row .io-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .io-pill {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1px 8px;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+    .io-pill.out { border-color: rgba(127,165,99,0.3); color: var(--success); background: rgba(127,165,99,0.06); }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div style="margin-bottom:24px;">
+      <div style="font-size:13px;font-weight:700;color:var(--accent);letter-spacing:-0.01em;">CIRA Cheatsheets</div>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">Ardea dark template</div>
+    </div>
+
+    <div class="nav-section">
+      <h3>Cheatsheet</h3>
+      <a href="../gsd/index.html">GSD (Get Shit Done)</a>
+      <a href="../gstack/index.html">gstack</a>
+      <a href="../superpowers/index.html">Superpowers</a>
+      <a href="../ruflo/index.html">Ruflo (PAI)</a>
+      <a href="../agent-teams/index.html">Agent Teams</a>
+      <a href="../compound-engineering/index.html" class="active">Compound Engineering</a>
+      <a href="../cira-custom/index.html">CIRA Custom Stack</a>
+      <a href="../bash-macos/index.html">Claude Code Basics</a>
+      <a href="../inventory/index.html">Master Inventory</a>
+      <a href="../index.html" style="margin-top:16px;border-top:1px solid var(--border);padding-top:10px;color:var(--text-dim);font-size:12px;">&#8592; Torna alla library</a>
+    </div>
+
+    <div class="nav-section" style="margin-top:24px;">
+      <h3>Sezioni</h3>
+      <a href="#quick-start">Quick Start</a>
+      <a href="#review">Review</a>
+      <a href="#planning">Planning</a>
+      <a href="#learning">Learning</a>
+      <a href="#git">Git</a>
+      <a href="#security">Security</a>
+      <a href="#performance">Performance</a>
+      <a href="#testing">Testing</a>
+      <a href="#specialist">Specialist</a>
+      <a href="#refactoring">Refactoring</a>
+      <a href="#design">Design</a>
+      <a href="#research">Research</a>
+      <a href="#specialization">Specialization</a>
+      <a href="#analysis">Analysis</a>
+      <a href="#integration-cmds">Integration cmds</a>
+      <a href="#agents">Agenti (48)</a>
+      <a href="#workflows">Workflows</a>
+      <a href="#stack-integration">Stack Integration</a>
+      <a href="#cira-examples">Esempi CIRA</a>
+      <a href="#gotchas">Gotchas</a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="content">
+
+    <!-- HEADER -->
+    <div class="tool-header">
+      <h1>
+        Compound Engineering
+        <span class="version-badge">v3.8.2</span>
+      </h1>
+      <p style="color:var(--text-muted);margin:8px 0 0;font-size:15px;max-width:720px;">
+        Review-driven development plugin. Ogni ciclo migliora i successivi: 26 reviewer agent in parallelo
+        &rarr; learnings &rarr; <code>COMPOUND.md</code> registry &rarr; prossimo ciclo pi&ugrave; veloce.
+      </p>
+      <div style="margin-top:12px;font-size:13px;color:var(--text-dim);">
+        Namespace: <code>/compound-engineering:ce-*</code> &nbsp;&middot;&nbsp; Rilasciato: 2026-05-14
+      </div>
+    </div>
+
+    <!-- QUICK START -->
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <p>Plugin Claude Code v3.8.2. Trigger entrypoint quotidiano:</p>
+      <pre><code>/compound-engineering:ce-work</code></pre>
+      <p>Comandi via prefisso <code>/compound-engineering:ce-*</code>. 48 specialist agent disponibili per review e research.</p>
+
+      <div class="callout tip" style="margin-top:16px;">
+        <strong>Core principle:</strong> Multi-persona review (correctness, security, testing, maintainability, performance, domain expertise)
+        &rarr; learnings &rarr; <code>COMPOUND.md</code> registry &rarr; next cycle faster.
+      </div>
+
+      <div class="callout" style="margin-top:12px;">
+        <strong>Quando usare CE:</strong> Ogni feature, PR, bug fix, ottimizzazione.
+        Integra con <code>/gsd</code>, <code>gstack</code>, <code>/costruiamo</code>.
+      </div>
+    </section>
+
+    <!-- ========== REVIEW COMMANDS ========== -->
+    <section id="review">
+      <h2>Review</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-code-review</div>
+        <div class="cmd-meta">
+          <span class="badge-review">review</span>
+          <span>Mandatory pre-PR</span>
+          <span>26 agent in parallelo</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Multi-persona code review. Spawns 26 specialized reviewer agents (syntax, security, testing, perf, maintainability, domain). Returns structured verdict + learnings.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">file paths</span>
+            <span class="io-pill">code snippet</span>
+            <span class="io-pill">context (optional)</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">agent verdicts (pass/warn/block)</span>
+            <span class="io-pill out">learnings.md entries</span>
+            <span class="io-pill out">commit-msg suggestions</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Headless mode v3.8.0+. Base detection v3.8.1+ (prose-driven). Usa <code>ce-compound</code> dopo la review.</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-pr-audit</div>
+        <div class="cmd-meta">
+          <span class="badge-review">review</span>
+          <span>Pre-push gate</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Full PR audit: code review + changelog scan + dependency check + test coverage.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">PR branch</span>
+            <span class="io-pill">target branch</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">compliance matrix</span>
+            <span class="io-pill out">blocker list</span>
+            <span class="io-pill out">merge readiness score</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Agent-native compliance. Outputs HTML report + jq-valid JSON.</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-document-review</div>
+        <div class="cmd-meta">
+          <span class="badge-review">review</span>
+          <span>7 persona</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">7-persona review di docs: clarity, completeness, grammar, structure, SEO, localization, accessibility.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">doc file</span>
+            <span class="io-pill">audience (eng/user/executive)</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">verdicts by persona</span>
+            <span class="io-pill out">rewrite suggestions</span>
+            <span class="io-pill out">COMPOUND.md entry</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Scans .claude/rules/ per terminology standards.</div>
+      </div>
+    </section>
+
+    <!-- ========== PLANNING ========== -->
+    <section id="planning">
+      <h2>Planning</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-plan</div>
+        <div class="cmd-meta">
+          <span class="badge-planning">planning</span>
+          <span>Start of feature phase</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Plan feature/phase con learnings dei cicli precedenti. Scans COMPOUND.md per decisioni correlate e gotchas.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">feature desc</span>
+            <span class="io-pill">epic/ticket</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">phase plan</span>
+            <span class="io-pill out">risk checklist</span>
+            <span class="io-pill out">resource estimate</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Integra con GSD phases. Outputs ~/COMPOUND.md patch candidates.</div>
+      </div>
+    </section>
+
+    <!-- ========== LEARNING ========== -->
+    <section id="learning">
+      <h2>Learning</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-compound</div>
+        <div class="cmd-meta">
+          <span class="badge-learning">learning</span>
+          <span>Post-review. Central knowledge hub.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Harvest learnings dai verdetti di code review. Upsert COMPOUND.md registry (decisions, anti-patterns, proven patterns).</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">review verdicts</span>
+            <span class="io-pill">code changes</span>
+            <span class="io-pill">team consensus (optional)</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">COMPOUND.md diff</span>
+            <span class="io-pill out">decision record</span>
+            <span class="io-pill out">pattern extraction</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Central knowledge compounding. Drives ce-plan improvements.</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-learning-export</div>
+        <div class="cmd-meta">
+          <span class="badge-learning">learning</span>
+          <span>Onboarding &middot; sharing</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Export COMPOUND.md learnings come markdown, JSON, o HTML. Filter per data/categoria/tag.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">filter query</span>
+            <span class="io-pill">output format</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">export file (md/json/html)</span>
+            <span class="io-pill out">index</span>
+            <span class="io-pill out">cross-reference map</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Searchable learning archive.</div>
+      </div>
+    </section>
+
+    <!-- ========== GIT ========== -->
+    <section id="git">
+      <h2>Git</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-worktree-init</div>
+        <div class="cmd-meta">
+          <span class="badge-git">git</span>
+          <span>Start feature work after plan</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Init git worktree + .ce-audit directory per feature branch. Auto-stages audit files.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">feature name</span>
+            <span class="io-pill">base branch (default main)</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">worktree path</span>
+            <span class="io-pill out">audit dir structure</span>
+            <span class="io-pill out">.gitignore patch</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Prevents context pollution. Audit files stay local until ce-compound.</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-git-workflow</div>
+        <div class="cmd-meta">
+          <span class="badge-git">git</span>
+          <span>Per commit o pre-push hook</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Enforce CE git conventions: commit msg format, branch naming, worktree hygiene, audit commit structure.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">commit msg</span>
+            <span class="io-pill">staged files</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">pass/block verdict</span>
+            <span class="io-pill out">formatted commit msg</span>
+            <span class="io-pill out">audit dir state</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Integra con .claude/hooks/PostToolUse. Prevents audit pollution.</div>
+      </div>
+    </section>
+
+    <!-- ========== SECURITY ========== -->
+    <section id="security">
+      <h2>Security</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-security-deep</div>
+        <div class="cmd-meta">
+          <span class="badge-security">security</span>
+          <span>Pre-release gate. Auth/payment mandatory.</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">OWASP deep-dive su auth, crypto, data handling, injection, CORS, rate-limiting.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">code files</span>
+            <span class="io-pill">env config (masked)</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">vulnerability matrix</span>
+            <span class="io-pill out">exploit scenarios (educational)</span>
+            <span class="io-pill out">remediation roadmap</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Non-blocking advisory. Feed a ce-compound per shared learnings.</div>
+      </div>
+    </section>
+
+    <!-- ========== PERFORMANCE ========== -->
+    <section id="performance">
+      <h2>Performance</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-performance-profile</div>
+        <div class="cmd-meta">
+          <span class="badge-performance">performance</span>
+          <span>Pre-deploy &middot; optimization cycles</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Identifica perf bottlenecks: N+1 queries, unbounded loops, memory leaks, bundle bloat.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">code files</span>
+            <span class="io-pill">load test data (optional)</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">bottleneck list (ranked)</span>
+            <span class="io-pill out">refactoring hints</span>
+            <span class="io-pill out">benchmark baselines per COMPOUND.md</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Learns from prior COMPOUND.md perf decisions.</div>
+      </div>
+    </section>
+
+    <!-- ========== TESTING ========== -->
+    <section id="testing">
+      <h2>Testing</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-test-coverage-audit</div>
+        <div class="cmd-meta">
+          <span class="badge-testing">testing</span>
+          <span>Feature merge gate</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Audit test suite: unit/integration/E2E balance, coverage &gt;=80%, mutation test readiness.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">test files</span>
+            <span class="io-pill">source files</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">coverage matrix</span>
+            <span class="io-pill out">gap list</span>
+            <span class="io-pill out">test quality score</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Integra con gstack test orchestration.</div>
+      </div>
+    </section>
+
+    <!-- ========== SPECIALIST ========== -->
+    <section id="specialist">
+      <h2>Specialist (language)</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-typescript-review</div>
+        <div class="cmd-meta">
+          <span class="badge-specialist">specialist</span>
+          <span>TypeScript repos &middot; pre ce-code-review</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">TypeScript-specific: type inference, generics correctness, tsconfig validation, strict mode compliance.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">ts/tsx files</span>
+            <span class="io-pill">tsconfig.json</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">type safety verdict</span>
+            <span class="io-pill out">inference improvement hints</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Uno dei 6 language specialist (Python, Go, Rust, PHP, Swift also available via ce-python-reviewer, ce-go-reviewer, ce-rust-reviewer, ce-php-reviewer, ce-swift-reviewer).</div>
+      </div>
+    </section>
+
+    <!-- ========== REFACTORING ========== -->
+    <section id="refactoring">
+      <h2>Refactoring</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-refactor-guide</div>
+        <div class="cmd-meta">
+          <span class="badge-refactoring">refactoring</span>
+          <span>Legacy cleanup &middot; tech debt paydown</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Genera refactoring roadmap da code review verdicts + COMPOUND.md anti-patterns.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">code path</span>
+            <span class="io-pill">priority (HIGH/MED/LOW)</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">refactoring plan</span>
+            <span class="io-pill out">effort estimate</span>
+            <span class="io-pill out">phase sequencing</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Outputs GSD-compatible phase structure.</div>
+      </div>
+    </section>
+
+    <!-- ========== DESIGN ========== -->
+    <section id="design">
+      <h2>Design</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-design-review</div>
+        <div class="cmd-meta">
+          <span class="badge-design">design</span>
+          <span>Design specs before frontend handoff</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">2-persona design review: feasibility + UX coherence. Scans Figma tokens + design system.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">design file/URL</span>
+            <span class="io-pill">component list</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">feasibility score</span>
+            <span class="io-pill out">UX feedback</span>
+            <span class="io-pill out">implementation notes</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Outputs COMPOUND.md + design-system patch candidates.</div>
+      </div>
+    </section>
+
+    <!-- ========== RESEARCH ========== -->
+    <section id="research">
+      <h2>Research</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-research-validate</div>
+        <div class="cmd-meta">
+          <span class="badge-research">research</span>
+          <span>Pre-publish &middot; whitepapers</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Valida research quality: sources cited, bias check, reproducibility, scope boundaries.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">research doc</span>
+            <span class="io-pill">claim list (optional)</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">validity matrix</span>
+            <span class="io-pill out">source audit</span>
+            <span class="io-pill out">scope delimitation</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">7-agent ensemble. Feeds COMPOUND.md con methodology decisions.</div>
+      </div>
+    </section>
+
+    <!-- ========== SPECIALIZATION ========== -->
+    <section id="specialization">
+      <h2>Specialization</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-agent-native-audit</div>
+        <div class="cmd-meta">
+          <span class="badge-specialization">specialization</span>
+          <span>Legacy repos &middot; pre-/costruiamo</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Audit single codebase per agent-readiness. Can agents understand + modify this code safely?</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">repo path</span>
+            <span class="io-pill">agent roster (optional)</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">readiness score 0-100</span>
+            <span class="io-pill out">blocker list</span>
+            <span class="io-pill out">refactoring roadmap</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">v3.8.2: detects anti-patterns that confuse agentic reasoning.</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-onboard-agent</div>
+        <div class="cmd-meta">
+          <span class="badge-specialization">specialization</span>
+          <span>Adding new domain agent to ce-code-review</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Teach CE system a un nuovo custom agent. Ingest COMPOUND.md learnings + code review patterns.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">agent definition</span>
+            <span class="io-pill">domain spec</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">agent ready flag</span>
+            <span class="io-pill out">training dataset</span>
+            <span class="io-pill out">integration patch per ce-code-review</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">v3.8.2: auto-detects agent intent from skill description.</div>
+      </div>
+    </section>
+
+    <!-- ========== ANALYSIS ========== -->
+    <section id="analysis">
+      <h2>Analysis</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-workflow-detect</div>
+        <div class="cmd-meta">
+          <span class="badge-analysis">analysis</span>
+          <span>Team process optimization</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Auto-detect developer workflow da git history. Suggest CE touch-points per cycle improvement.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">git log span (default 30d)</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">workflow diagram</span>
+            <span class="io-pill out">ce- command suggestions</span>
+            <span class="io-pill out">efficiency score</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Outputs COMPOUND.md + workflow recommendations.</div>
+      </div>
+    </section>
+
+    <!-- ========== INTEGRATION COMMANDS ========== -->
+    <section id="integration-cmds">
+      <h2>Integration commands</h2>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-audit-cira</div>
+        <div class="cmd-meta">
+          <span class="badge-integration">integration</span>
+          <span>Post-/costruiamo &middot; pre-master-index</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Audit CIRA custom skill per CE compliance: naming, audit-readiness, COMPOUND.md integration.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">skill file path</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">compliance score</span>
+            <span class="io-pill out">ce- naming suggestions</span>
+            <span class="io-pill out">COMPOUND.md ingest plan</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">Bridges /costruiamo output + CE learning system.</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-name">/compound-engineering:ce-headless-run</div>
+        <div class="cmd-meta">
+          <span class="badge-integration">integration</span>
+          <span>CI/CD pipelines &middot; automated gates</span>
+        </div>
+        <div class="cmd-row">
+          <span class="label">Cosa fa</span>
+          <span class="value">Run any ce-* command in headless mode (no user prompts). Pipe output to scripts/CI.</span>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Input</span>
+          <div class="io-pills">
+            <span class="io-pill">ce-command name</span>
+            <span class="io-pill">args JSON</span>
+          </div>
+        </div>
+        <div class="io-row">
+          <span class="io-label">Output</span>
+          <div class="io-pills">
+            <span class="io-pill out">structured JSON</span>
+            <span class="io-pill out">exit code</span>
+            <span class="io-pill out">log</span>
+          </div>
+        </div>
+        <div class="cmd-gotcha">v3.8.0+. All ce-* commands support <code>--headless</code> flag.</div>
+      </div>
+    </section>
+
+    <!-- ========== AGENTS TABLE ========== -->
+    <section id="agents">
+      <h2>Agenti specialisti (48)</h2>
+      <p style="color:var(--text-muted);font-size:13px;margin-bottom:16px;">
+        Spawned automaticamente da <code>ce-code-review</code> (26 reviewer) e dai comandi specializzati.
+        Invocabili anche direttamente in orchestrazioni custom.
+      </p>
+      <table class="agents-table">
+        <thead>
+          <tr>
+            <th>Agent</th>
+            <th>Uso</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="group-header"><td colspan="2">Code Review &#8212; 26 reviewer agent</td></tr>
+          <tr><td>ce-reviewer-syntax</td><td>Parse correctness, AST validation, language rules.</td></tr>
+          <tr><td>ce-reviewer-types</td><td>Type safety, inference correctness, generic variance.</td></tr>
+          <tr><td>ce-reviewer-logic</td><td>Algorithm correctness, business logic soundness, state machine validation.</td></tr>
+          <tr><td>ce-reviewer-security</td><td>OWASP Top 10, auth bypass, injection, crypto misuse, secrets leakage.</td></tr>
+          <tr><td>ce-reviewer-testing</td><td>Test quality, mutation readiness, coverage gaps, E2E criticality.</td></tr>
+          <tr><td>ce-reviewer-performance</td><td>Algorithmic complexity, resource leaks, N+1 patterns, caching opportunities.</td></tr>
+          <tr><td>ce-reviewer-maintainability</td><td>Code clarity, naming, function size, module cohesion, documentation.</td></tr>
+          <tr><td>ce-reviewer-accessibility</td><td>WCAG 2.1, screen reader, keyboard navigation, color contrast.</td></tr>
+          <tr><td>ce-reviewer-scalability</td><td>Horizontal scaling, database indexing, concurrency, load shedding.</td></tr>
+          <tr><td>ce-reviewer-dependencies</td><td>Dependency tree, transitive vulnerabilities, version conflicts, license compliance.</td></tr>
+          <tr><td>ce-reviewer-api-design</td><td>REST/GraphQL conventions, error handling, versioning, deprecation strategy.</td></tr>
+          <tr><td>ce-reviewer-database</td><td>Query optimization, transaction scope, schema normalization, migration safety.</td></tr>
+          <tr><td>ce-reviewer-devops</td><td>Docker/K8s manifests, env vars, secrets mgmt, health checks, observability.</td></tr>
+          <tr><td>ce-reviewer-ui</td><td>Component API clarity, accessibility, responsive design, state mgmt.</td></tr>
+          <tr><td>ce-reviewer-mobile</td><td>Platform conventions (iOS/Android), battery efficiency, offline-first patterns.</td></tr>
+          <tr><td>ce-reviewer-git</td><td>Commit hygiene, branch strategy, merge conflicts, rebase safety.</td></tr>
+          <tr><td>ce-reviewer-changelog</td><td>Entry accuracy, version semantics (semver), migration docs.</td></tr>
+          <tr><td>ce-reviewer-error-messages</td><td>User-friendliness, error context, troubleshooting hints, i18n readiness.</td></tr>
+          <tr><td>ce-reviewer-backwards-compat</td><td>Breaking change detection, deprecation warnings, migration path.</td></tr>
+          <tr><td>ce-reviewer-regex</td><td>Regex correctness, performance (catastrophic backtracking), test coverage.</td></tr>
+          <tr><td>ce-reviewer-concurrency</td><td>Race conditions, deadlock, resource contention, synchronization primitives.</td></tr>
+          <tr><td>ce-reviewer-memory</td><td>Heap leaks, GC pressure, memory profiling, allocation optimization.</td></tr>
+          <tr><td>ce-reviewer-threading</td><td>Thread pool sizing, context propagation, interrupt handling, graceful shutdown.</td></tr>
+          <tr><td>ce-reviewer-networking</td><td>Connection pooling, timeouts, retry logic, backpressure, circuit breaker.</td></tr>
+          <tr><td>ce-reviewer-caching</td><td>TTL correctness, cache invalidation, stampede prevention, warming strategy.</td></tr>
+          <tr><td>ce-reviewer-observability</td><td>Logging (structure, levels), metrics cardinality, trace propagation, dashboards.</td></tr>
+
+          <tr class="group-header"><td colspan="2">Document Review &#8212; 7 agent</td></tr>
+          <tr><td>ce-doc-clarity</td><td>Readability, jargon elimination, examples, voice consistency.</td></tr>
+          <tr><td>ce-doc-completeness</td><td>Topic coverage, edge cases, troubleshooting section, FAQ.</td></tr>
+          <tr><td>ce-doc-grammar</td><td>Spelling, punctuation, tone, active voice, sentence structure.</td></tr>
+          <tr><td>ce-doc-structure</td><td>Hierarchy, navigation, table of contents, cross-references, page structure.</td></tr>
+          <tr><td>ce-doc-seo</td><td>Keyword density, meta description, heading tags, internal links.</td></tr>
+          <tr><td>ce-doc-localization</td><td>i18n markers, rtl readiness, terminology consistency, cultural context.</td></tr>
+          <tr><td>ce-doc-accessibility</td><td>Alt text, heading structure per screen readers, semantic HTML, contrast.</td></tr>
+
+          <tr class="group-header"><td colspan="2">Research Validation &#8212; 7 agent</td></tr>
+          <tr><td>ce-research-sources</td><td>Citation accuracy, source credibility, bias detection, publication date.</td></tr>
+          <tr><td>ce-research-methodology</td><td>Research rigor, sampling strategy, confounding factors, statistical validity.</td></tr>
+          <tr><td>ce-research-reproducibility</td><td>Data availability, code release, methodology detail, experiment replication.</td></tr>
+          <tr><td>ce-research-scope</td><td>Claim boundaries, generalization limits, applicable contexts, caveats.</td></tr>
+          <tr><td>ce-research-novelty</td><td>Prior art search, contribution clarity, positioning vs. existing work.</td></tr>
+          <tr><td>ce-research-clarity</td><td>Abstract precision, methodology explanation, result interpretation, conclusion support.</td></tr>
+          <tr><td>ce-research-ethics</td><td>Informed consent, IRB review, bias disclosure, conflict of interest.</td></tr>
+
+          <tr class="group-header"><td colspan="2">Design Review &#8212; 2 agent</td></tr>
+          <tr><td>ce-design-feasibility</td><td>Technical implementability, API mapping, accessibility constraints, performance impact.</td></tr>
+          <tr><td>ce-design-ux</td><td>User journey clarity, mental models, error recovery, feedback loops.</td></tr>
+
+          <tr class="group-header"><td colspan="2">Language Specialists &#8212; 6 agent</td></tr>
+          <tr><td>ce-python-reviewer</td><td>Python idioms, type hints (mypy), asyncio patterns, virtual env, pip security.</td></tr>
+          <tr><td>ce-go-reviewer</td><td>Go idioms, goroutine safety, channel patterns, defer semantics, testing (testify).</td></tr>
+          <tr><td>ce-rust-reviewer</td><td>Ownership, borrow checker, unsafe blocks, trait design, error handling (Result/Option).</td></tr>
+          <tr><td>ce-php-reviewer</td><td>PSR standards, autoloading, type declarations, null safety, async patterns.</td></tr>
+          <tr><td>ce-swift-reviewer</td><td>Protocol design, property wrappers, Combine/AsyncAwait, memory management.</td></tr>
+          <tr><td>ce-dsl-reviewer</td><td>Grammar correctness, parsing strategies, operator precedence, error recovery.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ========== WORKFLOWS ========== -->
+    <section id="workflows">
+      <h2>Workflows end-to-end</h2>
+
+      <div class="callout tip">
+        <strong>Feature Delivery Cycle</strong> &#8212; ciclo principale CE
+      </div>
+      <ul class="phase-list">
+        <li><div><div class="phase-cmd">ce-plan</div><div class="phase-out">phase plan + COMPOUND.md lookup</div></div></li>
+        <li><div><div class="phase-cmd">ce-worktree-init</div><div class="phase-out">feature branch + audit dir</div></div></li>
+        <li><div><div class="phase-cmd">code impl + commit loop</div><div class="phase-out">git commit &#8594; ce-git-workflow check</div></div></li>
+        <li><div><div class="phase-cmd">ce-code-review</div><div class="phase-out">26-agent verdicts + learnings draft</div></div></li>
+        <li><div><div class="phase-cmd">ce-compound</div><div class="phase-out">COMPOUND.md patch + next-cycle improvements</div></div></li>
+        <li><div><div class="phase-cmd">ce-pr-audit</div><div class="phase-out">compliance matrix + merge readiness</div></div></li>
+        <li><div><div class="phase-cmd">push + merge</div></div></li>
+      </ul>
+
+      <div class="callout warn" style="margin-top:24px;">
+        <strong>PR Review Gates</strong> &#8212; multi-cycle improvement: early PRs slower, later PRs faster (COMPOUND.md learnings accumulate)
+      </div>
+      <div class="gate-list">
+        <div class="gate-item">
+          <div class="gate-cmd">ce-code-review</div>
+          <div class="gate-blocker">Blocker: verdicts da ce-reviewer-security, ce-reviewer-testing</div>
+        </div>
+        <div class="gate-item">
+          <div class="gate-cmd">ce-pr-audit</div>
+          <div class="gate-blocker">Blocker: coverage &lt;80% OR compliance score &lt;50</div>
+        </div>
+        <div class="gate-item">
+          <div class="gate-cmd">ce-git-workflow</div>
+          <div class="gate-blocker">Blocker: commit msg non-conforming OR audit dir pollution</div>
+        </div>
+      </div>
+
+      <div class="callout tip" style="margin-top:24px;">
+        <strong>Bug Fix Workflow</strong>
+      </div>
+      <ul class="phase-list">
+        <li><div><div class="phase-cmd">ce-compound query</div><div class="phase-out">find prior similar bugs + fix patterns</div></div></li>
+        <li><div><div class="phase-cmd">ce-code-review</div><div class="phase-out">review on fix candidate</div></div></li>
+        <li><div><div class="phase-cmd">ce-compound</div><div class="phase-out">harvest learnings</div></div></li>
+      </ul>
+
+      <div class="callout tip" style="margin-top:24px;">
+        <strong>Optimization Loop</strong>
+      </div>
+      <ul class="phase-list">
+        <li><div><div class="phase-cmd">ce-performance-profile</div><div class="phase-out">identify bottleneck</div></div></li>
+        <li><div><div class="phase-cmd">ce-code-review</div><div class="phase-out">on optimization candidate</div></div></li>
+        <li><div><div class="phase-cmd">ce-compound</div><div class="phase-out">extract pattern for next optimization</div></div></li>
+      </ul>
+
+      <div class="callout tip" style="margin-top:24px;">
+        <strong>Legacy Rescue</strong>
+      </div>
+      <ul class="phase-list">
+        <li><div><div class="phase-cmd">ce-agent-native-audit</div><div class="phase-out">assess agentic readiness</div></div></li>
+        <li><div><div class="phase-cmd">ce-refactor-guide</div><div class="phase-out">phase-based cleanup roadmap</div></div></li>
+        <li><div><div class="phase-cmd">per phase: ce-code-review + ce-compound</div></div></li>
+      </ul>
+
+      <div class="callout tip" style="margin-top:24px;">
+        <strong>Team Onboarding</strong>
+      </div>
+      <ul class="phase-list">
+        <li><div><div class="phase-cmd">ce-learning-export</div><div class="phase-out">export COMPOUND.md learnings</div></div></li>
+        <li><div><div class="phase-cmd">ce-workflow-detect</div><div class="phase-out">show optimal CE workflow per il team</div></div></li>
+        <li><div><div class="phase-cmd">ce-onboard-agent (optional)</div><div class="phase-out">teach CE new custom agent</div></div></li>
+      </ul>
+    </section>
+
+    <!-- ========== STACK INTEGRATION ========== -->
+    <section id="stack-integration">
+      <h2>Stack Integration</h2>
+      <div class="integration-grid">
+        <div class="integration-card">
+          <div class="int-name">/gsd</div>
+          <p><code>ce-plan</code> inputs from GSD phase plan. <code>ce-code-review</code> runs after feature impl phase. <code>ce-compound</code> outputs patch per GSD learnings doc.</p>
+        </div>
+        <div class="integration-card">
+          <div class="int-name">gstack</div>
+          <p><code>ce-code-review</code> integra con gstack test suite (<code>ce-test-coverage-audit</code>). Parallel review agents + gstack parallel test runners.</p>
+        </div>
+        <div class="integration-card">
+          <div class="int-name">/costruiamo</div>
+          <p><code>ce-audit-cira</code> checks /costruiamo output. <code>ce-onboard-agent</code> insegna CE nuovi custom agent. /costruiamo triggers <code>ce-compound</code> come learnings harvest step.</p>
+        </div>
+        <div class="integration-card">
+          <div class="int-name">superpowers</div>
+          <p><code>ce-compound</code> feeds superpowers research synthesis (reuse patterns, proven approaches).</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:24px;color:var(--accent);font-size:16px;">Ruoli nel team</h3>
+      <div class="role-grid">
+        <div class="role-card">
+          <h4>Developer</h4>
+          <code>ce-code-review</code>
+          <code>ce-git-workflow</code>
+          <code>ce-compound</code>
+        </div>
+        <div class="role-card">
+          <h4>Architect</h4>
+          <code>ce-plan</code>
+          <code>ce-agent-native-audit</code>
+          <code>ce-refactor-guide</code>
+        </div>
+        <div class="role-card">
+          <h4>Researcher</h4>
+          <code>ce-research-validate</code>
+          <code>ce-learning-export</code>
+        </div>
+        <div class="role-card">
+          <h4>DevOps</h4>
+          <code>ce-pr-audit</code>
+          <code>ce-headless-run</code>
+          <code style="color:var(--text-dim);font-size:10px;">in CI/CD pipeline</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CIRA EXAMPLES ========== -->
+    <section id="cira-examples">
+      <h2>Esempi CIRA</h2>
+
+      <div class="cira-example">
+        <span class="cira-tag">CIRA</span>
+        <h4>Dopo /costruiamo &#8212; audit skill generata</h4>
+        <pre><code># /costruiamo ha generato una nuova skill
+# Audita prima di mergiare nel master-index
+/compound-engineering:ce-audit-cira ~/.claude/skills/mia-skill-nuova.md</code></pre>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;">
+          Verifica naming <code>ce-*</code>, audit-readiness, e genera COMPOUND.md ingest plan.
+        </p>
+      </div>
+
+      <div class="cira-example">
+        <span class="cira-tag">CIRA</span>
+        <h4>Code review prima di ogni commit su Mercurio</h4>
+        <pre><code>/compound-engineering:ce-code-review \
+  ~/WORK/SOFTWARE/VALERIO/MAIL/demo_03_claude/src/auth/ \
+  --context "Python + Claude Agent SDK, nessun test ancora"</code></pre>
+      </div>
+
+      <div class="cira-example">
+        <span class="cira-tag">CIRA</span>
+        <h4>Headless in CI GitHub Actions</h4>
+        <pre><code># .github/workflows/ce-gate.yml
+- name: CE Code Review Gate
+  run: |
+    claude /compound-engineering:ce-headless-run \
+      --cmd ce-code-review \
+      --args '{"paths":["src/"],"headless":true}' \
+    | jq '.verdict'</code></pre>
+      </div>
+
+      <div class="cira-example">
+        <span class="cira-tag">CIRA</span>
+        <h4>Onboarding nuovo team member &#8212; export learnings</h4>
+        <pre><code>/compound-engineering:ce-learning-export \
+  --filter "category:security,date:2026-01" \
+  --format html \
+  --output ~/WORK/_AWARENESS/onboarding-learnings.html</code></pre>
+      </div>
+
+      <div class="cira-example">
+        <span class="cira-tag">CIRA</span>
+        <h4>Legacy rescue &#8212; Aurelio bot Python</h4>
+        <pre><code># Step 1: check se il codebase e' agent-ready
+/compound-engineering:ce-agent-native-audit \
+  ~/WORK/SOFTWARE/COACH/aurelio/
+
+# Step 2: se readiness score &lt; 60 -- refactor roadmap
+/compound-engineering:ce-refactor-guide \
+  ~/WORK/SOFTWARE/COACH/aurelio/ \
+  --priority HIGH</code></pre>
+      </div>
+    </section>
+
+    <!-- ========== GOTCHAS ========== -->
+    <section id="gotchas">
+      <h2>Gotchas</h2>
+
+      <div class="callout danger">
+        <strong>26 agent in parallelo:</strong> <code>ce-code-review</code> spawna 26 agent simultanei.
+        In CI usa <code>--headless</code> + setta un concurrency limit per evitare rate limit.
+      </div>
+
+      <div class="callout warn" style="margin-top:12px;">
+        <strong>COMPOUND.md = advisory, non enforced:</strong> <code>ce-compound</code> surfaces patterns,
+        il developer decide l&#39;adozione. I learnings non si auto-applicano.
+      </div>
+
+      <div class="callout warn" style="margin-top:12px;">
+        <strong>ce-plan reads, non auto-apply:</strong> Legge COMPOUND.md ma NON applica automaticamente.
+        Richiede decisione manuale + doc closure.
+      </div>
+
+      <div class="callout danger" style="margin-top:12px;">
+        <strong>ce-audit-cira richiede struttura prevedibile:</strong> L&#39;output di /costruiamo deve avere
+        skill name + file path standard. Output non-standard &#8594; audit fails.
+      </div>
+
+      <h3 style="margin-top:24px;color:var(--accent);font-size:16px;">FAQ rapide</h3>
+
+      <div class="faq-item">
+        <div class="faq-q">Posso runnare ce-code-review senza tutti i 26 agent?</div>
+        <div class="faq-a">
+          Si. <code>--agents=security,testing,perf</code> restringe lo scope.
+          Ma la review a 26 agent completa cattura molto di piu&#39;.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">ce-compound auto-mergia COMPOUND.md?</div>
+        <div class="faq-a">
+          No. Outputs un patch candidate. Review + merge manuale (o via CI gate).
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">ce-code-review funziona in CI senza user prompts?</div>
+        <div class="faq-a">
+          Si. Flag <code>--headless</code> + JSON output. Integra in GitHub Actions / pre-commit hook.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">COMPOUND.md ha size limits?</div>
+        <div class="faq-a">
+          Nessun limite stretto, ma splitta per category/year se &gt;10MB.
+          <code>ce-learning-export</code> aiuta a gestire.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">ce-code-review e COMPOUND.md si contraddicono?</div>
+        <div class="faq-a">
+          I verdetti real-time vincono. COMPOUND.md e&#39; storico.
+          Real-time wins; aggiorna COMPOUND.md se i learnings sono cambiati.
+        </div>
+      </div>
+
+      <h3 style="margin-top:24px;color:var(--accent);font-size:16px;">Version highlights</h3>
+      <ul class="version-list">
+        <li>
+          <span class="ver-tag">3.8.2</span>
+          <span class="ver-desc">Agent-native audit detection (ce-agent-native-audit). Prose-driven base detection in ce-code-review. COMPOUND.md registry versioning.</span>
+        </li>
+        <li>
+          <span class="ver-tag">3.8.1</span>
+          <span class="ver-desc">Prose-driven base detection per ce-code-review (fixes false positives on diffs).</span>
+        </li>
+        <li>
+          <span class="ver-tag">3.8.0</span>
+          <span class="ver-desc">Headless mode (--headless flag su tutti i ce-* commands). CI/CD integration.</span>
+        </li>
+        <li>
+          <span class="ver-tag">3.7.0</span>
+          <span class="ver-desc">COMPOUND.md central registry. Learning compounding across cycles.</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="margin-top:60px;padding-top:24px;border-top:1px solid var(--border);color:var(--text-dim);font-size:12px;">
+      Compound Engineering v3.8.2 &nbsp;&middot;&nbsp; Ardea dark template &nbsp;&middot;&nbsp;
+      <a href="../index.html">&#8592; Cheatsheet Library</a>
+      &nbsp;&middot;&nbsp; Generato 2026-05-15
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // Sidebar active link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Copy code blocks on click
+  document.querySelectorAll('pre code').forEach(block => {
+    block.style.cursor = 'pointer';
+    block.title = 'Click to copy';
+    block.addEventListener('click', () => {
+      navigator.clipboard.writeText(block.textContent.trim()).then(() => {
+        const orig = block.style.outline;
+        block.style.outline = '2px solid var(--success)';
+        setTimeout(() => { block.style.outline = orig; }, 800);
+      });
+    });
+  });
+</script>
+  <script src="../assets/glossary.js" defer></script>
+</body>
+</html>

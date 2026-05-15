@@ -1,0 +1,31 @@
+@media print {
+  body {
+    background: white;
+    color: black;
+    font-size: 11pt;
+  }
+  aside.sidebar, .copy-btn, #search-results, .search-box, .stale-banner {
+    display: none !important;
+  }
+  .layout { grid-template-columns: 1fr; }
+  main.content {
+    padding: 0;
+    max-width: none;
+  }
+  .tool-header h1, section > h2, .cmd-card .cmd-name { color: #000; }
+  .cmd-card, .callout, .cira-example, .when-card, .skip-card {
+    background: white;
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+  pre, code {
+    background: #f0f0f0;
+    color: #000;
+    border: 1px solid #ccc;
+  }
+  a { color: #000; text-decoration: underline; border: 0; }
+  a[href]:after { content: " (" attr(href) ")"; font-size: 9pt; color: #555; }
+  a[href^="#"]:after, a[href^="/"]:after { content: ""; }
+  table { page-break-inside: auto; }
+  tr { page-break-inside: avoid; page-break-after: auto; }
+}

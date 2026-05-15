@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash + macOS — Cheatsheet Ardea</title>
+  <style>
+    /* ─── Ardea Dark Theme ─── */
+    :root {
+      --bg:          #0d0f14;
+      --bg-card:     #141720;
+      --bg-card2:    #1a1d26;
+      --border:      #252a38;
+      --accent:      #5b8dee;
+      --accent2:     #3ecf8e;
+      --accent3:     #f5a623;
+      --text:        #c9d1e0;
+      --text-muted:  #6b7591;
+      --text-bright: #e8eaf0;
+      --danger:      #e05b5b;
+      --sidebar-w:   260px;
+      --radius:      8px;
+      --mono:        'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      display: flex;
+    }
+
+    /* ─── Sidebar ─── */
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: var(--sidebar-w);
+      height: 100vh;
+      background: #0a0c10;
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 24px 0;
+      z-index: 100;
+    }
+
+    .sidebar-logo {
+      padding: 0 20px 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+    .sidebar-logo .logo-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-bright);
+      letter-spacing: -0.3px;
+    }
+    .sidebar-logo .logo-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .sidebar-section {
+      padding: 6px 20px 2px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 7px 20px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sidebar a:hover {
+      color: var(--text-bright);
+      background: rgba(91,141,238,0.06);
+      border-left-color: var(--border);
+    }
+    .sidebar a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: rgba(91,141,238,0.10);
+      font-weight: 600;
+    }
+
+    /* ─── Main Content ─── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 40px 48px;
+      max-width: 1100px;
+    }
+
+    .page-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-bright);
+      letter-spacing: -0.5px;
+    }
+    .page-header p {
+      color: var(--text-muted);
+      margin-top: 6px;
+      font-size: 14px;
+    }
+    .page-header .badge {
+      display: inline-block;
+      background: rgba(91,141,238,0.15);
+      color: var(--accent);
+      border: 1px solid rgba(91,141,238,0.3);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    /* ─── Sections ─── */
+    section {
+      margin-bottom: 56px;
+      scroll-margin-top: 24px;
+    }
+
+    section h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    section h2 .cat-count {
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(62,207,142,0.12);
+      color: var(--accent2);
+      border: 1px solid rgba(62,207,142,0.25);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    section h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 20px 0 8px;
+    }
+
+    section p {
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.65;
+    }
+
+    /* ─── Command Card ─── */
+    .cmd-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
+      gap: 14px;
+    }
+
+    .cmd-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      transition: border-color 0.15s;
+    }
+    .cmd-card:hover {
+      border-color: rgba(91,141,238,0.35);
+    }
+
+    .cmd-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .cmd-name {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent2);
+      background: rgba(62,207,142,0.08);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(62,207,142,0.2);
+    }
+
+    .cmd-cosa-fa {
+      font-size: 13px;
+      color: var(--text-bright);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .cmd-quando {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .cmd-example {
+      background: #0a0c10;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: #a8d8a8;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .cmd-output {
+      margin-top: 6px;
+      background: #090c0e;
+      border: 1px solid #1e2535;
+      border-radius: 5px;
+      padding: 6px 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      overflow-x: auto;
+    }
+
+    .cmd-gotcha {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+      margin-top: 8px;
+      background: rgba(224,91,91,0.06);
+      border: 1px solid rgba(224,91,91,0.2);
+      border-radius: 5px;
+      padding: 6px 10px;
+      font-size: 11.5px;
+      color: #e07070;
+    }
+    .cmd-gotcha::before {
+      content: '⚠';
+      flex-shrink: 0;
+    }
+
+    .cmd-see-also {
+      margin-top: 7px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .cmd-see-also span {
+      color: var(--accent);
+    }
+
+    /* ─── Tables ─── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 4px;
+    }
+    thead tr {
+      background: var(--bg-card2);
+      border-bottom: 1px solid var(--border);
+    }
+    thead th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.1s;
+    }
+    tbody tr:hover {
+      background: rgba(91,141,238,0.04);
+    }
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+    tbody td {
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--text);
+      vertical-align: top;
+    }
+    tbody td code {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent2);
+      background: rgba(62,207,142,0.08);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .table-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    /* ─── Code blocks ─── */
+    pre {
+      background: #0a0c10;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      overflow-x: auto;
+      margin: 10px 0;
+    }
+    pre code {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: #b8d4b8;
+      background: none;
+      padding: 0;
+      line-height: 1.7;
+    }
+
+    code {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent2);
+      background: rgba(62,207,142,0.08);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    kbd {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-bottom: 2px solid #333;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text-bright);
+    }
+
+    /* ─── Quick Start ─── */
+    #quick-start .qs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .qs-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+    .qs-card h3 {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* ─── CIRA Examples ─── */
+    .cira-scenario {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent2);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .cira-scenario h4 {
+      color: var(--text-bright);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    /* ─── Automation section ─── */
+    .automation-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 4px;
+    }
+    .auto-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+    .auto-card h3 {
+      margin: 0 0 10px;
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    /* ─── Gotchas ─── */
+    .gotchas-list {
+      display: grid;
+      gap: 10px;
+    }
+    .gotcha-item {
+      display: flex;
+      gap: 10px;
+      background: rgba(224,91,91,0.05);
+      border: 1px solid rgba(224,91,91,0.2);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      font-size: 13px;
+      color: #d8888;
+      align-items: flex-start;
+    }
+    .gotcha-item .gi-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .gotcha-item .gi-text {
+      color: var(--text);
+    }
+    .gotcha-item .gi-text strong {
+      color: #e08080;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* ─── Stack integration ─── */
+    .stack-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .stack-card h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .stack-card p {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 900px) {
+      :root { --sidebar-w: 220px; }
+      .main { padding: 24px 20px; }
+      .cmd-grid { grid-template-columns: 1fr; }
+      #quick-start .qs-grid { grid-template-columns: 1fr; }
+      .automation-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── Scrollbar ─── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     SIDEBAR
+══════════════════════════════════════════ -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-name">Ardea</div>
+    <div class="logo-sub">Cheatsheet Collection</div>
+  </div>
+
+  <div class="sidebar-section">Cheatsheet</div>
+  <a href="../bash-macos/index.html" class="active">Bash + macOS</a>
+  <a href="../git/index.html">Git Workflow</a>
+  <a href="../jq/index.html">jq &amp; JSON</a>
+  <a href="../zsh/index.html">zsh Tricks</a>
+  <a href="../launchd/index.html">launchd / plist</a>
+  <a href="../gws/index.html">gws CLI</a>
+  <a href="../claude-code/index.html">Claude Code</a>
+  <a href="../telegram/index.html">Telegram Bot</a>
+  <a href="../cira-workflow/index.html">CIRA Workflow</a>
+  <a href="../security/index.html">Security</a>
+
+  <div class="sidebar-section">Sezioni</div>
+  <a href="#quick-start">Quick Start</a>
+  <a href="#navigation">Navigazione FS</a>
+  <a href="#file-ops">File Operations</a>
+  <a href="#text">Testo &amp; Ricerca</a>
+  <a href="#network">Rete</a>
+  <a href="#processes">Processi &amp; launchd</a>
+  <a href="#packages">Pacchetti</a>
+  <a href="#git">Git Essenziali</a>
+  <a href="#redirect-patterns">Redirect &amp; Pipe</a>
+  <a href="#automation">Automazione</a>
+  <a href="#json-csv">JSON &amp; CSV</a>
+  <a href="#macos-specific">macOS Specifici</a>
+  <a href="#cira-workflow">CIRA Workflow</a>
+  <a href="#shortcuts-zsh">Shortcut zsh</a>
+  <a href="#cira-examples">CIRA Examples</a>
+  <a href="#gotchas">macOS Gotchas</a>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     MAIN
+══════════════════════════════════════════ -->
+<main class="main">
+
+  <div class="page-header">
+    <h1>Bash + macOS — Cheatsheet Ardea <span class="badge">66 comandi</span></h1>
+    <p>Reference completo per shell zsh su macOS — navigazione, file, rete, processi, automazione launchd, CIRA workflow.</p>
+  </div>
+
+  <!-- ─────────────────────────────────
+       QUICK START
+  ───────────────────────────────── -->
+  <section id="quick-start">
+    <h2>Quick Start</h2>
+    <div class="qs-grid">
+      <div class="qs-card">
+        <h3>Shell di default macOS</h3>
+        <p>zsh (dal macOS 10.15+). Config in <code>~/.zshrc</code>.</p>
+        <p>Reload: <code>source ~/.zshrc</code></p>
+      </div>
+      <div class="qs-card">
+        <h3>Apri Terminale</h3>
+        <p>Spotlight: <kbd>Cmd+Space</kbd> → "Terminal" o "iTerm".</p>
+        <p>Nuovo tab: <kbd>Cmd+T</kbd> &nbsp;|&nbsp; Chiudi tab: <kbd>Cmd+W</kbd></p>
+      </div>
+    </div>
+    <h3>Esempio: healthcheck post-blackout</h3>
+    <pre><code>uptime
+launchctl list | grep cira
+lsof -iTCP:37777 -sTCP:LISTEN
+curl -sS -m 3 http://localhost:37777</code></pre>
+  </section>
+
+  <!-- ─────────────────────────────────
+       NAVIGATION
+  ───────────────────────────────── -->
+  <section id="navigation">
+    <h2>Navigazione filesystem <span class="cat-count">3 comandi</span></h2>
+    <div class="cmd-grid">
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">pwd</span>
+        </div>
+        <div class="cmd-cosa-fa">Stampa working directory corrente</div>
+        <div class="cmd-quando">Verificare dove sei in filesystem. Essential per debugging path.</div>
+        <div class="cmd-example">pwd</div>
+        <div class="cmd-output">/Users/cira/WORK/SOFTWARE/myproject</div>
+        <div class="cmd-see-also">Vedi anche: <span>cd</span>, <span>pushd/popd</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">cd</span>
+        </div>
+        <div class="cmd-cosa-fa">Cambia directory corrente</div>
+        <div class="cmd-quando">Spostarsi tra cartelle. <code>cd ~</code> per home. <code>cd -</code> torna alla precedente. Path assoluti &gt; relativi multipli.</div>
+        <div class="cmd-example">cd ~/WORK/SOFTWARE/VALERIO/MAIL</div>
+        <div class="cmd-gotcha">cd .. multipli sono lenti — usa cd /percorso/assoluto</div>
+        <div class="cmd-see-also">Vedi anche: <span>pwd</span>, <span>pushd/popd</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">ls</span>
+        </div>
+        <div class="cmd-cosa-fa">Lista file directory</div>
+        <div class="cmd-quando"><code>-la</code> dettagli + hidden. <code>-lh</code> dimensioni leggibili. <code>-t</code> ordinamento data.</div>
+        <div class="cmd-example">ls -lah ~/WORK</div>
+        <div class="cmd-output">drwxr-xr-x  12 cira  staff  384 May 15 07:32 WORK</div>
+        <div class="cmd-see-also">Vedi anche: <span>tree</span>, <span>find</span>, <span>exa (alternativa moderna)</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────
+       FILE OPS
+  ───────────────────────────────── -->
+  <section id="file-ops">
+    <h2>Operazioni su file <span class="cat-count">7 comandi</span></h2>
+    <div class="cmd-grid">
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">mkdir</span>
+        </div>
+        <div class="cmd-cosa-fa">Crea directory</div>
+        <div class="cmd-quando"><code>-p</code> crea parent directories se non esistono.</div>
+        <div class="cmd-example">mkdir -p ~/WORK/SITI/ispiration/sitename/{firecrawl,designlang}</div>
+        <div class="cmd-see-also">Vedi anche: <span>rmdir</span>, <span>rm -rf</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">cp</span>
+        </div>
+        <div class="cmd-cosa-fa">Copia file o directory</div>
+        <div class="cmd-quando">Backup file. <code>-r</code> ricorsivo. <code>-v</code> verbose.</div>
+        <div class="cmd-example">cp -r ~/WORK/BUSINESS-OS/template ~/WORK/BUSINESS-OS/new-project</div>
+        <div class="cmd-see-also">Vedi anche: <span>mv</span>, <span>rm</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">mv</span>
+        </div>
+        <div class="cmd-cosa-fa">Sposta o rinomina file</div>
+        <div class="cmd-quando">Funziona anche tra filesystem (a differenza di Linux).</div>
+        <div class="cmd-example">mv old-name.md new-name.md</div>
+        <div class="cmd-see-also">Vedi anche: <span>cp</span>, <span>rm</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">rm</span>
+        </div>
+        <div class="cmd-cosa-fa">Cancella file</div>
+        <div class="cmd-quando"><code>-r</code> ricorsivo per cartelle. <code>-i</code> chiede conferma. NO <code>-f</code> senza <code>-i</code>.</div>
+        <div class="cmd-example">rm -ri ~/WORK/CLAUDE/REPOS/polydao</div>
+        <div class="cmd-gotcha">IRREVERSIBILE. Non c'è undelete macOS. Usa Finder/Trash prima di rm</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">touch</span>
+        </div>
+        <div class="cmd-cosa-fa">Crea file vuoto o aggiorna timestamp</div>
+        <div class="cmd-quando">Creare file marker. Aggiornare mtime senza editare.</div>
+        <div class="cmd-example">touch ~/WORK/_AWARENESS/2026-05-15-checkpoint.md</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">find</span>
+        </div>
+        <div class="cmd-cosa-fa">Cerca file ricorsivamente per nome/tipo/data/dimensione</div>
+        <div class="cmd-quando"><code>-name</code> pattern. <code>-type f/d</code>. <code>-mtime -N</code> giorni. <code>-size +10M</code>.</div>
+        <div class="cmd-example">find ~/WORK -name '*.md' -mtime -7 -type f</div>
+        <div class="cmd-output">~/WORK/_AWARENESS/2026-05-14-HANDOFF-pre-clear.md</div>
+        <div class="cmd-gotcha">Da '.' non da '/' — altrimenti scansiona FS intero. Usa find ~/WORK non find /</div>
+        <div class="cmd-see-also">Vedi anche: <span>fd (alternativa veloce)</span>, <span>grep -r</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">fd</span>
+        </div>
+        <div class="cmd-cosa-fa">Alternativa moderna e veloce a find</div>
+        <div class="cmd-quando">PREFERISCI A FIND. 10× più veloce. Regex di default. (<code>brew install fd</code>)</div>
+        <div class="cmd-example">fd '\.md$' ~/WORK --changed-within 7d</div>
+        <div class="cmd-see-also">Vedi anche: <span>find (POSIX originale)</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────
+       TEXT
+  ───────────────────────────────── -->
+  <section id="text">
+    <h2>Ricerca e manipolazione testo <span class="cat-count">10 comandi</span></h2>
+    <div class="cmd-grid">
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">cat</span>
+        </div>
+        <div class="cmd-cosa-fa">Stampa contenuto file</div>
+        <div class="cmd-quando">File piccoli. Per editor: nano/vim. Per leggere in script: <code>$(cat file)</code></div>
+        <div class="cmd-example">cat ~/.zshrc | head -20</div>
+        <div class="cmd-see-also">Vedi anche: <span>less</span>, <span>head/tail</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">head / tail</span>
+        </div>
+        <div class="cmd-cosa-fa">Prime/ultime N righe file</div>
+        <div class="cmd-quando"><code>-n N</code> righe. <code>tail -f</code> segue log in real-time.</div>
+        <div class="cmd-example">head -20 ~/WORK/_AWARENESS/HANDOFF-2026-05-14.md</div>
+        <div class="cmd-see-also">Vedi anche: <span>less (viewer interattivo)</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">grep</span>
+        </div>
+        <div class="cmd-cosa-fa">Cerca testo in file</div>
+        <div class="cmd-quando"><code>-i</code> case-insensitive. <code>-v</code> inverti (NOT). <code>-n</code> numeri riga.</div>
+        <div class="cmd-example">grep -n 'TODO' ~/WORK/SCRIPTS/aurelio-bot-launcher.sh</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">grep -rE</span>
+        </div>
+        <div class="cmd-cosa-fa">Cerca regex ricorsivo nei file</div>
+        <div class="cmd-quando"><code>-r</code> ricorsivo. <code>-E</code> regex extended. <code>-l</code> solo nomi file. <code>--include='*.py'</code></div>
+        <div class="cmd-example">grep -rE 'TODO|FIXME' ~/.claude/skills --include='*.md'</div>
+        <div class="cmd-see-also">Vedi anche: <span>rg (ripgrep — 10× più veloce)</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">rg</span>
+        </div>
+        <div class="cmd-cosa-fa">ripgrep — search ricorsivo ultra-veloce con regex</div>
+        <div class="cmd-quando">PREFERISCI A GREP. 10× più veloce. <code>-i</code> case-insensitive. <code>-w</code> word boundary. <code>-A 3</code> contesto.</div>
+        <div class="cmd-example">rg 'costruiamo' ~/.claude/skills -A 2 -B 2</div>
+        <div class="cmd-see-also">Install: <code>brew install ripgrep</code></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">sed</span>
+        </div>
+        <div class="cmd-cosa-fa">Stream editor — modifica testo da CLI</div>
+        <div class="cmd-quando"><code>-i</code> in-place. <code>s/old/new/g</code> replace all. <code>d</code> cancella righe.</div>
+        <div class="cmd-example">sed -i '' 's/OLD_URL/NEW_URL/g' *.md</div>
+        <div class="cmd-gotcha">macOS: sed -i '' (empty string dopo -i). Linux: sed -i no spazi</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">awk</span>
+        </div>
+        <div class="cmd-cosa-fa">Data processing — split righe, stampa colonne</div>
+        <div class="cmd-quando">Estrarre colonne da output. <code>'{print $1,$3}'</code>. <code>-F</code> delimiter.</div>
+        <div class="cmd-example">ps aux | awk '{print $1,$11}' | head</div>
+        <div class="cmd-see-also">Vedi anche: <span>cut</span>, <span>paste</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">cut</span>
+        </div>
+        <div class="cmd-cosa-fa">Estrai colonne fisse da righe</div>
+        <div class="cmd-quando"><code>-d</code> delimitatore. <code>-f 1,3</code> campi 1 e 3.</div>
+        <div class="cmd-example">ps aux | cut -d' ' -f1-2</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">sort / uniq</span>
+        </div>
+        <div class="cmd-cosa-fa">Ordina righe / rimuove duplicati</div>
+        <div class="cmd-quando"><code>sort -n</code> numerico. <code>sort -r</code> reverse. <code>uniq -c</code> conta occorrenze.</div>
+        <div class="cmd-example">cat file.txt | sort | uniq -c | sort -rn</div>
+        <div class="cmd-output">42 skill-name&#10;38 another-skill</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">wc</span>
+        </div>
+        <div class="cmd-cosa-fa">Word/line/byte count</div>
+        <div class="cmd-quando"><code>-l</code> righe. <code>-w</code> parole. <code>-c</code> byte.</div>
+        <div class="cmd-example">find ~/.claude/skills -name 'SKILL.md' | wc -l</div>
+        <div class="cmd-output">2577</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">diff</span>
+        </div>
+        <div class="cmd-cosa-fa">Confronta due file</div>
+        <div class="cmd-quando"><code>-u</code> unified format. <code>-r</code> directory ricorsivo.</div>
+        <div class="cmd-example">diff -u old.json new.json | head -50</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────
+       NETWORK
+  ───────────────────────────────── -->
+  <section id="network">
+    <h2>Rete <span class="cat-count">6 comandi</span></h2>
+    <div class="cmd-grid">
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">curl</span>
+        </div>
+        <div class="cmd-cosa-fa">HTTP client per request da terminale</div>
+        <div class="cmd-quando"><code>-s</code> silent. <code>-S</code> show errors. <code>-m</code> timeout. <code>-o file</code>. <code>-w</code> format.</div>
+        <div class="cmd-example">curl -sS -m 5 -o /dev/null -w 'HTTP:%{http_code}\n' http://localhost:37777</div>
+        <div class="cmd-output">HTTP:200</div>
+        <div class="cmd-gotcha">Sempre -sS (silent ma error). Timeout critico: -m 5 secondi</div>
+        <div class="cmd-see-also">Vedi anche: <span>wget</span>, <span>httpie</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">curl POST/JSON</span>
+        </div>
+        <div class="cmd-cosa-fa">HTTP POST con JSON payload</div>
+        <div class="cmd-quando">API POST, PUT, DELETE.</div>
+        <div class="cmd-example">curl -X POST http://api.example.com \
+  -H 'Content-Type: application/json' \
+  -d '{"key":"value"}'</div>
+        <div class="cmd-see-also">Vedi anche: <span>jq per costruire JSON dinamico</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">wget</span>
+        </div>
+        <div class="cmd-cosa-fa">Download file da URL</div>
+        <div class="cmd-quando"><code>-O</code> salva con nome. <code>-q</code> quiet. <code>-t 3</code> retry. (<code>brew install wget</code>)</div>
+        <div class="cmd-example">wget -O ~/WORK/file.pdf 'https://example.com/doc.pdf'</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">ssh</span>
+        </div>
+        <div class="cmd-cosa-fa">Secure shell — accesso remoto</div>
+        <div class="cmd-quando"><code>-p 2222</code> port custom. <code>-i ~/.ssh/key.pem</code> chiave privata.</div>
+        <div class="cmd-example">ssh -i ~/.ssh/github_key user@example.com</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">scp</span>
+        </div>
+        <div class="cmd-cosa-fa">Secure copy — trasferisci file su SSH</div>
+        <div class="cmd-quando">Copia file verso/da server remoto. <code>-r</code> ricorsivo.</div>
+        <div class="cmd-example">scp -r ~/WORK/build user@server:/var/www/</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">lsof</span>
+        </div>
+        <div class="cmd-cosa-fa">Lista file/socket aperti da processi</div>
+        <div class="cmd-quando">Vedere chi usa una porta. Debug lock file. <code>-i TCP</code> porta.</div>
+        <div class="cmd-example">lsof -iTCP:37777 -sTCP:LISTEN</div>
+        <div class="cmd-output">COMMAND  PID  USER FD  TYPE DEVICE SIZE NODE NAME&#10;bun     2847 cira 12u IPv4 0x...     0t0  TCP localhost:37777 (LISTEN)</div>
+        <div class="cmd-see-also">Vedi anche: <span>netstat</span>, <span>ps</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────
+       PROCESSES
+  ───────────────────────────────── -->
+  <section id="processes">
+    <h2>Processi e launchd <span class="cat-count">4 comandi</span></h2>
+    <div class="cmd-grid">
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">ps</span>
+        </div>
+        <div class="cmd-cosa-fa">Lista processi in esecuzione</div>
+        <div class="cmd-quando">Trovare PID di un processo. <code>aux</code> full listing.</div>
+        <div class="cmd-example">ps aux | grep coach-bot</div>
+        <div class="cmd-output">cira  2847  0.2  1.3 12345 98765 ?? S  2:42PM bun /Users/cira/.claude/coach-bot.ts</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">kill</span>
+        </div>
+        <div class="cmd-cosa-fa">Termina processo per PID</div>
+        <div class="cmd-quando"><code>-9</code> force (SIGKILL). <code>-15</code> graceful (SIGTERM, default).</div>
+        <div class="cmd-example">kill -15 2847</div>
+        <div class="cmd-gotcha">CIRA: MAI pkill un servizio launchd — usa launchctl. kill riserva per debug</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">launchctl</span>
+        </div>
+        <div class="cmd-cosa-fa">Gestione servizi launchd macOS (daemon, agent)</div>
+        <div class="cmd-quando">Avviare/fermare servizio permanente. Verificare stato com.cira.* coach-bot, Aurelio.</div>
+        <div class="cmd-example">launchctl list | grep cira</div>
+        <div class="cmd-output">-    0    com.cira.coach-bot</div>
+        <pre style="margin-top:8px"><code># Load service
+launchctl bootstrap gui/$(id -u) \
+  ~/Library/LaunchAgents/com.cira.coach-bot.plist
+
+# Unload service
+launchctl bootout gui/$(id -u) \
+  ~/Library/LaunchAgents/com.cira.coach-bot.plist</code></pre>
+        <div class="cmd-gotcha">MAI pkill un servizio launchd — hai rotto MCP e dovrai restartare Claude Code</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">launchctl print</span>
+        </div>
+        <div class="cmd-cosa-fa">Stampa dettagli servizio launchd</div>
+        <div class="cmd-quando">Vedere config, env vars, status di un servizio.</div>
+        <div class="cmd-example">launchctl print gui/$(id -u)/com.cira.coach-bot</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────
+       PACKAGES
+  ───────────────────────────────── -->
+  <section id="packages">
+    <h2>Pacchetti macOS <span class="cat-count">4 comandi</span></h2>
+    <div class="cmd-grid">
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">brew</span>
+        </div>
+        <div class="cmd-cosa-fa">Homebrew package manager macOS</div>
+        <div class="cmd-quando">Installare tool CLI. Sempre <code>brew update &amp;&amp; brew upgrade</code>.</div>
+        <div class="cmd-example">brew install jq ripgrep gh ffmpeg node</div>
+        <div class="cmd-see-also">Essenziali CIRA: <span>jq ripgrep gh gws bun curl</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">npm</span>
+        </div>
+        <div class="cmd-cosa-fa">Node package manager</div>
+        <div class="cmd-quando"><code>install -g</code> per globale. <code>npm i</code> per locale (cwd).</div>
+        <div class="cmd-example">npm install -g bun @anthropic-ai/sdk</div>
+        <div class="cmd-see-also">Vedi anche: <span>npx (esegui senza install)</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">npx</span>
+        </div>
+        <div class="cmd-cosa-fa">Esegui pacchetto npm senza installare</div>
+        <div class="cmd-quando">Run CLI tools temporaneamente. Utile per test.</div>
+        <div class="cmd-example">npx create-next-app@latest my-app</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">pip / pip3</span>
+        </div>
+        <div class="cmd-cosa-fa">Python package manager</div>
+        <div class="cmd-quando">Installare pacchetti Python. Preferisci <code>pip3</code> per Python 3.</div>
+        <div class="cmd-example">pip3 install pandas numpy --user</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────
+       GIT
+  ───────────────────────────────── -->
+  <section id="git">
+    <h2>Git Essenziali <span class="cat-count">7 comandi</span></h2>
+    <div class="cmd-grid">
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">git status</span>
+        </div>
+        <div class="cmd-cosa-fa">Stato repo Git</div>
+        <div class="cmd-quando">Sempre prima di commit. Vedere file modificati, staged, untracked.</div>
+        <div class="cmd-example">git status</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">git add / git commit</span>
+        </div>
+        <div class="cmd-cosa-fa">Stage file e crea commit</div>
+        <div class="cmd-quando">Sempre. <code>git add file.py</code>. <code>git commit -m 'msg'</code>.</div>
+        <div class="cmd-example">git add ~/WORK/SCRIPTS/fix.sh &amp;&amp; git commit -m 'fix: telegram bot reconnect'</div>
+        <div class="cmd-see-also">Vedi anche: <span>git diff (preview changes)</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">git log</span>
+        </div>
+        <div class="cmd-cosa-fa">Cronologia commit</div>
+        <div class="cmd-quando"><code>-n 5</code> ultime 5. <code>--oneline</code> conciso. <code>--graph</code> albero rami.</div>
+        <div class="cmd-example">git log --oneline -20 --graph</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">git diff</span>
+        </div>
+        <div class="cmd-cosa-fa">Differenze tra versioni</div>
+        <div class="cmd-quando">Preview prima commit. <code>git diff HEAD~1</code> confronta precedente. <code>git diff branch1...branch2</code>.</div>
+        <div class="cmd-example">git diff --staged</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">git push / git pull</span>
+        </div>
+        <div class="cmd-cosa-fa">Push commit remoto / Pull da remoto</div>
+        <div class="cmd-quando">Sincronizzare repo. <code>git push -u origin branch_nuova</code> prima volta.</div>
+        <div class="cmd-example">git push origin main &amp;&amp; git pull origin main</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">git clone</span>
+        </div>
+        <div class="cmd-cosa-fa">Clona repository</div>
+        <div class="cmd-quando">Copiare repo remoto localmente. Fallback tarball HTTPS se git bloccato da proxy.</div>
+        <div class="cmd-example">git clone https://github.com/user/repo.git ~/WORK/CLAUDE/REPOS/repo</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">git branch</span>
+        </div>
+        <div class="cmd-cosa-fa">Gestisci rami</div>
+        <div class="cmd-quando"><code>git branch</code> lista locale. <code>-a</code> remoti. <code>git checkout -b nuova_branch</code> crea e switcha.</div>
+        <div class="cmd-example">git checkout -b fix/coach-bot-relay</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────
+       REDIRECT PATTERNS TABLE
+  ───────────────────────────────── -->
+  <section id="redirect-patterns">
+    <h2>Redirect e pipe patterns <span class="cat-count">9 pattern</span></h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Sintassi</th><th>Cosa fa</th><th>Quando / Note</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>cmd &gt; file</code></td>
+            <td>stdout in file (OVERWRITE)</td>
+            <td>Salvare output. <strong style="color:var(--danger)">Attenzione: sovrascrive!</strong></td>
+          </tr>
+          <tr>
+            <td><code>cmd &gt;&gt; file</code></td>
+            <td>stdout in file (APPEND)</td>
+            <td>Aggiungere a file. Non sovrascrive. Sicuro.</td>
+          </tr>
+          <tr>
+            <td><code>cmd 2&gt; file</code></td>
+            <td>stderr in file</td>
+            <td>Catturare errori — es. <code>curl bad-url.com 2&gt; error.log</code></td>
+          </tr>
+          <tr>
+            <td><code>cmd 2&gt;&amp;1</code></td>
+            <td>stderr → stdout</td>
+            <td>Combine error+output — es. <code>script.sh 2&gt;&amp;1 | tee log.txt</code></td>
+          </tr>
+          <tr>
+            <td><code>cmd1 | cmd2</code></td>
+            <td>Pipe stdout di cmd1 in stdin di cmd2</td>
+            <td>Incatenare — es. <code>cat file | grep 'error' | wc -l</code></td>
+          </tr>
+          <tr>
+            <td><code>cmd | tee file</code></td>
+            <td>Sia terminale che file</td>
+            <td>Salvare E vedere output — es. <code>curl api.com | tee response.json</code></td>
+          </tr>
+          <tr>
+            <td><code>xargs -n1 cmd</code></td>
+            <td>Esegui cmd per ogni riga input</td>
+            <td>Costruire comandi dinamici — es. <code>find . -name '*.tmp' | xargs rm</code></td>
+          </tr>
+          <tr>
+            <td><code>cmd &lt;&lt;&lt; 'string'</code></td>
+            <td>Here-string in stdin</td>
+            <td>Passare variabile come input — es. <code>grep 'error' &lt;&lt;&lt; "$log"</code></td>
+          </tr>
+          <tr>
+            <td><code>cmd &lt;&lt; EOF&#10;...&#10;EOF</code></td>
+            <td>Here-doc multiriga</td>
+            <td>Creare file inline. <em>Gotcha: EOF senza spazi. EOF tra apici = literal (no var expansion)</em></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Comandi redirect estesi</h3>
+    <div class="cmd-grid">
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">tee</span>
+        </div>
+        <div class="cmd-cosa-fa">stdout sia a terminale che file</div>
+        <div class="cmd-quando">Salvare output E vederlo sullo schermo contemporaneamente.</div>
+        <div class="cmd-example">curl http://localhost:37777 2&gt;&amp;1 | tee healthcheck.log</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">xargs</span>
+        </div>
+        <div class="cmd-cosa-fa">Passa input come argomenti a comando</div>
+        <div class="cmd-quando"><code>-n1</code> esegui per ogni riga. <code>-0</code> null-delimited.</div>
+        <div class="cmd-example">find ~/WORK -name '*.log' -print0 | xargs -0 rm</div>
+        <div class="cmd-see-also">Vedi anche: <span>Pipe (più semplice per stdin)</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────
+       AUTOMATION
+  ───────────────────────────────── -->
+  <section id="automation">
+    <h2>Automazione <span class="cat-count">5 comandi</span></h2>
+
+    <div class="automation-grid">
+      <div class="auto-card">
+        <h3>Cron</h3>
+        <pre><code># Edita crontab
+crontab -e
+
+# Lista job correnti
+crontab -l
+
+# Formato: MIN HOUR DOM MON DOW COMMAND
+# (0-59  0-23  1-31  1-12  0-6=Sun)
+
+# Esempi:
+0 2 * * * /Users/cira/WORK/SCRIPTS/backup.sh
+*/15 * * * * /Users/cira/WORK/SCRIPTS/healthcheck.sh
+0 22 * * 0 /Users/cira/WORK/SCRIPTS/weekly-cleanup.sh</code></pre>
+        <div class="cmd-gotcha" style="margin-top:10px">Crontab NON eredita PATH ~/.zshrc — usa percorsi assoluti nei cron job</div>
+      </div>
+
+      <div class="auto-card">
+        <h3>launchd plist</h3>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Path: <code>~/Library/LaunchAgents/com.cira.NAME.plist</code></p>
+        <pre><code># Load
+launchctl bootstrap gui/$(id -u) \
+  ~/Library/LaunchAgents/com.cira.X.plist
+
+# Unload
+launchctl bootout gui/$(id -u) \
+  ~/Library/LaunchAgents/com.cira.X.plist
+
+# List CIRA services
+launchctl list | grep cira
+
+# Print service details
+launchctl print gui/$(id -u)/com.cira.coach-bot</code></pre>
+      </div>
+
+      <div class="auto-card">
+        <h3>Alias in .zshrc</h3>
+        <pre><code># Aggiungi a ~/.zshrc
+alias ll='ls -lah'
+alias work='cd ~/WORK'
+alias gs='git status'
+
+# Applica modifiche
+source ~/.zshrc</code></pre>
+      </div>
+
+      <div class="auto-card">
+        <h3>Export env vars</h3>
+        <pre><code># In ~/.zshrc per persistenza
+export EDITOR=vim
+export FIRECRAWL_API_KEY='fc-...'
+export APIFY_API_TOKEN='apify_api_...'
+export CLAUDE_PLUGIN_ROOT=$HOME/.claude</code></pre>
+      </div>
+    </div>
+
+    <h3>source / .</h3>
+    <div class="cmd-grid">
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">source / .</span>
+        </div>
+        <div class="cmd-cosa-fa">Esegui shell script nel contesto corrente (non subshell)</div>
+        <div class="cmd-quando">Reload .zshrc. Carica env vars in sessione corrente.</div>
+        <div class="cmd-example">source ~/.zshrc</div>
+        <div class="cmd-gotcha">Diverso da <code>bash script.sh</code> (crea subshell) — source agisce sulla sessione attuale</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────
+       JSON-CSV
+  ───────────────────────────────── -->
+  <section id="json-csv">
+    <h2>JSON e CSV <span class="cat-count">1 comando</span></h2>
+    <div class="cmd-grid">
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">jq</span>
+        </div>
+        <div class="cmd-cosa-fa">Query JSON da CLI — il vangelo</div>
+        <div class="cmd-quando">SEMPRE con JSON. Parsare output API, settings.json, ecc.</div>
+        <div class="cmd-example">cat /tmp/data.json | jq '.items[] | select(.status=="ok") | .name' | head -5</div>
+      </div>
+
+    </div>
+    <h3>Selettori jq comuni</h3>
+    <div class="table-wrap" style="margin-top:8px">
+      <table>
+        <thead>
+          <tr><th>Selettore</th><th>Cosa fa</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>.foo</code></td><td>Campo foo dell'oggetto</td></tr>
+          <tr><td><code>.items[]</code></td><td>Tutti gli elementi dell'array</td></tr>
+          <tr><td><code>.items[] | select(.status=="ok")</code></td><td>Filtra elementi</td></tr>
+          <tr><td><code>.items | map(.name)</code></td><td>Trasforma — estrai campo da ogni elemento</td></tr>
+          <tr><td><code>.[0:5]</code></td><td>Slice array (elementi 0-4)</td></tr>
+          <tr><td><code>keys</code></td><td>Lista campi oggetto</td></tr>
+          <tr><td><code>jq -r '...'</code></td><td>Raw output (no quotes)</td></tr>
+          <tr><td><code>jq -c '...'</code></td><td>Compact (una riga)</td></tr>
+          <tr><td><code>jq '.' &lt; file.json</code></td><td>Pretty-print file JSON</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────
+       MACOS SPECIFIC
+  ───────────────────────────────── -->
+  <section id="macos-specific">
+    <h2>macOS Specifici <span class="cat-count">6 comandi</span></h2>
+    <div class="cmd-grid">
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">open</span>
+        </div>
+        <div class="cmd-cosa-fa">Apri file/URL nel default app macOS</div>
+        <div class="cmd-quando">Aprire HTML in browser, file in Finder, URL.</div>
+        <div class="cmd-example">open ~/WORK/SITI/cheatsheets/index.html</div>
+        <pre style="margin-top:8px"><code>open -a 'Visual Studio Code' file.py   # app specifica
+open -R file                            # reveal in Finder</code></pre>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">pbcopy / pbpaste</span>
+        </div>
+        <div class="cmd-cosa-fa">Copia/incolla clipboard da terminale</div>
+        <div class="cmd-quando">Pipe output a clipboard. Paste da clipboard.</div>
+        <div class="cmd-example">cat ~/.claude/coach-bot.plist | pbcopy</div>
+        <pre style="margin-top:8px"><code>pbpaste > ~/WORK/pasted.txt</code></pre>
+        <div class="cmd-gotcha">Mai pbcopy token/secret — entra in clipboard pubblico</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">defaults</span>
+        </div>
+        <div class="cmd-cosa-fa">Leggi/scrivi preferenze macOS (.plist)</div>
+        <div class="cmd-quando">Configurare app macOS da terminale.</div>
+        <div class="cmd-example">defaults read -g com.apple.controlcenter.modules</div>
+        <div class="cmd-see-also">Vedi anche: <span>plutil -p (print plist file)</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">plutil</span>
+        </div>
+        <div class="cmd-cosa-fa">Utility file .plist (XML config macOS)</div>
+        <div class="cmd-quando">Editare plist file. <code>-p</code> pretty-print. <code>-convert xml/json</code>.</div>
+        <div class="cmd-example">plutil -p ~/Library/LaunchAgents/com.cira.coach-bot.plist</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">du</span>
+        </div>
+        <div class="cmd-cosa-fa">Disk usage — quanto spazio occupano cartelle</div>
+        <div class="cmd-quando"><code>-h</code> human readable. <code>-d 1</code> profondità 1. <code>-s</code> sommario.</div>
+        <div class="cmd-example">du -sh ~/WORK/CLAUDE/REPOS/*</div>
+        <div class="cmd-output">4.2G  polydao&#10;2.1G  antigravity</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">open -a 'Quick Look'</span>
+        </div>
+        <div class="cmd-cosa-fa">Preview veloce file senza aprire app</div>
+        <div class="cmd-quando">Anteprima PDF, immagine. Alternativa: Spazio in Finder.</div>
+        <div class="cmd-example">open -a Quick\ Look ~/WORK/document.pdf</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────
+       CIRA WORKFLOW
+  ───────────────────────────────── -->
+  <section id="cira-workflow">
+    <h2>CIRA Workflow <span class="cat-count">4 comandi</span></h2>
+    <div class="cmd-grid">
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">gws</span>
+        </div>
+        <div class="cmd-cosa-fa">Google Workspace CLI — Gmail, Drive, Calendar</div>
+        <div class="cmd-quando">Aurelio coach: <code>gws mail list</code>, <code>gws drive files create --upload</code>, <code>gws calendar events list</code>.</div>
+        <div class="cmd-example">cd ~/WORK && gws drive files create --upload backup.tar</div>
+        <div class="cmd-gotcha">gws drive richiede cd nella dir del file — path assoluti rifiutati con validationError</div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">launchctl Aurelio healthcheck</span>
+        </div>
+        <div class="cmd-cosa-fa">Verificare stato bot Telegram Aurelio</div>
+        <div class="cmd-quando">Debug "bot non risponde". Verificare che processo gira.</div>
+        <div class="cmd-example">launchctl list | grep coach-bot &amp;&amp; lsof -iTCP:8000 -sTCP:LISTEN</div>
+        <pre style="margin-top:8px"><code># Diagnosi completa
+launchctl print gui/$(id -u)/com.cira.coach-bot
+tail -f /var/log/coach-bot.log</code></pre>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">tg-reply</span>
+        </div>
+        <div class="cmd-cosa-fa">Invia risposta veloce Telegram da CLI</div>
+        <div class="cmd-quando">Script bot Telegram, automation, debug.</div>
+        <div class="cmd-example">tg-reply 1689116477 &lt;msg_id&gt; 'Risposta veloce'</div>
+        <div class="cmd-see-also">Location: <span>~/WORK/SCRIPTS/telegram/tg-reply (wrapper Python)</span></div>
+      </div>
+
+      <div class="cmd-card">
+        <div class="cmd-card-header">
+          <span class="cmd-name">Monitor claude-mem worker</span>
+        </div>
+        <div class="cmd-cosa-fa">Verifica healthcheck worker :37777</div>
+        <div class="cmd-quando">Claude Code SessionStart attiva monitor. Se degraded indagare.</div>
+        <div class="cmd-example">curl -s http://localhost:37777 | jq</div>
+        <div class="cmd-see-also">Restart: Worker auto-avvio. Se muto: <span>launchctl kill session &lt;PID&gt;</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────
+       SHORTCUTS ZSH TABLE
+  ───────────────────────────────── -->
+  <section id="shortcuts-zsh">
+    <h2>Shortcut zsh <span class="cat-count">15 shortcut</span></h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Keys</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><kbd>Ctrl+R</kbd></td><td>Ricerca history reverse (interattivo)</td></tr>
+          <tr><td><kbd>Ctrl+A</kbd></td><td>Salta inizio riga</td></tr>
+          <tr><td><kbd>Ctrl+E</kbd></td><td>Salta fine riga</td></tr>
+          <tr><td><kbd>Ctrl+W</kbd></td><td>Cancella parola indietro</td></tr>
+          <tr><td><kbd>Ctrl+U</kbd></td><td>Cancella da cursore a inizio riga</td></tr>
+          <tr><td><kbd>Ctrl+K</kbd></td><td>Cancella da cursore a fine riga</td></tr>
+          <tr><td><kbd>!!</kbd></td><td>Riusa ultimo comando (<code>!!:p</code> stampa senza eseguire)</td></tr>
+          <tr><td><kbd>!$</kbd></td><td>Ultimo argomento del comando precedente</td></tr>
+          <tr><td><kbd>!*</kbd></td><td>Tutti gli argomenti del comando precedente</td></tr>
+          <tr><td><kbd>!n</kbd></td><td>Riusa comando #n dalla history</td></tr>
+          <tr><td><kbd>!?string</kbd></td><td>Riusa ultimo comando contenente string</td></tr>
+          <tr><td><kbd>Cmd+K</kbd></td><td>Pulisci terminale (Terminal.app + iTerm2)</td></tr>
+          <tr><td><kbd>Cmd+D</kbd></td><td>Chiudi tab (Terminal.app)</td></tr>
+          <tr><td><kbd>Tab</kbd></td><td>Autocompletion file/comando (zsh intelligente)</td></tr>
+          <tr><td><kbd>Esc+H</kbd></td><td>Mostra history search (zsh fzf se installato)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────
+       CIRA EXAMPLES
+  ───────────────────────────────── -->
+  <section id="cira-examples">
+    <h2>CIRA Examples <span class="cat-count">7 scenari</span></h2>
+
+    <div class="cira-scenario">
+      <h4>Healthcheck servizi post-blackout</h4>
+      <pre><code>launchctl list | grep cira
+lsof -iTCP:37777 -sTCP:LISTEN
+curl -sS -m 3 http://localhost:37777</code></pre>
+    </div>
+
+    <div class="cira-scenario">
+      <h4>Backup cartella WORK a Google Drive</h4>
+      <pre><code>cd ~/WORK &amp;&amp; tar -czf backup-$(date +%Y%m%d).tar.gz CLAUDE/ SCRIPTS/ SITI/
+gws drive files create --upload backup-*.tar.gz</code></pre>
+    </div>
+
+    <div class="cira-scenario">
+      <h4>Cerca skill che matchano keyword</h4>
+      <pre><code>find ~/.claude/skills -name SKILL.md | xargs grep -l 'costruiamo'
+rg 'costruiamo' ~/.claude/skills -A 2</code></pre>
+    </div>
+
+    <div class="cira-scenario">
+      <h4>Reply Telegram veloce da CLI</h4>
+      <pre><code>~/WORK/SCRIPTS/telegram/tg-reply &lt;user_id&gt; &lt;msg_id&gt; 'Messaggio'</code></pre>
+    </div>
+
+    <div class="cira-scenario">
+      <h4>Elenco file modificati negli ultimi 7 giorni</h4>
+      <pre><code>find ~/WORK -type f -mtime -7 | head -20</code></pre>
+    </div>
+
+    <div class="cira-scenario">
+      <h4>Count skill in master index</h4>
+      <pre><code>find ~/.claude/skills -name SKILL.md | wc -l</code></pre>
+    </div>
+
+    <div class="cira-scenario">
+      <h4>Restart Aurelio bot (non pkill!)</h4>
+      <pre><code>launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.cira.coach-bot.plist
+sleep 2
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.cira.coach-bot.plist</code></pre>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────
+       GOTCHAS
+  ───────────────────────────────── -->
+  <section id="gotchas">
+    <h2>macOS Gotchas</h2>
+    <div class="gotchas-list">
+
+      <div class="gotcha-item">
+        <span class="gi-icon">⚠</span>
+        <div class="gi-text">
+          <strong>sed -i '' su macOS</strong>
+          Sed syntax macOS: <code>sed -i ''</code> (empty string dopo -i). Linux usa <code>sed -i</code> senza spazi — non sono compatibili.
+        </div>
+      </div>
+
+      <div class="gotcha-item">
+        <span class="gi-icon">⚠</span>
+        <div class="gi-text">
+          <strong>Cron PATH non eredita .zshrc</strong>
+          Crontab NON eredita PATH e variabili da ~/.zshrc. Usa sempre percorsi assoluti nei cron job (es. <code>/usr/local/bin/node</code> non <code>node</code>).
+        </div>
+      </div>
+
+      <div class="gotcha-item">
+        <span class="gi-icon">🔴</span>
+        <div class="gi-text">
+          <strong>MAI pkill su servizi launchd</strong>
+          Processi launchd (Aurelio, claude-mem): usa sempre <code>launchctl bootout</code> per fermare, mai <code>pkill</code>. pkill ha rotto MCP e ha richiesto restart Claude Code.
+        </div>
+      </div>
+
+      <div class="gotcha-item">
+        <span class="gi-icon">⚠</span>
+        <div class="gi-text">
+          <strong>pbcopy e secret</strong>
+          Dati copiati con <code>pbcopy</code> entrano nel clipboard di sistema — mai copiare token, API key, o password con pbcopy.
+        </div>
+      </div>
+
+      <div class="gotcha-item">
+        <span class="gi-icon">⚠</span>
+        <div class="gi-text">
+          <strong>gws drive — percorsi assoluti rifiutati</strong>
+          <code>gws drive files create --upload</code> richiede <code>cd</code> nella directory del file prima. I path assoluti vengono rifiutati con validationError.
+        </div>
+      </div>
+
+      <div class="gotcha-item">
+        <span class="gi-icon">⚠</span>
+        <div class="gi-text">
+          <strong>Timezone cron — America/Los_Angeles default</strong>
+          La timezone di cron su macOS è America/Los_Angeles di default. Se serve un fuso orario diverso, specificalo nella configurazione launchd con <code>&lt;key&gt;TimeZone&lt;/key&gt;</code>.
+        </div>
+      </div>
+
+    </div>
+
+    <h3 style="margin-top:28px">Stack Integration CIRA</h3>
+    <div class="stack-card">
+      <h4>Claude Code</h4>
+      <p>Claude Code REPL legge .zshrc env vars + CLAUDE.md cwd. SessionStart attiva claude-mem worker :37777.</p>
+    </div>
+    <div class="stack-card">
+      <h4>GSD</h4>
+      <p>Bash è il substrato di tutti i comandi GSD eseguiti. /gsd:new-project crea cartelle, /gsd:execute-phase lancia script bash.</p>
+    </div>
+    <div class="stack-card">
+      <h4>CIRA Workflow</h4>
+      <p>gws CLI per Aurelio (mail/drive), launchctl per Aurelio bot, Telegram bot via com.cira.coach-bot.plist.</p>
+    </div>
+  </section>
+
+</main>
+  <script src="../assets/glossary.js" defer></script>
+</body>
+</html>

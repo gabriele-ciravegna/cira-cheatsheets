@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workflows CIRA — Cheatsheet Ardea</title>
+  <link rel="stylesheet" href="./assets/style.css">
+  <link rel="stylesheet" href="./assets/print.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="logo">⌘ CHEATSHEETS</div>
+      <input type="search" class="search-box" id="global-search" data-root="." placeholder="Cerca…">
+      <div id="search-results"></div>
+
+      <div class="nav-section">
+        <h3>Cheatsheet</h3>
+        <a href="./index.html">⌂ Index</a>
+        <a href="./gsd/index.html">GSD</a>
+        <a href="./gstack/index.html">Gstack</a>
+        <a href="./superpowers/index.html">Superpowers</a>
+        <a href="./ruflo/index.html">Ruflo</a>
+        <a href="./compound-engineering/index.html">Compound Eng</a>
+        <a href="./agent-teams/index.html">Agent Teams</a>
+        <a href="./cira-custom/index.html">CIRA Custom</a>
+        <a href="./claude-code-basics/index.html">Claude Code</a>
+        <a href="./bash-macos/index.html">Bash + macOS</a>
+      </div>
+
+      <div class="nav-section">
+        <h3>Quick</h3>
+        <a href="./daily-10.html">Daily 10</a>
+        <a href="./workflows-cira.html" class="active">Workflows CIRA</a>
+      </div>
+
+      <div class="nav-section">
+        <h3>Workflows</h3>
+        <a href="#wf-mvp">MVP nuovo (tipo Mercurio)</a>
+        <a href="#wf-resume">Riprendi sessione post /clear</a>
+        <a href="#wf-deploy">Deploy dashboard Vercel</a>
+        <a href="#wf-bug-telegram">Debug bot Telegram</a>
+        <a href="#wf-x-repos">Pipeline x-repos 6-step</a>
+        <a href="#wf-site-clone">Clone sito (Firecrawl + designlang)</a>
+        <a href="#wf-skill-create">Crea skill CIRA-ready</a>
+        <a href="#wf-coaching">Coaching mattutino</a>
+        <a href="#wf-cheatsheet">Costruisci cheatsheet (questo)</a>
+        <a href="#wf-handoff">Pre-clear handoff</a>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="tool-header">
+        <h1>Workflows CIRA</h1>
+        <p class="tagline">Sequenze concrete cross-tool: come si fa davvero ciascuna cosa</p>
+        <div class="when-card"><strong>Quando guardarlo:</strong> "Come ho fatto Mercurio l'altra volta?", "Come si deploya?", "Cosa fare ora?"</div>
+      </header>
+
+      <section id="wf-mvp">
+        <h2>1. MVP nuovo (pattern Mercurio)</h2>
+        <div class="callout tip">
+          <strong>Tempo:</strong> 3-8h per phase · <strong>Stack:</strong> /costruiamo → GSD (path A1) o gstack (path A2)
+        </div>
+        <h3>Sequenza</h3>
+        <pre><code># 1. Cartella progetto
+mkdir -p ~/WORK/SOFTWARE/&lt;client&gt;/&lt;projectname&gt;
+cd $_
+claude
+
+# 2. Trigger /costruiamo
+&gt; costruiamo MVP &lt;descrizione&gt;
+# Intervista 10-15 domande
+# Propone path: A1 GSD (audit-heavy) o A2 gstack (ship-first)
+
+# 3. Path A1 (Mercurio-style)
+&gt; /gsd-new-project
+&gt; /gsd-discuss-phase 1
+&gt; /gsd-plan-phase 1
+&gt; /gsd-execute-phase 1
+&gt; /gsd-verify-work 1
+&gt; /gsd-ship
+
+# 4. Deploy
+git push origin main  # auto-trigger Vercel</code></pre>
+        <h3>Esempio reale CIRA</h3>
+        <div class="cira-example">
+          <span class="cira-tag">Mercurio MVP</span>
+          <h4>Mail demo Valerio</h4>
+          <p>Path: <code>/gsd-quick</code> + execute-phase. Deadline 7/5/2026. Repo: <code>~/WORK/SOFTWARE/VALERIO/MAIL/demo_03_claude/</code>. Stack Next.js + OAuth + Claude API.</p>
+        </div>
+      </section>
+
+      <section id="wf-resume">
+        <h2>2. Riprendi sessione post /clear o crash</h2>
+        <div class="callout tip">
+          <strong>Tempo:</strong> 2 min · <strong>Stack:</strong> Claude Code basics + memory + GSD progress
+        </div>
+        <pre><code># 1. Riapri terminal nella dir progetto
+cd ~/WORK/SOFTWARE/&lt;project&gt;
+claude --resume
+
+# 2. Carica contesto memory automaticamente (SessionStart hook + CMEM)
+# 3. Verifica stato GSD
+&gt; /gsd-progress
+# o se non in progetto GSD:
+&gt; "leggi handoff in _AWARENESS/ se esiste"
+
+# 4. Se sessione vecchia, leggi memory esplicita
+&gt; mem-search "&lt;keyword progetto&gt;"</code></pre>
+      </section>
+
+      <section id="wf-deploy">
+        <h2>3. Deploy dashboard / sito Vercel</h2>
+        <div class="callout tip">
+          <strong>Tempo:</strong> 90 sec (auto) · <strong>Stack:</strong> git + Vercel auto-deploy
+        </div>
+        <pre><code># 1. Verifica diff locale
+cd ~/WORK/SOFTWARE/cira-dashboard  # o equivalente
+git status
+git diff
+
+# 2. Commit + push
+git add specific-files.html
+git commit -m "feat: aggiornamento dashboard"
+git push origin main
+
+# 3. Verifica deploy (attendi 90sec)
+sleep 90
+curl -sS -m 5 -o /dev/null -w 'HTTP:%{http_code}\n' https://cira-dashboard.vercel.app/
+
+# 4. Se 404: check vercel.json cleanUrls config
+cat vercel.json | jq '.cleanUrls'</code></pre>
+        <div class="cmd-gotcha">Vercel deploy può fallire 5x → fix vercel.json + retry. cleanUrls deve essere true</div>
+      </section>
+
+      <section id="wf-bug-telegram">
+        <h2>4. Debug bot Telegram non risponde</h2>
+        <div class="callout tip">
+          <strong>Tempo:</strong> 5-10 min · <strong>Stack:</strong> bash launchctl + memory CIRA telegram-bot
+        </div>
+        <pre><code># 1. STEP 1 — probe sendMessage diretto (NON dedurre da display name)
+# (memory ref: feedback_telegram_bot_diagnostic_probe_first)
+
+# 2. Healthcheck launchd
+launchctl list | grep -E "telegram|coach-bot"
+launchctl print gui/$(id -u)/com.cira.telegram-bot | grep -E "state|pid|last exit"
+launchctl print gui/$(id -u)/com.cira.coach-bot   | grep -E "state|pid|last exit"
+
+# 3. Verifica processo vivo
+ps aux | grep -E "telegram|aurelio|coach-bot" | grep -v grep
+
+# 4. Verifica inbox arriva messaggi
+tail -n 5 ~/.claude/channels/telegram/inbox/_text.log
+
+# 5. Se serve restart launchd
+launchctl bootout gui/$(id -u)/com.cira.telegram-bot
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.cira.telegram-bot.plist</code></pre>
+        <div class="cmd-gotcha">REGOLA FERREA: fix file/registry, MAI killare processi "per rinfrescare" (memory: minimal-fix-first)</div>
+      </section>
+
+      <section id="wf-x-repos">
+        <h2>5. Pipeline x-repos 6-step (audit REPO AI)</h2>
+        <div class="callout tip">
+          <strong>Tempo:</strong> 30-45 min · <strong>Trigger:</strong> "esegui pipeline x-repos"
+        </div>
+        <pre><code># Step 1-5 automatici via script
+bash ~/WORK/SCRIPTS/x-repos-pipeline/run.sh
+
+# Step 6 — 4 sub-agent paralleli A/B/C/D per ogni repo
+# (verdict: install / archive / delete / monitor)
+# Output JSON in /tmp/x-repos-verdict-{N}.json</code></pre>
+        <p>Memory ref: <code>feedback_x_repos_pipeline_method</code></p>
+      </section>
+
+      <section id="wf-site-clone">
+        <h2>6. Clone sito (Firecrawl + designlang)</h2>
+        <div class="callout tip">
+          <strong>Stack:</strong> Firecrawl (testo) + designlang (design tokens)
+        </div>
+        <pre><code># Output OBBLIGATORIO in ~/WORK/SITI/ispiration/&lt;sitename&gt;/
+mkdir -p ~/WORK/SITI/ispiration/&lt;sitename&gt;/{firecrawl,designlang}
+cd ~/WORK/SITI/ispiration/&lt;sitename&gt;
+
+# Firecrawl scrape (testo + struttura)
+# Via MCP: firecrawl_scrape({url, formats:["markdown","html"]})
+
+# designlang extract
+designlang extract &lt;url&gt; --output ./designlang/
+
+# Mai mettere output altrove!</code></pre>
+        <p>Memory ref: <code>feedback_site_clone_pipeline</code></p>
+      </section>
+
+      <section id="wf-skill-create">
+        <h2>7. Crea skill CIRA-ready (M1-M8)</h2>
+        <div class="callout tip">
+          <strong>Stack:</strong> skill-creator-cira + verify-skill.py + Master Registry
+        </div>
+        <pre><code>&gt; "crea skill per &lt;X&gt;"
+
+# Skill-creator-cira applica checklist M1-M8:
+# M1 WIKILINKS · M2 BOUNDARIES · M3 CARD · M4 DESCRIPTION
+# M5 STRUTTURA · M6 DISCLOSURE · M7 TESTING · M8 PACKAGING
+
+# Post-creazione: verify
+python3 ~/WORK/.registry/scripts/verify-skill.py &lt;path/to/skill&gt;
+
+# Se exit 0 → aggiungi a MR immediately
+# (memory: feedback_m8_immediate_registry)</code></pre>
+      </section>
+
+      <section id="wf-coaching">
+        <h2>8. Coaching mattutino (orchestra + mentori)</h2>
+        <div class="callout tip">
+          <strong>Tempo:</strong> 15-30 min · <strong>Stack:</strong> orchestra + skill mentori Bilyeu 5 reparti
+        </div>
+        <pre><code>&gt; orchestra
+# Domanda: "Su quale dei 5 reparti operativi Bilyeu lavoriamo oggi?"
+# RESEARCHER / STRATEGIST / BUILDER / COPYWRITER / MARKETER / DAILY_COACH
+
+# Una volta scelto, orchestra invoca skill mentore (1-3) rilevanti
+# Esempio: pricing bloccato → aristotle-first-principles + ali-pricing + hormozi
+# Esempio: founder paura → hormozi-founder-resilience + tom-bilyeu-identity</code></pre>
+      </section>
+
+      <section id="wf-cheatsheet">
+        <h2>9. Costruisci cheatsheet (pattern questa libreria)</h2>
+        <div class="callout tip">
+          <strong>Tempo:</strong> 70-90 min · <strong>Stack:</strong> 9× Haiku research + 9× Sonnet synthesis paralleli
+        </div>
+        <pre><code># Phase 0 — inventory (main thread, 3min)
+# Phase 1 — 9× Task() Haiku research → JSON in /tmp/
+# Phase 2 — Template Ardea CSS/JS (main thread)
+# Phase 3 — 9× Task() Sonnet synthesis → HTML in ~/WORK/SITI/cheatsheets/{name}/
+# Phase 4 — index + daily-10 + workflows-cira + master JSON (main thread)
+# Phase 5 — SessionStart hook staleness (opzionale)
+
+# Token: ~80-150k. Time wall-clock: 60-75 min</code></pre>
+      </section>
+
+      <section id="wf-handoff">
+        <h2>10. Pre-clear handoff (chiusura sessione)</h2>
+        <div class="callout tip">
+          <strong>Tempo:</strong> 5 min · <strong>Stack:</strong> memory + _AWARENESS handoff doc
+        </div>
+        <pre><code># Prima di /clear, salva contesto
+echo "creating handoff..."
+# Scrivi ~/WORK/_AWARENESS/$(date +%Y-%m-%d)-HANDOFF-pre-clear.md con:
+# - Stato corrente progetto
+# - File modificati
+# - Decisioni pendenti
+# - Prompt ripresa (es. "Riprendi cheatsheet build")
+
+# Aggiungi entry memory project se opportuno
+# (memory_path: ~/.claude/projects/-Users-cira/memory/project_*.md)</code></pre>
+      </section>
+
+      <section id="cira-extras">
+        <h2>Extra workflow CIRA</h2>
+
+        <div class="cira-example">
+          <span class="cira-tag">Aurelio coach</span>
+          <h4>Lifecycle bot Telegram</h4>
+          <p>Bot launchd <code>com.cira.coach-bot</code>. Plist + wrapper <code>SCRIPTS/aurelio-bot-launcher.sh</code> (FDA grant). Restart: <code>launchctl bootout/bootstrap</code>. MAI pkill.</p>
+        </div>
+
+        <div class="cira-example">
+          <span class="cira-tag">claude-mem</span>
+          <h4>Memory persistente</h4>
+          <p>Worker bun PID via <code>lsof -iTCP:37777</code>. DB SQLite <code>~/.claude-mem/claude-mem.db</code>. Per ingest da script: INSERT raw in observations table con singleton sdk_session.</p>
+        </div>
+
+        <div class="cira-example">
+          <span class="cira-tag">gws Drive upload</span>
+          <h4>Path cwd obbligato</h4>
+          <p><code>gws drive files create --upload</code> richiede <code>cd</code> nella dir del file. Path assoluti rifiutati con validationError.</p>
+        </div>
+      </section>
+
+      <footer>
+        Generato 2026-05-15 · Estratto da memory CIRA + skill costruiamo · <a href="javascript:window.print()">Stampa / PDF</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="./assets/copy.js" defer></script>
+  <script src="./assets/search.js" defer></script>
+</body>
+</html>
